@@ -169,15 +169,6 @@ export const calculatorCategories: CalculatorCategory[] = [
     count: 4,
     live: false,
   },
-  {
-    slug: 'automotive',
-    title: 'Automotive',
-    description: 'Fuel efficiency, car payments, speed, and vehicle calculators.',
-    icon: '🚗',
-    color: '#B699FF',
-    count: 51,
-    live: false,
-  },
 ];
 
 // Items per category
