@@ -12,7 +12,12 @@
       "Bash(cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\lp-home-me.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\images\\\\site\\\\\" && cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\lp-profile-img.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\images\\\\site\\\\\")",
       "Bash(npm run *)",
       "Bash(python3 -c ' *)",
-      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const a=JSON.parse\\(d\\); console.log\\(JSON.stringify\\(a.slice\\(0,5\\),null,2\\)\\)\")"
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const a=JSON.parse\\(d\\); console.log\\(JSON.stringify\\(a.slice\\(0,5\\),null,2\\)\\)\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr create --title 'feat: Layer 3 complete — 63 static routes, freebies pages, image path fixes' --body ' *)",
+      "Bash(where gh *)"
     ]
   }
 }

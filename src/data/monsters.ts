@@ -11,7 +11,6 @@ export interface Monster {
   route: string;
   image: string;
   status: MonsterStatus;
-  emoji: string;
   tagline: string;
 }
 
@@ -28,7 +27,6 @@ export const monsters: Monster[] = [
     route: '/artworks',
     image: '/images/Monsters/artooo.png',
     status: 'active',
-    emoji: '🎨',
     tagline: 'Art that feels.',
   },
   {
@@ -43,7 +41,6 @@ export const monsters: Monster[] = [
     route: '/infographics',
     image: '/images/Monsters/infooo.png',
     status: 'active',
-    emoji: '📊',
     tagline: 'Knowledge, visualized.',
   },
   {
@@ -58,7 +55,6 @@ export const monsters: Monster[] = [
     route: '/toolbox',
     image: '/images/Monsters/toolooo.png',
     status: 'active',
-    emoji: '🔧',
     tagline: 'Tools that work.',
   },
   {
@@ -73,38 +69,35 @@ export const monsters: Monster[] = [
     route: '/freebies',
     image: '/images/Monsters/freeooo.png',
     status: 'active',
-    emoji: '🎁',
     tagline: 'Free. Always.',
   },
   {
     id: 'devooo',
     name: 'devooo',
-    module: 'DevSpark',
+    module: 'Unknown',
     description:
-      'Deep dives into development, coding practices, frameworks, tutorials, solutions, and the engineering mindset.',
+      'A mystery. A future module. Identity unknown — but it is coming.',
     color: '#B699FF',
     colorLight: '#DDD6FE',
     textColor: '#2A3439',
     route: '/future-monsters',
     image: '/images/Monsters/devooo.png',
     status: 'coming-soon',
-    emoji: '⚡',
-    tagline: 'Code that sparks.',
+    tagline: 'Coming soon.',
   },
   {
     id: 'summooo',
     name: 'summooo',
-    module: 'Summariser',
+    module: 'Unknown',
     description:
-      'AI-powered summaries of books, topics, and ideas — distilled knowledge for fast learners and curious minds.',
+      'A mystery. A future module. Identity unknown — but it is coming.',
     color: '#5DB3D7',
     colorLight: '#BAE6FD',
     textColor: '#2A3439',
     route: '/future-monsters',
     image: '/images/Monsters/ff-01.png',
     status: 'coming-soon',
-    emoji: '🧠',
-    tagline: 'Think faster.',
+    tagline: 'Coming soon.',
   },
   {
     id: 'future-3',
@@ -118,7 +111,6 @@ export const monsters: Monster[] = [
     route: '/future-monsters',
     image: '/images/Monsters/ff-02.png',
     status: 'coming-soon',
-    emoji: '🔮',
     tagline: 'Coming soon.',
   },
   {
@@ -133,7 +125,6 @@ export const monsters: Monster[] = [
     route: '/future-monsters',
     image: '/images/Monsters/ff-03.png',
     status: 'coming-soon',
-    emoji: '🌱',
     tagline: 'Growing.',
   },
   {
@@ -148,7 +139,6 @@ export const monsters: Monster[] = [
     route: '/future-monsters',
     image: '/images/Monsters/ff-04.png',
     status: 'coming-soon',
-    emoji: '🚀',
     tagline: 'Unleashing soon.',
   },
 ];

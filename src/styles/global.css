@@ -30,6 +30,8 @@
   --k-text-muted:     #6B7280;
   --k-border:         #E5E7EB;
   --k-shadow:         rgba(42, 52, 57, 0.08);
+  --k-accent:         #f82d48;
+  --k-accent-dark:    #eb1431;
 
   /* Monster colors */
   --m-artooo:         #F5CF5C;
@@ -130,7 +132,7 @@ img { max-width: 100%; display: block; }
 
 /* Gradient text */
 .k-gradient-text {
-  background: linear-gradient(135deg, var(--m-artooo), var(--m-toolooo));
+  background: linear-gradient(135deg, var(--k-accent), var(--k-accent-dark));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -150,7 +152,7 @@ img { max-width: 100%; display: block; }
 
 /* Focus ring */
 :focus-visible {
-  outline: 2px solid var(--m-artooo);
+  outline: 2px solid var(--k-accent);
   outline-offset: 3px;
 }
 

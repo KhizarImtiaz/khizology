@@ -4,6 +4,7 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import ArtworkGrid from '../components/artworks/ArtworkGrid';
 import { artworks } from '../data/artworks';
 import { monsters } from '../data/monsters';
+import { url, img } from '../utils/url';
 
 const ACCENT = '#F5CF5C';
 const monster = monsters.find(m => m.id === 'artooo')!;
@@ -20,7 +21,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="k-container">
       <div class="art-hero-inner">
         <div class="art-hero-text">
-          <Breadcrumb crumbs={[{ label: 'artooo', href: '/artworks' }]} accentColor={ACCENT} />
+          <Breadcrumb crumbs={[{ label: 'artooo', href: url('/artworks') }]} accentColor={ACCENT} />
           <div class="art-hero-badge">
             <img src={`${base}/images/Monsters/artooo.png`} alt="artooo" width="40" height="40" class="art-hero-monster" />
             <span class="k-section-label" style={`color: ${ACCENT}`}>artooo · Artworks</span>
@@ -87,7 +88,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="art-cta-links">
           {monsters.filter(m => m.status === 'active' && m.id !== 'artooo').map(m => (
-            <a href={m.route} class="art-cta-monster" style={`--mc: ${m.color}`}>
+            <a href={url(m.route)} class="art-cta-monster" style={`--mc: ${m.color}`}>
               <img src={`${base}${m.image}`} alt={m.name} width="32" height="32" />
               <span>{m.module}</span>
             </a>

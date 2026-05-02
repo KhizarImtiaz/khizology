@@ -3,6 +3,7 @@ import BaseLayout from '../../components/layout/BaseLayout.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import { toolGroups, mvpWebTools } from '../../data/toolsData';
 import { monsters } from '../../data/monsters';
+import { url } from '../../utils/url';
 
 const ACCENT = '#F7933C';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -18,7 +19,7 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
   <section class="tl-hero">
     <div class="k-container">
       <Breadcrumb
-        crumbs={[{ label: 'Toolbox', href: '/toolbox' }, { label: 'Tools' }]}
+        crumbs={[{ label: 'Toolbox', href: url('/toolbox') }, { label: 'Tools' }]}
         accentColor={ACCENT}
       />
       <div class="tl-hero-inner">
@@ -87,7 +88,7 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
               <h3 class="tl-tool-name">{tool.name}</h3>
               <p class="tl-tool-desc">{tool.description}</p>
               {tool.live ? (
-                <a href={`/toolbox/tools/${tool.slug}`} class="tl-tool-btn live">Open Tool →</a>
+                <a href={url(`/toolbox/tools/${tool.slug}`)} class="tl-tool-btn live">Open Tool →</a>
               ) : (
                 <button class="tl-tool-btn disabled" disabled>Coming Soon</button>
               )}
@@ -107,12 +108,12 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
           <strong>Web Tools</strong>
           <span class="tl-switch-you">← You are here</span>
         </div>
-        <a href="/toolbox/calculators" class="tl-switch-card link">
+        <a href={url("/toolbox/calculators")} class="tl-switch-card link">
           <span>🧮</span>
           <strong>Calculators</strong>
           <span class="tl-switch-arrow">Explore 200+ →</span>
         </a>
-        <a href="/toolbox" class="tl-switch-card link">
+        <a href={url("/toolbox")} class="tl-switch-card link">
           <span>🏠</span>
           <strong>All Toolbox</strong>
           <span class="tl-switch-arrow">Back to hub →</span>
@@ -128,7 +129,7 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
         <p class="tl-other-label">More khizology →</p>
         <div class="tl-other-links">
           {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
-            <a href={m.route} class="tl-other-link" style={`--mc: ${m.color}`}>
+            <a href={url(m.route)} class="tl-other-link" style={`--mc: ${m.color}`}>
               <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
               <span>{m.module}</span>
             </a>

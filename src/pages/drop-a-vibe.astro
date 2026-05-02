@@ -1,23 +1,35 @@
 ---
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import { url, img } from '../utils/url';
 
 const vibeModes = [
-  { emoji: '💬', label: 'General Feedback', desc: 'Thoughts on khizology, ideas, suggestions' },
-  { emoji: '🤝', label: 'Collaboration', desc: 'Art commissions, creative partnerships' },
-  { emoji: '🐛', label: 'Bug Report', desc: 'Something broken? Let me know' },
-  { emoji: '💡', label: 'Feature Idea', desc: 'A tool or monster you\'d like to see' },
-  { emoji: '👋', label: 'Just Saying Hi', desc: 'No agenda, just good vibes' },
+  { label: 'General Feedback', desc: 'Thoughts on khizology, ideas, suggestions' },
+  { label: 'Collaboration', desc: 'Art commissions, creative partnerships' },
+  { label: 'Bug Report', desc: 'Something broken? Let me know' },
+  { label: 'Feature Idea', desc: 'A tool or monster you\'d like to see' },
+  { label: 'Just Saying Hi', desc: 'No agenda, just good vibes' },
+];
+
+const socialLinks = [
+  { label: 'Instagram', handle: '@khizooo_art', href: 'https://www.instagram.com/khizooo_art' },
+  { label: 'X / Twitter', handle: '@khizaroo', href: 'https://twitter.com/khizaroo' },
+  { label: 'GitHub', handle: 'KhizaroOo', href: 'https://github.com/KhizaroOo' },
+  { label: 'LinkedIn', handle: 'khizar-imtiaz', href: 'https://www.linkedin.com/in/khizar-imtiaz' },
+  { label: 'WhatsApp', handle: '+92 300 7683396', href: 'https://wa.me/923007683396' },
+  { label: 'Telegram', handle: '@KhizarImtiaz', href: 'https://t.me/KhizarImtiaz' },
+  { label: 'TikTok', handle: '@khizooo_butt', href: 'https://www.tiktok.com/@khizooo_butt' },
+  { label: 'Discord', handle: 'khizooo', href: 'https://discordapp.com/users/567964089989726231' },
 ];
 ---
 
 <BaseLayout
   title="Drop a Vibe"
   description="Drop a message, idea, feedback, or collaboration request to khizooo. Every vibe is welcome."
-  accentColor="#5CCFAF"
+  accentColor="var(--k-accent)"
 >
   <div class="k-container" style="padding-top: 2rem;">
-    <Breadcrumb crumbs={[{ label: 'Drop a Vibe' }]} accentColor="#5CCFAF" />
+    <Breadcrumb crumbs={[{ label: 'Drop a Vibe' }]} accentColor="var(--k-accent)" />
   </div>
 
   <section class="k-section dav-section">
@@ -25,7 +37,7 @@ const vibeModes = [
 
       <!-- Left: Form -->
       <div class="dav-form-side">
-        <span class="k-section-label" style="color: #5CCFAF">Drop a Vibe</span>
+        <span class="k-section-label" style="color: var(--k-accent)">Drop a Vibe</span>
         <h1 class="dav-title">Say Hello.</h1>
         <p class="dav-lead">
           Whether it's feedback, a collab idea, a bug, or just a good-vibe message —
@@ -38,7 +50,6 @@ const vibeModes = [
             <label class="vibe-type-label">
               <input type="radio" name="vibetype" value={v.label} class="vibe-radio" checked={i === 0} />
               <span class="vibe-type-card">
-                <span class="vt-emoji">{v.emoji}</span>
                 <span class="vt-label">{v.label}</span>
               </span>
             </label>
@@ -66,9 +77,9 @@ const vibeModes = [
             <textarea id="message" name="message" rows="5" placeholder="Type your message here... no formality required." required></textarea>
           </div>
           <div class="form-footer">
-            <span class="form-note">📬 No backend yet — form integration coming soon. For now, social links work too.</span>
+            <span class="form-note">No backend yet — form integration coming soon. For now, social links work too.</span>
             <button type="submit" class="dav-submit" disabled>
-              Drop it 🚀
+              Drop it →
               <span class="submit-badge">Coming Soon</span>
             </button>
           </div>
@@ -78,44 +89,34 @@ const vibeModes = [
       <!-- Right: Sidebar -->
       <div class="dav-sidebar">
         <div class="dav-monster-card">
-          <img src="/images/Monsters/infooo.png" alt="infooo" width="80" height="80" />
+          <img src={img('/images/Monsters/infooo.png')} alt="infooo" width="80" height="80" />
           <p>"Every conversation starts with a small vibe. Don't hold back."</p>
         </div>
 
         <div class="dav-connect">
           <h3>Other Ways to Connect</h3>
           <ul class="connect-list">
-            <li>
-              <span class="connect-icon">🐙</span>
-              <div>
-                <strong>GitHub</strong>
-                <a href="https://github.com/khizarooo" target="_blank" rel="noopener">@khizarooo</a>
-              </div>
-            </li>
-            <li>
-              <span class="connect-icon">📸</span>
-              <div>
-                <strong>Instagram</strong>
-                <span class="coming-link">Coming soon</span>
-              </div>
-            </li>
-            <li>
-              <span class="connect-icon">🐦</span>
-              <div>
-                <strong>Twitter / X</strong>
-                <span class="coming-link">Coming soon</span>
-              </div>
-            </li>
+            {socialLinks.map(s => (
+              <li>
+                <div class="connect-icon-box">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </div>
+                <div>
+                  <strong>{s.label}</strong>
+                  <a href={s.href} target="_blank" rel="noopener">{s.handle}</a>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div class="dav-promise">
           <h3>The Promise</h3>
           <ul class="promise-list">
-            <li>✓ Every message gets read</li>
-            <li>✓ No spam, ever</li>
-            <li>✓ Genuine replies only</li>
-            <li>✓ Good vibes only</li>
+            <li>Every message gets read</li>
+            <li>No spam, ever</li>
+            <li>Genuine replies only</li>
+            <li>Good vibes only</li>
           </ul>
         </div>
       </div>
@@ -154,9 +155,8 @@ const vibeModes = [
     font-size: 0.8rem; font-weight: 600; color: var(--k-text-muted);
   }
   .vibe-radio:checked + .vibe-type-card {
-    background: #5CCFAF; border-color: #5CCFAF; color: #2A3439; font-weight: 700;
+    background: var(--k-accent); border-color: var(--k-accent); color: #fff; font-weight: 700;
   }
-  .vt-emoji { font-size: 0.9rem; }
 
   /* Form */
   .dav-form { display: flex; flex-direction: column; gap: 1rem; }
@@ -179,7 +179,7 @@ const vibeModes = [
   }
   .form-group input:focus,
   .form-group textarea:focus {
-    border-color: #5CCFAF;
+    border-color: var(--k-accent);
   }
   .form-group input::placeholder,
   .form-group textarea::placeholder { color: var(--k-text-muted); }
@@ -202,7 +202,7 @@ const vibeModes = [
   }
   .submit-badge {
     display: inline-flex; padding: 0.15rem 0.5rem;
-    background: #5CCFAF; color: var(--k-dark);
+    background: var(--k-accent); color: #fff;
     border-radius: 999px; font-size: 0.65rem; font-weight: 700;
     font-family: 'Poppins', sans-serif; text-transform: uppercase;
   }
@@ -215,7 +215,7 @@ const vibeModes = [
 
   .dav-monster-card {
     background: var(--k-bg-card); border: 1px solid var(--k-border);
-    border-left: 4px solid #5CCFAF;
+    border-left: 4px solid var(--k-accent);
     border-radius: 0 1rem 1rem 0;
     padding: 1.25rem; display: flex; align-items: center; gap: 1rem;
   }
@@ -233,20 +233,31 @@ const vibeModes = [
     color: var(--k-text-muted); margin: 0 0 0.875rem;
   }
 
-  .connect-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.875rem; }
+  .connect-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
   .connect-list li { display: flex; align-items: center; gap: 0.75rem; }
-  .connect-icon { font-size: 1.25rem; flex-shrink: 0; }
+  .connect-icon-box {
+    width: 1.875rem; height: 1.875rem; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--k-border); border-radius: 0.5rem;
+    color: var(--k-text-muted);
+  }
   .connect-list div { display: flex; flex-direction: column; gap: 0.1rem; }
-  .connect-list strong { font-size: 0.8rem; color: var(--k-text); }
-  .connect-list a { font-size: 0.8rem; color: #5CCFAF; text-decoration: none; }
+  .connect-list strong { font-size: 0.75rem; color: var(--k-text); font-family: 'Poppins', sans-serif; font-weight: 700; }
+  .connect-list a { font-size: 0.75rem; color: var(--k-accent); text-decoration: none; }
   .connect-list a:hover { text-decoration: underline; }
-  .coming-link { font-size: 0.75rem; color: var(--k-text-muted); font-style: italic; }
 
   .promise-list {
     list-style: none; margin: 0; padding: 0;
-    display: flex; flex-direction: column; gap: 0.5rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
   }
-  .promise-list li { font-size: 0.85rem; color: var(--k-text-muted); }
+  .promise-list li {
+    font-size: 0.85rem; color: var(--k-text-muted);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .promise-list li::before {
+    content: '✓'; color: var(--k-accent); font-weight: 700; font-size: 0.75rem;
+    flex-shrink: 0;
+  }
 
   @media (max-width: 900px) {
     .dav-inner { grid-template-columns: 1fr; }

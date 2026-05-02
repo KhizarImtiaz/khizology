@@ -10,5 +10,5 @@ export const SITE = {
   subTagline: 'A monster-powered creative knowledge universe.',
   ogImage: '/images/site/khizooo.png',
   twitterCard: 'summary_large_image' as const,
-  themeColor: '#F5CF5C',
+  themeColor: '#f82d48',
 };

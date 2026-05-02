@@ -3,16 +3,19 @@ import BaseLayout from '../../../components/layout/BaseLayout.astro';
 import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
 import { calculatorCategories, calculatorItemsMap } from '../../../data/calculators';
 import { monsters } from '../../../data/monsters';
+import { url } from '../../../utils/url';
+import ProfitMarginCalc from '../../../components/calculators/ProfitMarginCalc';
+import WebsiteCostCalc from '../../../components/calculators/WebsiteCostCalc';
+import PercentageCalc from '../../../components/calculators/PercentageCalc';
+import AgeCalc from '../../../components/calculators/AgeCalc';
 
-// Build slug → category mapping
-// Route pattern: /toolbox/calculators/[slug]
-// Slug formats: finance-calculator, everyday-life-calculator, developer-tools, color-tools, automotive-calculator, etc.
-const slugMap: Record<string, string> = {
+// Category slug map
+const CATEGORY_SLUG_MAP: Record<string, string> = {
   'finance-calculator':          'finance',
   'math-calculator':             'math',
   'everyday-life-calculator':    'everyday-life',
-  'biology-calculator':          'biology',
-  'chemistry-calculator':        'chemistry',
+  'biology-calculator':          'physics',
+  'chemistry-calculator':        'physics',
   'physics-calculator':          'physics',
   'developer-tools':             'developer-tools',
   'color-tools':                 'color',
@@ -22,21 +25,24 @@ const slugMap: Record<string, string> = {
   'food-calculator':             'food',
   'sports-calculator':           'sports',
   'text-calculator':             'text',
-  'fun-calculator':              'fun',
+  'fun-calculator':              'everyday-life',
   'time-date-calculator':        'time-date',
   'photography-calculator':      'photography',
-  'crafting-calculator':         'crafting',
+  'crafting-calculator':         'construction',
   'automotive-calculator':       'automotive',
   'travel-calculator':           'travel',
 };
 
+// Functional MVP calculators
+const MVP_CALC_SLUGS = ['profit-margin-calculator', 'website-cost-calculator', 'percentage-calculator', 'age-calculator'];
+
 export async function getStaticPaths() {
-  const slugMap: Record<string, string> = {
+  const CATEGORY_SLUG_MAP: Record<string, string> = {
     'finance-calculator':          'finance',
     'math-calculator':             'math',
     'everyday-life-calculator':    'everyday-life',
-    'biology-calculator':          'biology',
-    'chemistry-calculator':        'chemistry',
+    'biology-calculator':          'physics',
+    'chemistry-calculator':        'physics',
     'physics-calculator':          'physics',
     'developer-tools':             'developer-tools',
     'color-tools':                 'color',
@@ -46,287 +52,463 @@ export async function getStaticPaths() {
     'food-calculator':             'food',
     'sports-calculator':           'sports',
     'text-calculator':             'text',
-    'fun-calculator':              'fun',
+    'fun-calculator':              'everyday-life',
     'time-date-calculator':        'time-date',
     'photography-calculator':      'photography',
-    'crafting-calculator':         'crafting',
+    'crafting-calculator':         'construction',
     'automotive-calculator':       'automotive',
     'travel-calculator':           'travel',
   };
 
-  return Object.entries(slugMap).map(([routeSlug, categorySlug]) => ({
+  // Category listing routes
+  const categoryRoutes = Object.entries(CATEGORY_SLUG_MAP).map(([routeSlug, categorySlug]) => ({
     params: { slug: routeSlug },
-    props: { routeSlug, categorySlug },
+    props: { type: 'category' as const, routeSlug, categorySlug, calc: null },
   }));
+
+  // Individual calculator routes (from all items in the map)
+  const allItems = Object.values(calculatorItemsMap).flat();
+  const calcRoutes = allItems.map(item => ({
+    params: { slug: item.slug },
+    props: { type: 'calculator' as const, routeSlug: item.slug, categorySlug: item.category, calc: item },
+  }));
+
+  return [...categoryRoutes, ...calcRoutes];
 }
 
-const { routeSlug, categorySlug } = Astro.props;
+const { type, routeSlug, categorySlug, calc } = Astro.props;
 
 const ACCENT = '#F7933C';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const category = calculatorCategories.find(c => c.slug === categorySlug)!;
 const items = calculatorItemsMap[categorySlug] ?? [];
+const relatedCats = calculatorCategories.filter(c => c.slug !== categorySlug).slice(0, 8);
 
-// Related categories (same kind, excluding current)
-const relatedCats = calculatorCategories
-  .filter(c => c.slug !== categorySlug)
-  .slice(0, 8);
+// For individual calc pages: related calcs from same category
+const relatedCalcs = type === 'calculator'
+  ? (calculatorItemsMap[categorySlug] ?? []).filter(c => c.slug !== (calc?.slug ?? '')).slice(0, 4)
+  : [];
+
+const isMVP = type === 'calculator' && MVP_CALC_SLUGS.includes(calc?.slug ?? '');
+
+// FAQ data per calc
+const calcFaqs: Record<string, {q:string;a:string}[]> = {
+  'profit-margin-calculator': [
+    { q: 'What is profit margin?', a: 'Profit margin is the percentage of revenue that becomes profit after all costs are deducted. It measures how efficiently a business converts sales into profit.' },
+    { q: 'What is a good profit margin?', a: 'It varies by industry. Retail averages 2-5%, SaaS can be 60-80%, service businesses 15-40%. Generally, above 20% is considered healthy for most businesses.' },
+    { q: 'What is markup vs margin?', a: 'Markup is calculated on cost (profit ÷ cost × 100), while margin is calculated on revenue (profit ÷ revenue × 100). They measure different things but are related.' },
+    { q: 'Is this calculator free?', a: 'Yes — 100% free with no signup required.' },
+  ],
+  'website-cost-calculator': [
+    { q: 'How accurate are these estimates?', a: 'These are indicative ranges based on industry averages. Actual costs vary by location, agency experience, and specific requirements. Use as a starting benchmark.' },
+    { q: 'Does the estimate include hosting?', a: 'The estimate focuses on build costs. Hosting typically adds $5-100/month depending on your platform, not included in the one-time build estimate.' },
+    { q: 'Should I hire a freelancer or agency?', a: 'Freelancers are often 30-50% cheaper than agencies. Agencies offer more oversight and team support. For complex projects, agencies reduce risk.' },
+    { q: 'How do I reduce website costs?', a: 'Use templates over custom design, start with fewer pages, choose CMS platforms like WordPress or Webflow, and phase features over time.' },
+  ],
+  'percentage-calculator': [
+    { q: 'How do you calculate percentage?', a: 'Divide the part by the whole and multiply by 100. For example, 30 out of 200 = (30/200) × 100 = 15%.' },
+    { q: 'What is a percentage increase formula?', a: 'Percentage increase = ((new value - old value) / old value) × 100. If sales went from 100 to 120, that\'s a 20% increase.' },
+    { q: 'How do I find what percent one number is of another?', a: 'Divide the first number by the second and multiply by 100. E.g., 25 is what % of 80? (25/80) × 100 = 31.25%.' },
+    { q: 'Can I use this for discounts?', a: 'Yes! Use "What is X% of Y?" to find discount amounts, or "Decrease by X%" to find final prices after discounts.' },
+  ],
+  'age-calculator': [
+    { q: 'How accurate is the age calculation?', a: 'Very accurate — it accounts for leap years and varying month lengths for precise years, months, and days.' },
+    { q: 'Can I calculate age at a specific date?', a: 'Yes! The optional "Target Date" field lets you calculate age at any past or future date, not just today.' },
+    { q: 'How are total days calculated?', a: 'We count the actual number of days between your birth date and the target date, accounting for all calendar variations.' },
+    { q: 'Is my date of birth stored anywhere?', a: 'No. All calculations are done locally in your browser. Nothing is stored or transmitted.' },
+  ],
+};
+
+const genericFaqs = [
+  { q: 'Is this calculator free?', a: 'Yes — all toolooo calculators are 100% free, forever. No signup, no ads, no paywalls.' },
+  { q: 'When will this calculator be available?', a: 'We\'re actively building calculators for all categories. Follow @khizooo for launch announcements.' },
+  { q: 'Are calculations private?', a: 'All calculations happen in your browser. Nothing is sent to any server.' },
+];
 ---
 
 <BaseLayout
-  title={`${category.title} Calculators — Free Online Tools by toolooo`}
-  description={`Free ${category.title.toLowerCase()} calculators. ${category.description} Fast, accurate, no ads.`}
+  title={type === 'category'
+    ? `${category?.title} Calculators — Free Online by toolooo`
+    : `${calc?.name} — Free Online Calculator by toolooo`}
+  description={type === 'category'
+    ? `Free ${category?.title?.toLowerCase()} calculators. ${category?.description}`
+    : `Free online ${calc?.name}. ${calc?.description} No signup required.`}
   accentColor={ACCENT}
 >
-  <!-- Hero -->
-  <section class="cc-hero">
-    <div class="k-container">
-      <Breadcrumb
-        crumbs={[
-          { label: 'Toolbox', href: '/toolbox' },
-          { label: 'Calculators', href: '/toolbox/calculators' },
-          { label: category.title },
-        ]}
-        accentColor={ACCENT}
-      />
-      <div class="cc-hero-inner">
-        <div class="cc-hero-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent)`}>
-          <span>{category.icon}</span>
-        </div>
-        <div class="cc-hero-text">
-          <span class="k-section-label" style={`color: ${ACCENT}`}>toolooo · Calculators</span>
-          <h1 class="cc-hero-title">{category.title} Calculators</h1>
-          <p class="cc-hero-desc">{category.description}</p>
-          <div class="cc-hero-meta">
-            <span class="cc-meta-chip" style={`color: ${category.color}`}>{category.count} calculators</span>
-            <span class="cc-meta-sep">·</span>
-            <span class="cc-meta-chip">Free to use</span>
-            <span class="cc-meta-sep">·</span>
-            <span class="cc-meta-chip">No signup</span>
+
+{type === 'category' && category ? (
+  <>
+    <!-- CATEGORY LISTING PAGE -->
+    <section class="cc-hero">
+      <div class="k-container">
+        <Breadcrumb
+          crumbs={[{ label: 'Toolbox', href: '/toolbox' }, { label: 'Calculators', href: '/toolbox/calculators' }, { label: category.title }]}
+          accentColor={ACCENT}
+        />
+        <div class="cc-hero-inner">
+          <div class="cc-hero-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent)`}>
+            <span>{category.icon}</span>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Calculator Cards -->
-  <section class="k-section cc-calc-section">
-    <div class="k-container">
-      <div class="cc-section-header">
-        <span class="k-section-label" style={`color: ${ACCENT}`}>Available Calculators</span>
-        <h2 class="cc-section-title">{items.length > 0 ? `${items.length} ${category.title} Calculators` : `${category.title} Calculators`}</h2>
-      </div>
-
-      {items.length > 0 ? (
-        <div class="cc-cards-grid">
-          {items.map((calc, i) => (
-            <div class={`cc-calc-card${calc.isMVP ? ' mvp' : ''}`} style={`--cc: ${category.color}; --delay: ${i * 0.06}s`}>
-              <div class="cc-calc-glow"></div>
-              <div class="cc-calc-top">
-                <div class="cc-calc-icon-wrap">
-                  <span class="cc-calc-icon">{calc.icon}</span>
-                </div>
-                <div class="cc-calc-badges">
-                  {calc.isMVP && <span class="cc-badge mvp">MVP</span>}
-                  {calc.isPopular && <span class="cc-badge popular">Popular</span>}
-                  {calc.isNew && <span class="cc-badge new">New</span>}
-                  {!calc.isMVP && <span class="cc-badge soon">Coming Soon</span>}
-                </div>
-              </div>
-              <h3 class="cc-calc-name">{calc.name}</h3>
-              <p class="cc-calc-desc">{calc.description}</p>
-              {calc.live ? (
-                <a href={`/toolbox/calculators/${categorySlug}/${calc.slug}`} class="cc-calc-btn live">Open Calculator →</a>
-              ) : (
-                <div class="cc-calc-footer">
-                  <span class="cc-calc-soon-label">Launching soon</span>
-                </div>
-              )}
+          <div class="cc-hero-text">
+            <span class="k-section-label" style={`color: ${ACCENT}`}>toolooo · Calculators</span>
+            <h1 class="cc-hero-title">{category.title} Calculators</h1>
+            <p class="cc-hero-desc">{category.description}</p>
+            <div class="cc-hero-meta">
+              <span class="cc-meta-chip" style={`color: ${category.color}`}>{category.count}+ calculators</span>
+              <span class="cc-meta-sep">·</span>
+              <span class="cc-meta-chip">Free</span>
+              <span class="cc-meta-sep">·</span>
+              <span class="cc-meta-chip">No signup</span>
             </div>
-          ))}
-        </div>
-      ) : (
-        <!-- Skeleton coming soon state -->
-        <div class="cc-empty-state">
-          <div class="cc-empty-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent); color: ${category.color}`}>
-            {category.icon}
           </div>
-          <h3 class="cc-empty-title">{category.title} Calculators Coming Soon</h3>
-          <p class="cc-empty-desc">
-            We're building {category.count} calculators for this category. Each one will be
-            fast, accurate, and completely free. Check back soon.
-          </p>
-          <!-- Skeleton preview -->
-          <div class="cc-skeleton-grid">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div class="cc-skeleton-card" style={`--delay: ${i * 0.07}s`}>
-                <div class="cc-sk-icon skeleton"></div>
-                <div class="cc-sk-body">
-                  <div class="cc-sk-title skeleton"></div>
-                  <div class="cc-sk-desc skeleton"></div>
-                  <div class="cc-sk-badge skeleton"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="k-section cc-calc-section">
+      <div class="k-container">
+        <div class="cc-section-header">
+          <span class="k-section-label" style={`color: ${ACCENT}`}>Available Calculators</span>
+          <h2 class="cc-section-title">{items.length > 0 ? `${items.length} ${category.title} Calculators` : `${category.title} Calculators`}</h2>
+        </div>
+
+        {items.length > 0 ? (
+          <div class="cc-cards-grid">
+            {items.map((c, i) => (
+              <a href={url(`/toolbox/calculators/${c.slug}`)} class={`cc-calc-card${c.isMVP ? ' mvp' : ''}`} style={`--cc: ${category.color}; --delay: ${i * 0.05}s`}>
+                <div class="cc-calc-top">
+                  <div class="cc-calc-icon-wrap"><span>{c.icon}</span></div>
+                  <div class="cc-calc-badges">
+                    {c.isMVP && <span class="cc-badge mvp">MVP</span>}
+                    {c.isPopular && <span class="cc-badge popular">Popular</span>}
+                    {c.isNew && <span class="cc-badge new">New</span>}
+                    {!c.isMVP && <span class="cc-badge soon">Soon</span>}
+                  </div>
                 </div>
-              </div>
+                <h3 class="cc-calc-name">{c.name}</h3>
+                <p class="cc-calc-desc">{c.description}</p>
+                <span class="cc-calc-btn">{MVP_CALC_SLUGS.includes(c.slug) ? 'Open Calculator →' : 'Coming Soon'}</span>
+              </a>
             ))}
           </div>
-          <a href="/drop-a-vibe" class="cc-empty-cta">Notify me when ready →</a>
+        ) : (
+          <div class="cc-empty-state">
+            <div class="cc-empty-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent); color: ${category.color}`}>{category.icon}</div>
+            <h3 class="cc-empty-title">{category.title} Calculators Coming Soon</h3>
+            <p class="cc-empty-desc">Building {category.count} calculators for this category. Check back soon.</p>
+            <div class="cc-skeleton-grid">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div class="cc-skeleton-card" style={`--delay: ${i * 0.07}s`}>
+                  <div class="cc-sk-icon skeleton"></div>
+                  <div class="cc-sk-body">
+                    <div class="cc-sk-title skeleton"></div>
+                    <div class="cc-sk-desc skeleton"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="cc-seo-section">
+      <div class="k-container">
+        <div class="cc-seo-inner">
+          <h2 class="cc-seo-title">About {category.title} Calculators</h2>
+          <p class="cc-seo-text">The toolooo {category.title.toLowerCase()} calculator collection includes {category.count}+ free tools designed for fast, accurate answers with no ads or logins.</p>
         </div>
-      )}
-    </div>
-  </section>
-
-  <!-- SEO intro text -->
-  <section class="cc-seo-section">
-    <div class="k-container">
-      <div class="cc-seo-inner">
-        <h2 class="cc-seo-title">About {category.title} Calculators</h2>
-        <p class="cc-seo-text">
-          The toolooo {category.title.toLowerCase()} calculator collection includes {category.count}+ free tools
-          designed to solve real problems quickly. Whether you're a student, professional, or just need a quick
-          answer, these calculators are built to be fast, accurate, and ad-free.
-        </p>
-        <p class="cc-seo-text">
-          All calculators work instantly in your browser — no downloads, no accounts, no ads. Just enter your
-          values and get your answer. Every calculator is mobile-optimized and supports dark mode.
-        </p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Related categories -->
-  <section class="cc-related-section">
-    <div class="k-container">
-      <h2 class="cc-related-title">Other Calculator Categories</h2>
-      <div class="cc-related-grid">
-        {relatedCats.map(c => {
-          const href = `/toolbox/calculators/${c.slug === 'developer-tools' ? 'developer-tools' : c.slug === 'color' ? 'color-tools' : c.slug + '-calculator'}`;
-          return (
-            <a href={href} class="cc-related-card" style={`--rc: ${c.color}`}>
-              <span class="cc-related-icon">{c.icon}</span>
-              <div>
-                <span class="cc-related-name">{c.title}</span>
-                <span class="cc-related-count">{c.count}</span>
-              </div>
-            </a>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-
-  <!-- Other monsters -->
-  <section class="cc-other-section">
-    <div class="k-container">
-      <div class="cc-other-inner">
-        <p class="cc-other-label">More khizology →</p>
-        <div class="cc-other-links">
-          {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
-            <a href={m.route} class="cc-other-link" style={`--mc: ${m.color}`}>
-              <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
-              <span>{m.module}</span>
+    <section class="cc-related-section">
+      <div class="k-container">
+        <h2 class="cc-related-title">Other Calculator Categories</h2>
+        <div class="cc-related-grid">
+          {relatedCats.map(rc => (
+            <a href={url(`/toolbox/calculators/${rc.slug}-calculator`)} class="cc-related-card" style={`--rc: ${rc.color}`}>
+              <span class="cc-related-icon">{rc.icon}</span>
+              <span class="cc-related-name">{rc.title}</span>
+              <span class="cc-related-count">{rc.count}+</span>
             </a>
           ))}
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </>
+) : type === 'calculator' && calc ? (
+  <>
+    <!-- INDIVIDUAL CALCULATOR DETAIL PAGE -->
+    <section class="cd-hero" style={`--cc: ${category?.color ?? ACCENT}`}>
+      <div class="k-container">
+        <Breadcrumb
+          crumbs={[
+            { label: 'Toolbox', href: '/toolbox' },
+            { label: 'Calculators', href: '/toolbox/calculators' },
+            { label: category?.title ?? 'Calculator', href: `/toolbox/calculators/${categorySlug}-calculator` },
+            { label: calc.name },
+          ]}
+          accentColor={ACCENT}
+        />
+        <div class="cd-hero-inner">
+          <div class="cd-hero-icon-wrap">
+            <span class="cd-hero-icon">{calc.icon}</span>
+          </div>
+          <div class="cd-hero-text">
+            <div class="cd-hero-badges">
+              {calc.isMVP && <span class="cd-badge mvp">MVP</span>}
+              {calc.isNew && <span class="cd-badge new">New</span>}
+              {calc.isPopular && <span class="cd-badge popular">Popular</span>}
+              {!isMVP && <span class="cd-badge soon">Coming Soon</span>}
+              {isMVP && <span class="cd-badge live">Live</span>}
+              <span class="cd-badge free">Free</span>
+            </div>
+            <h1 class="cd-hero-title">{calc.name}</h1>
+            <p class="cd-hero-desc">{calc.description}</p>
+            <div class="cd-hero-meta">
+              <span>{category?.icon} {category?.title}</span>
+              <span>·</span>
+              <span>No signup</span>
+              <span>·</span>
+              <span>Instant results</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cd-calc-section k-section">
+      <div class="k-container">
+        <div class="cd-layout">
+          <!-- Main -->
+          <div class="cd-main">
+
+            {isMVP ? (
+              <div class="cd-calc-wrap">
+                {calc.slug === 'profit-margin-calculator' && <ProfitMarginCalc client:load />}
+                {calc.slug === 'website-cost-calculator' && <WebsiteCostCalc client:load />}
+                {calc.slug === 'percentage-calculator' && <PercentageCalc client:load />}
+                {calc.slug === 'age-calculator' && <AgeCalc client:load />}
+              </div>
+            ) : (
+              <div class="cd-coming-soon">
+                <div class="cd-cs-wrap">
+                  <div class="cd-cs-ring" style={`border-color: color-mix(in srgb, ${ACCENT} 40%, transparent)`}>
+                    <span class="cd-cs-icon">{calc.icon}</span>
+                  </div>
+                  <span class="cd-cs-badge">🔨 Under Construction</span>
+                  <h2 class="cd-cs-title">Calculator Coming Soon</h2>
+                  <p class="cd-cs-desc">
+                    We're building the {calc.name}. When it launches, you'll get instant results, formula explanations, and shareable result cards — all free.
+                  </p>
+                  <div class="cd-cs-features">
+                    <div class="cd-cs-feat">✦ Instant calculation</div>
+                    <div class="cd-cs-feat">✦ Formula breakdown</div>
+                    <div class="cd-cs-feat">✦ Copy & share results</div>
+                    <div class="cd-cs-feat">✦ No account needed</div>
+                  </div>
+                  <div class="cd-cs-actions">
+                    <a href={url(`/toolbox/calculators/${categorySlug}-calculator`)} class="cd-cs-btn-primary">← Back to {category?.title}</a>
+                    <a href={url("/toolbox/calculators")} class="cd-cs-btn-secondary">All Calculators</a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <!-- About section -->
+            <div class="cd-about">
+              <h2 class="cd-section-h2">About {calc.name}</h2>
+              <p class="cd-about-text">{calc.description} This calculator provides instant, accurate results right in your browser — no downloads, no accounts, no ads.</p>
+              {isMVP && (
+                <p class="cd-about-text">Simply fill in the required fields above and click calculate. You can copy your results or use the shareable result card to save your work.</p>
+              )}
+            </div>
+
+            <!-- FAQ -->
+            <div class="cd-faq">
+              <h2 class="cd-section-h2">Frequently Asked Questions</h2>
+              <div class="cd-faq-list">
+                {(calcFaqs[calc.slug] ?? genericFaqs).map(faq => (
+                  <details class="cd-faq-item">
+                    <summary class="cd-faq-q">{faq.q}</summary>
+                    <p class="cd-faq-a">{faq.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="cd-sidebar">
+            <div class="cd-sidebar-card">
+              <h3 class="cd-sidebar-h3">Calculator Info</h3>
+              <div class="cd-info-rows">
+                <div class="cd-info-row"><span class="cd-info-label">Category</span><span class="cd-info-val">{category?.title}</span></div>
+                <div class="cd-info-row"><span class="cd-info-label">Type</span><span class="cd-info-val">Calculator</span></div>
+                <div class="cd-info-row"><span class="cd-info-label">Price</span><span class="cd-info-val" style="color:#22c55e;font-weight:700">Free</span></div>
+                <div class="cd-info-row"><span class="cd-info-label">Login</span><span class="cd-info-val">Not required</span></div>
+                <div class="cd-info-row"><span class="cd-info-label">Status</span>
+                  <span class="cd-info-val" style={`color: ${isMVP ? '#22c55e' : ACCENT}; font-weight:700`}>
+                    {isMVP ? 'Live ✓' : 'Coming Soon'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {relatedCalcs.length > 0 && (
+              <div class="cd-sidebar-card">
+                <h3 class="cd-sidebar-h3">Related Calculators</h3>
+                <div class="cd-related-calcs">
+                  {relatedCalcs.map(rc => (
+                    <a href={url(`/toolbox/calculators/${rc.slug}`)} class="cd-rel-item">
+                      <span class="cd-rel-icon">{rc.icon}</span>
+                      <span class="cd-rel-name">{rc.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div class="cd-sidebar-card">
+              <h3 class="cd-sidebar-h3">More khizology</h3>
+              <div class="cd-monsters">
+                {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
+                  <a href={url(m.route)} class="cd-monster-link" style={`--mc: ${m.color}`}>
+                    <img src={`${base}${m.image}`} alt={m.name} width="22" height="22" />
+                    <span>{m.module}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </>
+) : null}
+
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .cc-hero { background: var(--k-bg); padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--k-border); }
-  .cc-hero-inner { display: flex; gap: 1.5rem; align-items: flex-start; margin-top: 1rem; flex-wrap: wrap; }
-  .cc-hero-icon { width: 72px; height: 72px; border-radius: 1.125rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; }
-  .cc-hero-text { flex: 1; min-width: 280px; }
-  .cc-hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 900; color: var(--k-text); margin: .25rem 0 .75rem; line-height: 1.1; }
-  .cc-hero-desc { font-size: .975rem; color: var(--k-text-muted); line-height: 1.7; margin: 0 0 .875rem; max-width: 580px; }
-  .cc-hero-meta { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
-  .cc-meta-chip { font-size: .78rem; font-weight: 600; color: var(--k-text-muted); }
-  .cc-meta-sep { opacity: .4; color: var(--k-text-muted); }
+  /* ── CATEGORY PAGE STYLES ── */
+  .cc-hero { background: var(--k-bg); padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--k-border); }
+  .cc-hero-inner { display: flex; gap: 1.25rem; align-items: center; margin-top: 1rem; flex-wrap: wrap; }
+  .cc-hero-icon { width: 64px; height: 64px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.875rem; flex-shrink: 0; }
+  .cc-hero-text { flex: 1; }
+  .cc-hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 900; color: var(--k-text); line-height: 1.1; margin: .25rem 0 .75rem; }
+  .cc-hero-desc { font-size: .9rem; color: var(--k-text-muted); line-height: 1.6; margin: 0 0 .75rem; }
+  .cc-hero-meta { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .cc-meta-chip { font-size: .78rem; font-weight: 600; }
+  .cc-meta-sep { color: var(--k-text-muted); font-size: .78rem; }
 
-  /* Calc section */
   .cc-calc-section { background: var(--k-bg); }
-  .cc-section-header { margin-bottom: 2rem; }
-  .cc-section-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--k-text); margin: .25rem 0 0; }
+  .cc-section-header { margin-bottom: 1.75rem; }
+  .cc-section-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 800; color: var(--k-text); margin: .25rem 0 0; }
 
-  .cc-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
-  .cc-calc-card {
-    position: relative; background: var(--k-bg-card); border: 1.5px solid var(--k-border);
-    border-radius: 1.25rem; padding: 1.5rem; overflow: hidden;
-    display: flex; flex-direction: column; gap: .625rem;
-    transition: border-color .2s, transform .2s;
-    animation: fadeIn .35s ease both; animation-delay: var(--delay, 0s);
-  }
+  .cc-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+  .cc-calc-card { background: var(--k-bg-card); border: 1.5px solid var(--k-border); border-radius: 1.125rem; padding: 1.25rem; display: flex; flex-direction: column; gap: .5rem; text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; }
   .cc-calc-card:hover, .cc-calc-card.mvp { border-color: var(--cc); }
-  .cc-calc-card:hover { transform: translateY(-3px); }
-  .cc-calc-glow { position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: var(--cc); opacity: .07; filter: blur(20px); pointer-events: none; }
-  .cc-calc-card:hover .cc-calc-glow { opacity: .15; }
+  .cc-calc-card:hover { transform: translateY(-2px); }
   .cc-calc-top { display: flex; align-items: center; justify-content: space-between; }
-  .cc-calc-icon-wrap { width: 48px; height: 48px; border-radius: .875rem; background: color-mix(in srgb, var(--cc) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-  .cc-calc-badges { display: flex; gap: .375rem; flex-wrap: wrap; justify-content: flex-end; }
-
-  /* Badges */
-  .cc-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
+  .cc-calc-icon-wrap { width: 40px; height: 40px; border-radius: .75rem; background: color-mix(in srgb, var(--cc) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+  .cc-calc-badges { display: flex; gap: .3rem; flex-wrap: wrap; justify-content: flex-end; }
+  .cc-badge { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .12rem .45rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
   .cc-badge.mvp { background: color-mix(in srgb, #F7933C 15%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 30%, transparent); }
-  .cc-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
   .cc-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
+  .cc-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
   .cc-badge.soon { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); }
+  .cc-calc-name { font-family: 'Poppins', sans-serif; font-size: .875rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .cc-calc-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
+  .cc-calc-btn { align-self: flex-start; font-size: .75rem; font-weight: 700; color: #F7933C; font-family: 'Poppins', sans-serif; margin-top: .25rem; }
 
-  .cc-calc-name { font-family: 'Poppins', sans-serif; font-size: .975rem; font-weight: 800; color: var(--k-text); margin: 0; }
-  .cc-calc-desc { font-size: .8rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
-  .cc-calc-btn {
-    align-self: flex-start; padding: .45rem .875rem; border-radius: .5rem;
-    font-weight: 700; font-size: .78rem; font-family: 'Poppins', sans-serif; text-decoration: none; transition: opacity .2s;
-  }
-  .cc-calc-btn.live { background: #F7933C; color: #fff; }
-  .cc-calc-btn.live:hover { opacity: .85; }
-  .cc-calc-footer { display: flex; align-items: center; }
-  .cc-calc-soon-label { font-size: .72rem; color: var(--k-text-muted); font-style: italic; }
+  .cc-empty-state { text-align: center; padding: 2rem 0; }
+  .cc-empty-icon { width: 64px; height: 64px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.875rem; margin: 0 auto 1rem; }
+  .cc-empty-title { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--k-text); margin: 0 0 .5rem; }
+  .cc-empty-desc { font-size: .875rem; color: var(--k-text-muted); margin: 0 auto 1.5rem; max-width: 480px; }
+  .cc-skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .875rem; margin-bottom: 1.5rem; }
+  .cc-skeleton-card { display: flex; gap: .75rem; align-items: center; background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: .875rem; padding: .875rem; }
+  .cc-sk-icon { width: 40px; height: 40px; border-radius: .625rem; flex-shrink: 0; }
+  .cc-sk-body { flex: 1; display: flex; flex-direction: column; gap: .375rem; }
+  .cc-sk-title { height: 14px; border-radius: .25rem; width: 70%; }
+  .cc-sk-desc { height: 10px; border-radius: .25rem; width: 90%; }
 
-  /* Empty state */
-  .cc-empty-state { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem 1rem; gap: 1.25rem; }
-  .cc-empty-icon { width: 80px; height: 80px; border-radius: 1.25rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
-  .cc-empty-title { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--k-text); margin: 0; }
-  .cc-empty-desc { font-size: .9rem; color: var(--k-text-muted); line-height: 1.7; max-width: 480px; margin: 0; }
-  .cc-skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; width: 100%; max-width: 900px; }
-  .cc-skeleton-card { background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1.125rem; padding: 1.25rem; display: flex; gap: .875rem; align-items: flex-start; animation: fadeIn .3s ease both; animation-delay: var(--delay, 0s); }
-  .cc-sk-icon { width: 44px; height: 44px; border-radius: .75rem; flex-shrink: 0; }
-  .cc-sk-body { flex: 1; display: flex; flex-direction: column; gap: .5rem; }
-  .cc-sk-title { height: 14px; border-radius: 4px; width: 80%; }
-  .cc-sk-desc { height: 10px; border-radius: 4px; width: 100%; }
-  .cc-sk-badge { height: 18px; border-radius: 999px; width: 80px; }
-  .cc-empty-cta {
-    display: inline-flex; align-items: center; padding: .65rem 1.5rem;
-    background: #F7933C; color: #fff; border-radius: .625rem;
-    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .875rem; text-decoration: none;
-    transition: opacity .2s;
-  }
-  .cc-empty-cta:hover { opacity: .85; }
-
-  /* SEO */
-  .cc-seo-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 3rem 0; }
+  .cc-seo-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
   .cc-seo-inner { max-width: 720px; }
-  .cc-seo-title { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--k-text); margin: 0 0 .875rem; }
-  .cc-seo-text { font-size: .9rem; color: var(--k-text-muted); line-height: 1.7; margin: 0 0 .75rem; }
+  .cc-seo-title { font-family: 'Poppins', sans-serif; font-size: 1.0625rem; font-weight: 800; color: var(--k-text); margin: 0 0 .75rem; }
+  .cc-seo-text { font-size: .875rem; color: var(--k-text-muted); line-height: 1.75; margin: 0 0 .625rem; }
 
-  /* Related */
-  .cc-related-section { background: var(--k-bg); padding: 2.5rem 0; border-top: 1px solid var(--k-border); }
-  .cc-related-title { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 800; color: var(--k-text); margin: 0 0 1.25rem; }
-  .cc-related-grid { display: flex; gap: .625rem; flex-wrap: wrap; }
-  .cc-related-card { display: flex; align-items: center; gap: .625rem; background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: .75rem; padding: .5rem .875rem; text-decoration: none; color: var(--k-text-muted); transition: border-color .2s, color .2s; }
+  .cc-related-section { padding: 2rem 0; background: var(--k-bg); border-top: 1px solid var(--k-border); }
+  .cc-related-title { font-family: 'Poppins', sans-serif; font-size: 1.0625rem; font-weight: 800; color: var(--k-text); margin: 0 0 1.25rem; }
+  .cc-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .75rem; }
+  .cc-related-card { display: flex; flex-direction: column; gap: .25rem; padding: .875rem 1rem; background: var(--k-bg-card); border: 1.5px solid var(--k-border); border-radius: .875rem; text-decoration: none; color: var(--k-text-muted); transition: border-color .2s, color .2s; }
   .cc-related-card:hover { border-color: var(--rc); color: var(--rc); }
-  .cc-related-icon { font-size: 1rem; }
-  .cc-related-name { font-size: .78rem; font-weight: 600; font-family: 'Poppins', sans-serif; display: block; }
-  .cc-related-count { font-size: .65rem; color: var(--k-text-muted); }
+  .cc-related-icon { font-size: 1.375rem; }
+  .cc-related-name { font-weight: 700; font-family: 'Poppins', sans-serif; color: var(--k-text); font-size: .8rem; }
+  .cc-related-count { font-size: .7rem; font-weight: 600; }
 
-  /* Other */
-  .cc-other-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
-  .cc-other-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: space-between; }
-  .cc-other-label { font-size: .8rem; font-weight: 700; color: var(--k-text-muted); }
-  .cc-other-links { display: flex; gap: .625rem; flex-wrap: wrap; }
-  .cc-other-link { display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .625rem; background: var(--k-bg); border: 1px solid var(--k-border); border-radius: .75rem; text-decoration: none; color: var(--k-text-muted); font-size: .7rem; font-weight: 600; min-width: 64px; transition: border-color .2s, color .2s; }
-  .cc-other-link:hover { border-color: var(--mc); color: var(--mc); }
+  /* ── INDIVIDUAL CALC DETAIL PAGE STYLES ── */
+  .cd-hero { background: var(--k-bg); padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--k-border); }
+  .cd-hero-inner { display: flex; gap: 1.25rem; align-items: flex-start; margin-top: 1rem; flex-wrap: wrap; }
+  .cd-hero-icon-wrap { width: 64px; height: 64px; border-radius: 1rem; background: color-mix(in srgb, var(--cc) 15%, transparent); border: 2px solid color-mix(in srgb, var(--cc) 30%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.875rem; flex-shrink: 0; }
+  .cd-hero-icon { line-height: 1; }
+  .cd-hero-text { flex: 1; min-width: 260px; }
+  .cd-hero-badges { display: flex; gap: .375rem; flex-wrap: wrap; margin-bottom: .625rem; }
+  .cd-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
+  .cd-badge.mvp { background: color-mix(in srgb, #F7933C 15%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 30%, transparent); }
+  .cd-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
+  .cd-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
+  .cd-badge.soon { background: var(--k-bg-elevated); color: var(--k-text-muted); border: 1px solid var(--k-border); }
+  .cd-badge.live { background: color-mix(in srgb, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in srgb, #22c55e 30%, transparent); }
+  .cd-badge.free { background: color-mix(in srgb, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in srgb, #22c55e 30%, transparent); }
+  .cd-hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 900; color: var(--k-text); margin: .375rem 0 .75rem; line-height: 1.1; }
+  .cd-hero-desc { font-size: 1rem; color: var(--k-text-muted); line-height: 1.7; max-width: 540px; margin: 0 0 .75rem; }
+  .cd-hero-meta { display: flex; gap: .5rem; font-size: .8rem; color: var(--k-text-muted); flex-wrap: wrap; }
 
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .cd-calc-section { background: var(--k-bg); }
+  .cd-layout { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 900px) { .cd-layout { grid-template-columns: 1fr 280px; } }
+
+  .cd-calc-wrap { margin-bottom: 2rem; }
+  .cd-coming-soon { background: var(--k-bg-card); border: 2px dashed var(--k-border); border-radius: 1.25rem; padding: 3rem 1.5rem; margin-bottom: 2rem; }
+  .cd-cs-wrap { text-align: center; max-width: 460px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: .75rem; }
+  .cd-cs-ring { width: 88px; height: 88px; border-radius: 50%; border: 3px solid; display: flex; align-items: center; justify-content: center; }
+  .cd-cs-icon { font-size: 2.5rem; }
+  .cd-cs-badge { font-size: .72rem; font-weight: 700; padding: .25rem .875rem; border-radius: 999px; background: var(--k-bg-elevated); border: 1px solid var(--k-border); color: var(--k-text-muted); font-family: 'Poppins', sans-serif; }
+  .cd-cs-title { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .cd-cs-desc { font-size: .875rem; color: var(--k-text-muted); line-height: 1.7; max-width: 380px; margin: 0; }
+  .cd-cs-features { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; background: var(--k-bg); border: 1px solid var(--k-border); border-radius: .875rem; padding: .875rem 1rem; width: 100%; }
+  .cd-cs-feat { font-size: .82rem; color: var(--k-text); }
+  .cd-cs-actions { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
+  .cd-cs-btn-primary { background: #F7933C; color: #fff; padding: .6rem 1.25rem; border-radius: .625rem; font-weight: 700; font-size: .875rem; font-family: 'Poppins', sans-serif; text-decoration: none; }
+  .cd-cs-btn-secondary { background: var(--k-bg); color: var(--k-text-muted); padding: .6rem 1.25rem; border-radius: .625rem; font-weight: 700; font-size: .875rem; font-family: 'Poppins', sans-serif; text-decoration: none; border: 1px solid var(--k-border); }
+
+  .cd-about { background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .cd-faq { background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .cd-section-h2 { font-family: 'Poppins', sans-serif; font-size: 1.0625rem; font-weight: 800; color: var(--k-text); margin: 0 0 .875rem; }
+  .cd-about-text { font-size: .9rem; color: var(--k-text-muted); line-height: 1.75; margin: 0 0 .625rem; }
+  .cd-faq-list { display: flex; flex-direction: column; gap: .625rem; }
+  .cd-faq-item { background: var(--k-bg); border: 1px solid var(--k-border); border-radius: .75rem; overflow: hidden; }
+  .cd-faq-q { padding: .875rem 1rem; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .875rem; color: var(--k-text); list-style: none; display: flex; justify-content: space-between; }
+  .cd-faq-q::after { content: '+'; color: var(--k-text-muted); }
+  details[open] .cd-faq-q::after { content: '–'; }
+  .cd-faq-a { padding: 0 1rem .875rem; font-size: .875rem; color: var(--k-text-muted); line-height: 1.7; margin: 0; }
+
+  .cd-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+  .cd-sidebar-card { background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1rem; padding: 1.25rem; }
+  .cd-sidebar-h3 { font-family: 'Poppins', sans-serif; font-size: .875rem; font-weight: 800; color: var(--k-text); margin: 0 0 .75rem; }
+  .cd-info-rows { display: flex; flex-direction: column; gap: .375rem; }
+  .cd-info-row { display: flex; justify-content: space-between; font-size: .825rem; padding: .375rem 0; border-bottom: 1px solid var(--k-border); }
+  .cd-info-row:last-child { border-bottom: none; }
+  .cd-info-label { color: var(--k-text-muted); font-weight: 600; }
+  .cd-info-val { color: var(--k-text); font-weight: 600; font-family: 'Poppins', sans-serif; }
+  .cd-related-calcs { display: flex; flex-direction: column; gap: .5rem; }
+  .cd-rel-item { display: flex; gap: .625rem; align-items: center; padding: .5rem; border-radius: .5rem; text-decoration: none; color: var(--k-text); font-size: .825rem; transition: background .2s; }
+  .cd-rel-item:hover { background: var(--k-bg); }
+  .cd-rel-icon { font-size: 1.125rem; flex-shrink: 0; }
+  .cd-rel-name { font-weight: 600; font-family: 'Poppins', sans-serif; font-size: .8rem; }
+  .cd-monsters { display: flex; flex-direction: column; gap: .375rem; }
+  .cd-monster-link { display: flex; align-items: center; gap: .5rem; padding: .5rem .625rem; border-radius: .625rem; border: 1px solid var(--k-border); text-decoration: none; color: var(--k-text-muted); font-size: .8rem; font-weight: 600; transition: border-color .2s, color .2s; }
+  .cd-monster-link:hover { border-color: var(--mc); color: var(--mc); }
+  .cd-monster-link img { border-radius: .25rem; object-fit: contain; }
 </style>

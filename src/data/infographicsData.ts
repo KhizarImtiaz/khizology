@@ -10,6 +10,7 @@ export interface InfographicPost {
   tags: string[];
   readingTime: string;
   live: boolean;
+  keyPoints?: string[];
 }
 
 export interface InfographicSection {
@@ -35,7 +36,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Market Trend Infographics — khizooo',
     seoDesc: 'Visual breakdowns of market trends and industry movements. Data-backed infographics that make trends instantly clear.',
-    posts: [],
+    posts: [
+      {
+        slug: 'ai-tools-market-growth-2024',
+        title: 'AI Tools Market Growth 2024 — $200B and Counting',
+        summary: 'A visual breakdown of how the AI tools market exploded in 2024, which sectors grew fastest, and where the money is flowing.',
+        category: 'market-trend',
+        tags: ['AI', 'Market Data', 'Tech', '2024'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['AI tools market hit $200B globally', 'Generative AI grew 340% YoY', 'SaaS integrations driving 60% of growth', 'SMBs are the fastest-adopting segment'],
+      },
+      {
+        slug: 'creator-economy-stats-2025',
+        title: 'The Creator Economy by the Numbers — 2025 Edition',
+        summary: 'Visualizing the $480B creator economy — who\'s earning, which platforms pay best, and where the next wave of growth is happening.',
+        category: 'market-trend',
+        tags: ['Creator Economy', 'Social Media', 'Revenue'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['50M+ active creators globally', 'YouTube top earners make $50M+/year', 'Micro-creators (10K-100K) earn more per follower', 'Subscriptions growing faster than ads'],
+      },
+    ],
   },
   {
     slug: 'cost-breakdown',
@@ -46,7 +68,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Cost Breakdown Infographics — khizooo',
     seoDesc: 'Understand where money goes with clear cost breakdown infographics covering pricing, fees, and expenses.',
-    posts: [],
+    posts: [
+      {
+        slug: 'how-much-does-a-website-cost',
+        title: 'How Much Does a Website Actually Cost? (Full Breakdown)',
+        summary: 'From $500 landing pages to $50,000 web apps — a visual guide to what drives website costs and what you\'re really paying for.',
+        category: 'cost-breakdown',
+        tags: ['Website', 'Design', 'Development', 'Pricing'],
+        readingTime: '5 min',
+        live: false,
+        keyPoints: ['Landing page: $500–$2,000', 'Business site: $2,000–$10,000', 'E-commerce: $5,000–$50,000', 'Hosting + maintenance adds 20-30% annually'],
+      },
+      {
+        slug: 'amazon-seller-fees-breakdown',
+        title: 'Amazon Seller Fee Breakdown — What You Actually Keep',
+        summary: 'Visually understand every fee Amazon charges and what percentage of your selling price you actually pocket.',
+        category: 'cost-breakdown',
+        tags: ['Amazon', 'E-commerce', 'Fees', 'Profit'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Referral fees: 8–15% per sale', 'FBA fees eat 20–35% of revenue', 'Average seller keeps 50–60 cents per $1', 'PPC ads add another 10–20% cost'],
+      },
+    ],
   },
   {
     slug: 'decision-trees',
@@ -57,7 +100,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Decision Tree Infographics — khizooo',
     seoDesc: 'Flowcharts and visual decision trees to help you make better decisions faster.',
-    posts: [],
+    posts: [
+      {
+        slug: 'should-you-quit-your-job-decision-tree',
+        title: 'Should You Quit Your Job? (Decision Tree)',
+        summary: 'A step-by-step visual decision tree to help you decide whether to leave your job, switch careers, or stay and grow.',
+        category: 'decision-trees',
+        tags: ['Career', 'Decision Making', 'Life'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['Financial runway check', 'Skills transferability', 'Opportunity cost calculation', 'Timing and market factors'],
+      },
+      {
+        slug: 'which-programming-language-should-i-learn',
+        title: 'Which Programming Language Should You Learn First?',
+        summary: 'A visual decision tree to match your goals — web, mobile, AI, data, games — to the right first language.',
+        category: 'decision-trees',
+        tags: ['Coding', 'Beginners', 'Tech', 'Career'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['Web dev → JavaScript/Python', 'AI/Data → Python', 'Mobile → Swift or Kotlin', 'Games → C# or C++'],
+      },
+    ],
   },
   {
     slug: 'comparison',
@@ -68,7 +132,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Comparison Infographics — khizooo',
     seoDesc: 'Visual comparisons of tools, frameworks, ideas, and choices. Decide faster with side-by-side breakdowns.',
-    posts: [],
+    posts: [
+      {
+        slug: 'freelance-vs-full-time-comparison',
+        title: 'Freelance vs Full-Time Employment — Complete Comparison',
+        summary: 'Side-by-side visual breakdown of income, freedom, stability, benefits, and taxes for freelancers vs employees.',
+        category: 'comparison',
+        tags: ['Freelance', 'Career', 'Finance', 'Lifestyle'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Freelance income can be 2-3x higher', 'Full-time offers benefits worth $15K+/year', 'Taxes eat 30-40% of freelance income', 'Freedom vs stability trade-off'],
+      },
+      {
+        slug: 'react-vs-vue-vs-svelte',
+        title: 'React vs Vue vs Svelte — Which Framework in 2025?',
+        summary: 'A visual head-to-head of the three dominant frontend frameworks across performance, learning curve, ecosystem, and job market.',
+        category: 'comparison',
+        tags: ['React', 'Vue', 'Svelte', 'Frontend'],
+        readingTime: '5 min',
+        live: false,
+        keyPoints: ['React: largest ecosystem, most jobs', 'Vue: gentlest learning curve', 'Svelte: best performance', 'All are production-ready in 2025'],
+      },
+    ],
   },
   {
     slug: 'cheat-sheet-framework',
@@ -79,7 +164,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Cheat Sheet Infographics & Frameworks — khizooo',
     seoDesc: 'Quick reference cheat sheets and visual frameworks covering tech, productivity, and more.',
-    posts: [],
+    posts: [
+      {
+        slug: 'css-flexbox-cheat-sheet',
+        title: 'CSS Flexbox Cheat Sheet — Every Property at a Glance',
+        summary: 'The complete visual cheat sheet for CSS Flexbox — every property, every value, with examples you can use right now.',
+        category: 'cheat-sheet-framework',
+        tags: ['CSS', 'Flexbox', 'Web Dev', 'Frontend'],
+        readingTime: '2 min',
+        live: false,
+        keyPoints: ['All container properties', 'All item properties', 'Common layout patterns', 'Centering tricks'],
+      },
+      {
+        slug: 'content-creation-framework',
+        title: 'The 5-Step Content Creation Framework That Works',
+        summary: 'A visual framework for creating content consistently — from idea to publish in a repeatable system.',
+        category: 'cheat-sheet-framework',
+        tags: ['Content', 'Framework', 'Creator', 'Productivity'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['Idea capture system', 'Hook → Value → CTA structure', 'Repurposing matrix', 'Batch creation method'],
+      },
+    ],
   },
   {
     slug: 'data-stats',
@@ -90,7 +196,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Data & Stats Infographics — khizooo',
     seoDesc: 'Research-backed data and statistics visualized for clarity. Turn raw numbers into insights.',
-    posts: [],
+    posts: [
+      {
+        slug: 'attention-span-social-media-stats',
+        title: 'Human Attention Span in the Social Media Age — The Data',
+        summary: 'Visual stats on how social media has changed human attention spans, what captures focus, and what the research actually says.',
+        category: 'data-stats',
+        tags: ['Psychology', 'Social Media', 'Research', 'Stats'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['Average attention span: 8 seconds', '65% of users scroll past content in <1 second', 'Video retains attention 3x better', 'Curiosity gaps increase read-through by 200%'],
+      },
+      {
+        slug: 'remote-work-productivity-stats-2024',
+        title: 'Remote Work Productivity — What the Data Actually Shows',
+        summary: 'The real stats on remote work productivity, happiness, burnout, and what companies are actually seeing in 2024.',
+        category: 'data-stats',
+        tags: ['Remote Work', 'Productivity', 'Research', 'Work'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Remote workers are 13% more productive (Stanford)', '74% prefer hybrid work', 'Meeting time reduced by 25% remote', 'Burnout risk higher without clear boundaries'],
+      },
+    ],
   },
   {
     slug: 'step-by-step-process',
@@ -101,7 +228,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Step-by-Step Process Infographics — khizooo',
     seoDesc: 'Visual step-by-step guides and process breakdowns for learning and doing.',
-    posts: [],
+    posts: [
+      {
+        slug: 'how-to-start-a-side-hustle-step-by-step',
+        title: 'How to Start a Side Hustle in 30 Days (Step-by-Step)',
+        summary: 'A visual 30-day roadmap to launch your first side hustle — from idea validation to first sale.',
+        category: 'step-by-step-process',
+        tags: ['Side Hustle', 'Business', 'Beginner', 'Income'],
+        readingTime: '5 min',
+        live: false,
+        keyPoints: ['Week 1: Idea validation', 'Week 2: Setup and positioning', 'Week 3: First outreach', 'Week 4: First sale'],
+      },
+      {
+        slug: 'build-a-landing-page-step-by-step',
+        title: 'How to Build a Landing Page That Converts (Visual Guide)',
+        summary: 'The complete visual process for building high-converting landing pages — structure, copy, design, and launch.',
+        category: 'step-by-step-process',
+        tags: ['Landing Page', 'Conversion', 'Design', 'Marketing'],
+        readingTime: '5 min',
+        live: false,
+        keyPoints: ['Above fold must answer 3 Qs in 5s', 'Social proof doubles conversions', 'Single CTA rule', 'Mobile-first approach'],
+      },
+    ],
   },
   {
     slug: 'mistakes-fixes',
@@ -112,7 +260,28 @@ export const infographicTypes: InfographicSection[] = [
     kind: 'type',
     seoTitle: 'Mistakes & Fixes Infographics — khizooo',
     seoDesc: 'Common mistakes and their fixes visualized. Learn from errors faster.',
-    posts: [],
+    posts: [
+      {
+        slug: '7-instagram-bio-mistakes-killing-your-growth',
+        title: '7 Instagram Bio Mistakes Killing Your Growth (And Fixes)',
+        summary: 'The most common Instagram bio mistakes content creators make — visualized with the exact fixes that drive follower growth.',
+        category: 'mistakes-fixes',
+        tags: ['Instagram', 'Social Media', 'Growth', 'Creator'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['No clear niche statement', 'Weak or missing CTA', 'Zero social proof', 'Too formal or too casual for audience', 'Not updating after pivots'],
+      },
+      {
+        slug: 'css-mistakes-every-beginner-makes',
+        title: '8 CSS Mistakes Every Beginner Makes (With Clean Fixes)',
+        summary: 'A visual guide to the CSS errors that haunt every beginner — overusing !important, ignoring specificity, and more.',
+        category: 'mistakes-fixes',
+        tags: ['CSS', 'Beginners', 'Web Dev', 'Code Quality'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Overusing !important', 'Not using CSS variables', 'Ignoring the cascade', 'Pixel-perfect obsession', 'Forgetting box-sizing'],
+      },
+    ],
   },
 ];
 
@@ -127,7 +296,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Self Improvement Infographics — khizooo',
     seoDesc: 'Visual guides for personal growth, habit building, and mindset shifts. Actionable self-improvement infographics.',
-    posts: [],
+    posts: [
+      {
+        slug: 'atomic-habits-visual-summary',
+        title: 'Atomic Habits — The Visual Summary Every Builder Needs',
+        summary: 'The key frameworks from Atomic Habits — cue-craving-response-reward, the 1% rule, and identity-based habits — visualized.',
+        category: 'self-improvements',
+        tags: ['Habits', 'Books', 'Mindset', 'Productivity'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['1% better daily = 37x better in a year', 'Identity precedes behavior change', '2-minute rule to start any habit', 'Environment design beats willpower'],
+      },
+      {
+        slug: 'morning-routine-habits-high-performers',
+        title: 'Morning Routines of High Performers — What the Data Shows',
+        summary: 'Visual breakdown of common morning habits among top performers — the patterns that drive consistency and output.',
+        category: 'self-improvements',
+        tags: ['Morning Routine', 'Habits', 'Productivity', 'Health'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['80% wake before 6AM', 'Exercise before screens', 'No phone for first 60 minutes', 'Journaling and intention-setting'],
+      },
+    ],
   },
   {
     slug: 'tech-and-coding',
@@ -138,7 +328,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Tech & Coding Infographics — khizooo',
     seoDesc: 'Programming concepts, developer tools, and tech insights visualized. Learn coding faster with visual infographics.',
-    posts: [],
+    posts: [
+      {
+        slug: 'how-the-internet-actually-works',
+        title: 'How the Internet Actually Works — Visual Explainer',
+        summary: 'From your keyboard to a server in Iceland and back in 50ms — a visual breakdown of DNS, HTTP, TCP/IP, and CDNs.',
+        category: 'tech-and-coding',
+        tags: ['Networking', 'DNS', 'HTTP', 'Explainer'],
+        readingTime: '5 min',
+        live: false,
+        keyPoints: ['DNS resolves domains to IPs', 'TCP/IP is the postal system of the internet', 'CDNs serve cached content close to you', 'HTTPS encrypts every request/response'],
+      },
+      {
+        slug: 'rest-api-vs-graphql-visual-guide',
+        title: 'REST API vs GraphQL — Visual Guide for Developers',
+        summary: 'The clearest side-by-side breakdown of REST and GraphQL — when to use each, their trade-offs, and real-world examples.',
+        category: 'tech-and-coding',
+        tags: ['API', 'GraphQL', 'REST', 'Backend'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['REST: simple, cacheable, widely supported', 'GraphQL: flexible queries, single endpoint', 'REST better for public APIs', 'GraphQL shines in complex data graphs'],
+      },
+    ],
   },
   {
     slug: 'career-productivity',
@@ -149,7 +360,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Career & Productivity Infographics — khizooo',
     seoDesc: 'Career growth strategies and productivity systems visualized. Work smarter with actionable infographics.',
-    posts: [],
+    posts: [
+      {
+        slug: 'deep-work-visual-guide',
+        title: 'Deep Work — Cal Newport\'s Framework Visualized',
+        summary: 'The key principles of Deep Work — how to enter flow states, eliminate shallow work, and protect your concentration.',
+        category: 'career-productivity',
+        tags: ['Deep Work', 'Focus', 'Productivity', 'Books'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Deep work = competitive advantage', '4-hour deep work blocks max', 'Shutdown ritual ends the workday', 'Attention residue kills focus switching'],
+      },
+      {
+        slug: 'salary-negotiation-cheat-sheet',
+        title: 'Salary Negotiation Cheat Sheet — Get Paid What You\'re Worth',
+        summary: 'A visual breakdown of salary negotiation strategies — from researching market rates to countering offers.',
+        category: 'career-productivity',
+        tags: ['Salary', 'Negotiation', 'Career', 'Money'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['Never name a number first', 'Research beats guessing (Glassdoor, Levels.fyi)', 'Ask for 15-20% above target', 'Benefits are negotiable too'],
+      },
+    ],
   },
   {
     slug: 'human-psychology',
@@ -160,7 +392,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Human Psychology Infographics — khizooo',
     seoDesc: 'Visual breakdowns of psychology, behavior, decision-making, and the human mind.',
-    posts: [],
+    posts: [
+      {
+        slug: 'cognitive-biases-visual-guide',
+        title: '20 Cognitive Biases That Control Your Decisions',
+        summary: 'A visual guide to the most powerful cognitive biases — how they distort your thinking, and how to counter them.',
+        category: 'human-psychology',
+        tags: ['Cognitive Bias', 'Decision Making', 'Psychology', 'Behavior'],
+        readingTime: '6 min',
+        live: false,
+        keyPoints: ['Confirmation bias: seeking what confirms beliefs', 'Dunning-Kruger: knowing less, feeling more confident', 'Loss aversion: losses hurt 2x more than gains feel good', 'Sunk cost fallacy keeps us in bad situations'],
+      },
+      {
+        slug: 'dopamine-social-media-brain',
+        title: 'How Social Media Hijacks Your Brain (Dopamine Loop)',
+        summary: 'Visual breakdown of how social media platforms are engineered to trigger dopamine responses and keep you scrolling.',
+        category: 'human-psychology',
+        tags: ['Dopamine', 'Social Media', 'Addiction', 'Brain'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Variable reward = most addictive', 'Likes activate same pathways as slot machines', 'Infinite scroll removes natural stopping points', 'Notification badge is a deliberate anxiety trigger'],
+      },
+    ],
   },
   {
     slug: 'finance',
@@ -171,7 +424,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Finance Infographics — khizooo',
     seoDesc: 'Financial concepts, investing basics, and money management tips visualized clearly.',
-    posts: [],
+    posts: [
+      {
+        slug: 'compound-interest-visual-explainer',
+        title: 'Compound Interest — The 8th Wonder of the World (Visual)',
+        summary: 'A visual explainer of compound interest — what it is, how it builds wealth over time, and why starting at 25 vs 35 matters so much.',
+        category: 'finance',
+        tags: ['Investing', 'Compound Interest', 'Wealth', 'Long-term'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['$1,000 at 7% for 40 years = $14,974', 'Starting 10 years earlier = 2× the outcome', 'Rule of 72: divide by rate to get doubling time', 'Consistency beats one-time windfalls'],
+      },
+      {
+        slug: '50-30-20-budget-rule-explained',
+        title: 'The 50/30/20 Budget Rule — Visual Breakdown',
+        summary: 'How to use the 50/30/20 rule to budget for needs, wants, and savings — with real examples at different income levels.',
+        category: 'finance',
+        tags: ['Budgeting', 'Personal Finance', '50/30/20', 'Savings'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['50% needs: rent, bills, food', '30% wants: dining, entertainment', '20% savings/investing/debt', 'Adjust ratios for high cost of living'],
+      },
+    ],
   },
   {
     slug: 'humanity-and-wisdom',
@@ -182,7 +456,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Humanity & Wisdom Infographics — khizooo',
     seoDesc: 'Philosophy, history, and timeless wisdom visualized for modern understanding.',
-    posts: [],
+    posts: [
+      {
+        slug: 'stoicism-for-modern-life-visual-guide',
+        title: 'Stoicism for Modern Life — A Visual Guide',
+        summary: 'The core principles of Stoic philosophy — control vs. no control, negative visualization, memento mori — visualized for everyday life.',
+        category: 'humanity-and-wisdom',
+        tags: ['Stoicism', 'Philosophy', 'Mindset', 'Wisdom'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Control what you can, accept what you cannot', 'Negative visualization: imagine the worst', 'Memento mori: remember death, live fully', 'Virtue is the only true good'],
+      },
+      {
+        slug: 'history-repeats-patterns',
+        title: '5 Historical Patterns That Keep Repeating',
+        summary: 'A visual look at recurring patterns in human history — empires, economic cycles, and social movements that echo through time.',
+        category: 'humanity-and-wisdom',
+        tags: ['History', 'Patterns', 'Society', 'Wisdom'],
+        readingTime: '5 min',
+        live: false,
+        keyPoints: ['Empires follow 250-year cycles', 'Economic bubbles follow identical psychology', 'Populism rises in inequality peaks', 'Technology disrupts social order repeatedly'],
+      },
+    ],
   },
   {
     slug: 'kids-and-learning',
@@ -193,7 +488,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Kids & Learning Infographics — khizooo',
     seoDesc: 'Fun and educational infographics for kids and learners of all ages.',
-    posts: [],
+    posts: [
+      {
+        slug: 'how-plants-make-food-photosynthesis',
+        title: 'How Plants Make Their Own Food — Photosynthesis Explained',
+        summary: 'A fun, visual explainer of photosynthesis for kids — sunlight, water, CO2, and how plants turn them into food and oxygen.',
+        category: 'kids-and-learning',
+        tags: ['Science', 'Biology', 'Plants', 'Kids'],
+        readingTime: '2 min',
+        live: false,
+        keyPoints: ['Sunlight + water + CO2 = glucose + oxygen', 'Chlorophyll makes leaves green', 'Stomata are leaf breathing holes', 'Trees make oxygen for us all'],
+      },
+      {
+        slug: 'multiplication-tricks-visual',
+        title: 'Multiplication Tricks Every Kid Should Know (Visual)',
+        summary: 'Fun visual tricks to make multiplication tables easy — the 9s trick, the butterfly method, and more.',
+        category: 'kids-and-learning',
+        tags: ['Math', 'Kids', 'Learning', 'Tricks'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['9s trick using fingers', 'Even numbers pattern', 'Doubling strategy for 4s and 8s', 'Skip counting for 3s, 6s, 7s'],
+      },
+    ],
   },
   {
     slug: 'art-and-creativity',
@@ -204,7 +520,28 @@ export const infographicTopics: InfographicSection[] = [
     kind: 'topic',
     seoTitle: 'Art & Creativity Infographics — khizooo',
     seoDesc: 'Color theory, design principles, and creative techniques visualized for artists and designers.',
-    posts: [],
+    posts: [
+      {
+        slug: 'color-theory-basics-visual-guide',
+        title: 'Color Theory Basics Every Designer Must Know',
+        summary: 'A visual guide to color theory fundamentals — the color wheel, harmony types, color psychology, and how to build palettes.',
+        category: 'art-and-creativity',
+        tags: ['Color Theory', 'Design', 'Art', 'Fundamentals'],
+        readingTime: '4 min',
+        live: false,
+        keyPoints: ['Primary, secondary, tertiary colors', 'Complementary colors = maximum contrast', 'Analogous palettes = harmony', 'Color temperature affects emotion'],
+      },
+      {
+        slug: 'typography-hierarchy-visual-guide',
+        title: 'Typography Hierarchy — The Visual Rules of Great Type',
+        summary: 'How to use type scale, weight, spacing, and contrast to create clear visual hierarchy in any design.',
+        category: 'art-and-creativity',
+        tags: ['Typography', 'Design', 'Hierarchy', 'Fonts'],
+        readingTime: '3 min',
+        live: false,
+        keyPoints: ['Use max 2-3 fonts per design', 'Scale ratio: 1.25× or 1.618×', 'Weight contrast = instant hierarchy', 'Line height 1.4-1.6× for body text'],
+      },
+    ],
   },
 ];
 
@@ -215,4 +552,10 @@ export const allInfographicSections: InfographicSection[] = [
 
 export function getInfographicSection(slug: string): InfographicSection | undefined {
   return allInfographicSections.find(s => s.slug === slug);
+}
+
+export function getAllInfographicPosts(): { section: InfographicSection; post: InfographicPost }[] {
+  return allInfographicSections.flatMap(section =>
+    section.posts.map(post => ({ section, post }))
+  );
 }

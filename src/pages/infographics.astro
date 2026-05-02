@@ -3,6 +3,7 @@ import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import { infoCategories } from '../data/infographics';
 import { monsters } from '../data/monsters';
+import { url } from '../utils/url';
 
 const ACCENT = '#5CCFAF';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -27,7 +28,7 @@ const infographicTypes = [
   <!-- Hero -->
   <section class="inf-hero">
     <div class="k-container">
-      <Breadcrumb crumbs={[{ label: 'infooo', href: '/infographics' }]} accentColor={ACCENT} />
+      <Breadcrumb crumbs={[{ label: 'infooo', href: url('/infographics') }]} accentColor={ACCENT} />
       <div class="inf-hero-inner">
         <div class="inf-hero-text">
           <div class="inf-hero-badge">
@@ -85,7 +86,7 @@ const infographicTypes = [
               ) : (
                 <span class="inf-cat-soon">Coming soon</span>
               )}
-              <a href={`/infographics/${cat.slug}`} class="inf-cat-link">Explore →</a>
+              <a href={url(`/infographics/${cat.slug}`)} class="inf-cat-link">Explore →</a>
             </div>
           </div>
         ))}
@@ -137,7 +138,7 @@ const infographicTypes = [
             <img src={`${base}/images/Monsters/infooo.png`} alt="infooo" width="80" height="80" />
             <h3>Be first to know</h3>
             <p>Follow along and get notified when new infographics drop.</p>
-            <a href="/drop-a-vibe" class="inf-cta-btn" style={`background: ${ACCENT}`}>Stay in the Loop →</a>
+            <a href={url('/drop-a-vibe')} class="inf-cta-btn" style={`background: ${ACCENT}`}>Stay in the Loop →</a>
           </div>
         </div>
       </div>
@@ -151,7 +152,7 @@ const infographicTypes = [
         <p class="inf-other-label">More khizology monsters →</p>
         <div class="inf-other-links">
           {monsters.filter(m => m.status === 'active' && m.id !== 'infooo').map(m => (
-            <a href={m.route} class="inf-other-link" style={`--mc: ${m.color}`}>
+            <a href={url(m.route)} class="inf-other-link" style={`--mc: ${m.color}`}>
               <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
               <span>{m.module}</span>
             </a>
