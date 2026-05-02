@@ -17,7 +17,22 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(gh pr create --title 'feat: Layer 3 complete — 63 static routes, freebies pages, image path fixes' --body ' *)",
-      "Bash(where gh *)"
+      "Bash(where gh *)",
+      "mcp__pdf-viewer__display_pdf",
+      "mcp__Desktop_Commander__start_process",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const buf=fs.readFileSync\\('D:/khizooo/khizology/claude-web/khizology/khizar-cv.pdf'\\);const str=buf.toString\\('latin1'\\);const matches=str.match\\(/[A-Za-z][A-Za-z0-9 ,.\\\\-@+\\(\\):\\\\/]{8,}/g\\)||[];const useful=[...new Set\\(matches\\)].filter\\(m=>m.trim\\(\\).length>6&&/[a-zA-Z]{3}/.test\\(m\\)\\);console.log\\(useful.slice\\(0,600\\).join\\('\\\\n'\\)\\);\")",
+      "Bash(/toolbox/calculators/\\\\${c.slug})",
+      "Bash(/toolbox/calculators/\\\\${rc.slug}-calculator)",
+      "Bash(/toolbox/calculators/\\\\${categorySlug}-calculator)",
+      "Bash(/toolbox/calculators/\\\\${rc.slug})",
+      "Bash(git checkout *)",
+      "Bash(gh pr *)",
+      "PowerShell(Get-Command gh -ErrorAction SilentlyContinue)",
+      "Bash(curl --version)",
+      "Bash(git remote *)",
+      "Bash(git config *)",
+      "Bash(git fetch *)"
     ]
   }
 }
