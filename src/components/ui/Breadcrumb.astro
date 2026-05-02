@@ -1,0 +1,50 @@
+---
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  crumbs: Crumb[];
+  accentColor?: string;
+}
+const { crumbs, accentColor } = Astro.props;
+---
+
+<nav class="k-breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    {crumbs.map((crumb, i) => (
+      <li>
+        <span aria-hidden="true" class="sep">›</span>
+        {crumb.href && i < crumbs.length - 1
+          ? <a href={crumb.href}>{crumb.label}</a>
+          : <span aria-current="page" style={accentColor ? `color: ${accentColor}` : ''}>{crumb.label}</span>
+        }
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .k-breadcrumb {
+    padding: 0.75rem 0;
+    font-size: 0.8rem;
+    color: var(--k-text-muted);
+  }
+  .k-breadcrumb ol {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .k-breadcrumb a {
+    color: var(--k-text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .k-breadcrumb a:hover { color: var(--k-text); }
+  .sep { color: var(--k-border); margin-inline: 0.25rem; }
+  [aria-current="page"] { font-weight: 600; }
+</style>

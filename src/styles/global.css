@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-k-bg:       #F5F5F8;
+  --color-k-dark:     #2A3439;
+  --color-artooo:     #F5CF5C;
+  --color-infooo:     #5CCFAF;
+  --color-toolooo:    #F7933C;
+  --color-freeooo:    #6CA6FF;
+  --color-future-1:   #B699FF;
+  --color-future-2:   #5DB3D7;
+  --color-future-3:   #DF78A0;
+  --color-future-4:   #93B96A;
+  --color-future-5:   #E38D7C;
+  --font-family-sans:   'Mulish', sans-serif;
+  --font-family-accent: 'Poppins', sans-serif;
+}
+
+/* ──────────────────────────────────────────────
+   DESIGN TOKENS — LIGHT MODE (DEFAULT)
+────────────────────────────────────────────── */
+:root {
+  /* Base */
+  --k-bg:             #F5F5F8;
+  --k-bg-card:        #FFFFFF;
+  --k-bg-elevated:    #FFFFFF;
+  --k-dark:           #2A3439;
+  --k-text:           #2A3439;
+  --k-text-muted:     #6B7280;
+  --k-border:         #E5E7EB;
+  --k-shadow:         rgba(42, 52, 57, 0.08);
+
+  /* Monster colors */
+  --m-artooo:         #F5CF5C;
+  --m-artooo-light:   #FDE68A;
+  --m-infooo:         #5CCFAF;
+  --m-infooo-light:   #A7F3D0;
+  --m-toolooo:        #F7933C;
+  --m-toolooo-light:  #FED7AA;
+  --m-freeooo:        #6CA6FF;
+  --m-freeooo-light:  #BFDBFE;
+  --m-future-1:       #B699FF;
+  --m-future-2:       #5DB3D7;
+  --m-future-3:       #DF78A0;
+  --m-future-4:       #93B96A;
+  --m-future-5:       #E38D7C;
+
+  /* Active monster accent (overridden per-page) */
+  --m-accent:         #2A3439;
+  --m-accent-light:   #E5E7EB;
+}
+
+/* ──────────────────────────────────────────────
+   DARK MODE
+────────────────────────────────────────────── */
+html.dark {
+  --k-bg:             #0F1117;
+  --k-bg-card:        #1A1F2E;
+  --k-bg-elevated:    #242938;
+  --k-dark:           #F5F5F8;
+  --k-text:           #E8EAF0;
+  --k-text-muted:     #9CA3AF;
+  --k-border:         #2D3348;
+  --k-shadow:         rgba(0, 0, 0, 0.4);
+}
+
+/* ──────────────────────────────────────────────
+   BASE RESET & DEFAULTS
+────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--k-bg);
+  color: var(--k-text);
+  font-family: 'Mulish', sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ──────────────────────────────────────────────
+   UTILITY CLASSES
+────────────────────────────────────────────── */
+.k-container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.k-section {
+  padding-block: 5rem;
+}
+
+/* Monster accent badge */
+.monster-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--m-accent);
+  color: var(--k-dark);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Section heading style */
+.k-section-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--m-accent);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Gradient text */
+.k-gradient-text {
+  background: linear-gradient(135deg, var(--m-artooo), var(--m-toolooo));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card base */
+.k-card {
+  background: var(--k-bg-card);
+  border: 1px solid var(--k-border);
+  border-radius: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.k-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px var(--k-shadow);
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--m-artooo);
+  outline-offset: 3px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--k-bg); }
+::-webkit-scrollbar-thumb { background: var(--k-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--k-text-muted); }
+
+/* ──────────────────────────────────────────────
+   SKELETON LOADERS
+────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--k-border) 25%,
+    var(--k-bg-elevated) 50%,
+    var(--k-border) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 0.5rem;
+}
+
+/* ──────────────────────────────────────────────
+   COMING SOON LOCK EFFECT
+────────────────────────────────────────────── */
+.coming-soon-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 17, 23, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+html.dark .coming-soon-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* ──────────────────────────────────────────────
+   PAGE TRANSITION
+────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: fadeIn 0.35s ease forwards;
+}

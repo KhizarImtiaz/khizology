@@ -1,0 +1,332 @@
+---
+import BaseLayout from '../../../components/layout/BaseLayout.astro';
+import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
+import { calculatorCategories, calculatorItemsMap } from '../../../data/calculators';
+import { monsters } from '../../../data/monsters';
+
+// Build slug → category mapping
+// Route pattern: /toolbox/calculators/[slug]
+// Slug formats: finance-calculator, everyday-life-calculator, developer-tools, color-tools, automotive-calculator, etc.
+const slugMap: Record<string, string> = {
+  'finance-calculator':          'finance',
+  'math-calculator':             'math',
+  'everyday-life-calculator':    'everyday-life',
+  'biology-calculator':          'biology',
+  'chemistry-calculator':        'chemistry',
+  'physics-calculator':          'physics',
+  'developer-tools':             'developer-tools',
+  'color-tools':                 'color',
+  'health-calculator':           'health',
+  'construction-calculator':     'construction',
+  'unit-conversion-calculator':  'unit-conversion',
+  'food-calculator':             'food',
+  'sports-calculator':           'sports',
+  'text-calculator':             'text',
+  'fun-calculator':              'fun',
+  'time-date-calculator':        'time-date',
+  'photography-calculator':      'photography',
+  'crafting-calculator':         'crafting',
+  'automotive-calculator':       'automotive',
+  'travel-calculator':           'travel',
+};
+
+export async function getStaticPaths() {
+  const slugMap: Record<string, string> = {
+    'finance-calculator':          'finance',
+    'math-calculator':             'math',
+    'everyday-life-calculator':    'everyday-life',
+    'biology-calculator':          'biology',
+    'chemistry-calculator':        'chemistry',
+    'physics-calculator':          'physics',
+    'developer-tools':             'developer-tools',
+    'color-tools':                 'color',
+    'health-calculator':           'health',
+    'construction-calculator':     'construction',
+    'unit-conversion-calculator':  'unit-conversion',
+    'food-calculator':             'food',
+    'sports-calculator':           'sports',
+    'text-calculator':             'text',
+    'fun-calculator':              'fun',
+    'time-date-calculator':        'time-date',
+    'photography-calculator':      'photography',
+    'crafting-calculator':         'crafting',
+    'automotive-calculator':       'automotive',
+    'travel-calculator':           'travel',
+  };
+
+  return Object.entries(slugMap).map(([routeSlug, categorySlug]) => ({
+    params: { slug: routeSlug },
+    props: { routeSlug, categorySlug },
+  }));
+}
+
+const { routeSlug, categorySlug } = Astro.props;
+
+const ACCENT = '#F7933C';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const category = calculatorCategories.find(c => c.slug === categorySlug)!;
+const items = calculatorItemsMap[categorySlug] ?? [];
+
+// Related categories (same kind, excluding current)
+const relatedCats = calculatorCategories
+  .filter(c => c.slug !== categorySlug)
+  .slice(0, 8);
+---
+
+<BaseLayout
+  title={`${category.title} Calculators — Free Online Tools by toolooo`}
+  description={`Free ${category.title.toLowerCase()} calculators. ${category.description} Fast, accurate, no ads.`}
+  accentColor={ACCENT}
+>
+  <!-- Hero -->
+  <section class="cc-hero">
+    <div class="k-container">
+      <Breadcrumb
+        crumbs={[
+          { label: 'Toolbox', href: '/toolbox' },
+          { label: 'Calculators', href: '/toolbox/calculators' },
+          { label: category.title },
+        ]}
+        accentColor={ACCENT}
+      />
+      <div class="cc-hero-inner">
+        <div class="cc-hero-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent)`}>
+          <span>{category.icon}</span>
+        </div>
+        <div class="cc-hero-text">
+          <span class="k-section-label" style={`color: ${ACCENT}`}>toolooo · Calculators</span>
+          <h1 class="cc-hero-title">{category.title} Calculators</h1>
+          <p class="cc-hero-desc">{category.description}</p>
+          <div class="cc-hero-meta">
+            <span class="cc-meta-chip" style={`color: ${category.color}`}>{category.count} calculators</span>
+            <span class="cc-meta-sep">·</span>
+            <span class="cc-meta-chip">Free to use</span>
+            <span class="cc-meta-sep">·</span>
+            <span class="cc-meta-chip">No signup</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculator Cards -->
+  <section class="k-section cc-calc-section">
+    <div class="k-container">
+      <div class="cc-section-header">
+        <span class="k-section-label" style={`color: ${ACCENT}`}>Available Calculators</span>
+        <h2 class="cc-section-title">{items.length > 0 ? `${items.length} ${category.title} Calculators` : `${category.title} Calculators`}</h2>
+      </div>
+
+      {items.length > 0 ? (
+        <div class="cc-cards-grid">
+          {items.map((calc, i) => (
+            <div class={`cc-calc-card${calc.isMVP ? ' mvp' : ''}`} style={`--cc: ${category.color}; --delay: ${i * 0.06}s`}>
+              <div class="cc-calc-glow"></div>
+              <div class="cc-calc-top">
+                <div class="cc-calc-icon-wrap">
+                  <span class="cc-calc-icon">{calc.icon}</span>
+                </div>
+                <div class="cc-calc-badges">
+                  {calc.isMVP && <span class="cc-badge mvp">MVP</span>}
+                  {calc.isPopular && <span class="cc-badge popular">Popular</span>}
+                  {calc.isNew && <span class="cc-badge new">New</span>}
+                  {!calc.isMVP && <span class="cc-badge soon">Coming Soon</span>}
+                </div>
+              </div>
+              <h3 class="cc-calc-name">{calc.name}</h3>
+              <p class="cc-calc-desc">{calc.description}</p>
+              {calc.live ? (
+                <a href={`/toolbox/calculators/${categorySlug}/${calc.slug}`} class="cc-calc-btn live">Open Calculator →</a>
+              ) : (
+                <div class="cc-calc-footer">
+                  <span class="cc-calc-soon-label">Launching soon</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <!-- Skeleton coming soon state -->
+        <div class="cc-empty-state">
+          <div class="cc-empty-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent); color: ${category.color}`}>
+            {category.icon}
+          </div>
+          <h3 class="cc-empty-title">{category.title} Calculators Coming Soon</h3>
+          <p class="cc-empty-desc">
+            We're building {category.count} calculators for this category. Each one will be
+            fast, accurate, and completely free. Check back soon.
+          </p>
+          <!-- Skeleton preview -->
+          <div class="cc-skeleton-grid">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div class="cc-skeleton-card" style={`--delay: ${i * 0.07}s`}>
+                <div class="cc-sk-icon skeleton"></div>
+                <div class="cc-sk-body">
+                  <div class="cc-sk-title skeleton"></div>
+                  <div class="cc-sk-desc skeleton"></div>
+                  <div class="cc-sk-badge skeleton"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <a href="/drop-a-vibe" class="cc-empty-cta">Notify me when ready →</a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- SEO intro text -->
+  <section class="cc-seo-section">
+    <div class="k-container">
+      <div class="cc-seo-inner">
+        <h2 class="cc-seo-title">About {category.title} Calculators</h2>
+        <p class="cc-seo-text">
+          The toolooo {category.title.toLowerCase()} calculator collection includes {category.count}+ free tools
+          designed to solve real problems quickly. Whether you're a student, professional, or just need a quick
+          answer, these calculators are built to be fast, accurate, and ad-free.
+        </p>
+        <p class="cc-seo-text">
+          All calculators work instantly in your browser — no downloads, no accounts, no ads. Just enter your
+          values and get your answer. Every calculator is mobile-optimized and supports dark mode.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related categories -->
+  <section class="cc-related-section">
+    <div class="k-container">
+      <h2 class="cc-related-title">Other Calculator Categories</h2>
+      <div class="cc-related-grid">
+        {relatedCats.map(c => {
+          const href = `/toolbox/calculators/${c.slug === 'developer-tools' ? 'developer-tools' : c.slug === 'color' ? 'color-tools' : c.slug + '-calculator'}`;
+          return (
+            <a href={href} class="cc-related-card" style={`--rc: ${c.color}`}>
+              <span class="cc-related-icon">{c.icon}</span>
+              <div>
+                <span class="cc-related-name">{c.title}</span>
+                <span class="cc-related-count">{c.count}</span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Other monsters -->
+  <section class="cc-other-section">
+    <div class="k-container">
+      <div class="cc-other-inner">
+        <p class="cc-other-label">More khizology →</p>
+        <div class="cc-other-links">
+          {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
+            <a href={m.route} class="cc-other-link" style={`--mc: ${m.color}`}>
+              <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
+              <span>{m.module}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .cc-hero { background: var(--k-bg); padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--k-border); }
+  .cc-hero-inner { display: flex; gap: 1.5rem; align-items: flex-start; margin-top: 1rem; flex-wrap: wrap; }
+  .cc-hero-icon { width: 72px; height: 72px; border-radius: 1.125rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; }
+  .cc-hero-text { flex: 1; min-width: 280px; }
+  .cc-hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 900; color: var(--k-text); margin: .25rem 0 .75rem; line-height: 1.1; }
+  .cc-hero-desc { font-size: .975rem; color: var(--k-text-muted); line-height: 1.7; margin: 0 0 .875rem; max-width: 580px; }
+  .cc-hero-meta { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .cc-meta-chip { font-size: .78rem; font-weight: 600; color: var(--k-text-muted); }
+  .cc-meta-sep { opacity: .4; color: var(--k-text-muted); }
+
+  /* Calc section */
+  .cc-calc-section { background: var(--k-bg); }
+  .cc-section-header { margin-bottom: 2rem; }
+  .cc-section-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--k-text); margin: .25rem 0 0; }
+
+  .cc-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .cc-calc-card {
+    position: relative; background: var(--k-bg-card); border: 1.5px solid var(--k-border);
+    border-radius: 1.25rem; padding: 1.5rem; overflow: hidden;
+    display: flex; flex-direction: column; gap: .625rem;
+    transition: border-color .2s, transform .2s;
+    animation: fadeIn .35s ease both; animation-delay: var(--delay, 0s);
+  }
+  .cc-calc-card:hover, .cc-calc-card.mvp { border-color: var(--cc); }
+  .cc-calc-card:hover { transform: translateY(-3px); }
+  .cc-calc-glow { position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: var(--cc); opacity: .07; filter: blur(20px); pointer-events: none; }
+  .cc-calc-card:hover .cc-calc-glow { opacity: .15; }
+  .cc-calc-top { display: flex; align-items: center; justify-content: space-between; }
+  .cc-calc-icon-wrap { width: 48px; height: 48px; border-radius: .875rem; background: color-mix(in srgb, var(--cc) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+  .cc-calc-badges { display: flex; gap: .375rem; flex-wrap: wrap; justify-content: flex-end; }
+
+  /* Badges */
+  .cc-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
+  .cc-badge.mvp { background: color-mix(in srgb, #F7933C 15%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 30%, transparent); }
+  .cc-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
+  .cc-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
+  .cc-badge.soon { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); }
+
+  .cc-calc-name { font-family: 'Poppins', sans-serif; font-size: .975rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .cc-calc-desc { font-size: .8rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
+  .cc-calc-btn {
+    align-self: flex-start; padding: .45rem .875rem; border-radius: .5rem;
+    font-weight: 700; font-size: .78rem; font-family: 'Poppins', sans-serif; text-decoration: none; transition: opacity .2s;
+  }
+  .cc-calc-btn.live { background: #F7933C; color: #fff; }
+  .cc-calc-btn.live:hover { opacity: .85; }
+  .cc-calc-footer { display: flex; align-items: center; }
+  .cc-calc-soon-label { font-size: .72rem; color: var(--k-text-muted); font-style: italic; }
+
+  /* Empty state */
+  .cc-empty-state { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem 1rem; gap: 1.25rem; }
+  .cc-empty-icon { width: 80px; height: 80px; border-radius: 1.25rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+  .cc-empty-title { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .cc-empty-desc { font-size: .9rem; color: var(--k-text-muted); line-height: 1.7; max-width: 480px; margin: 0; }
+  .cc-skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; width: 100%; max-width: 900px; }
+  .cc-skeleton-card { background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1.125rem; padding: 1.25rem; display: flex; gap: .875rem; align-items: flex-start; animation: fadeIn .3s ease both; animation-delay: var(--delay, 0s); }
+  .cc-sk-icon { width: 44px; height: 44px; border-radius: .75rem; flex-shrink: 0; }
+  .cc-sk-body { flex: 1; display: flex; flex-direction: column; gap: .5rem; }
+  .cc-sk-title { height: 14px; border-radius: 4px; width: 80%; }
+  .cc-sk-desc { height: 10px; border-radius: 4px; width: 100%; }
+  .cc-sk-badge { height: 18px; border-radius: 999px; width: 80px; }
+  .cc-empty-cta {
+    display: inline-flex; align-items: center; padding: .65rem 1.5rem;
+    background: #F7933C; color: #fff; border-radius: .625rem;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .875rem; text-decoration: none;
+    transition: opacity .2s;
+  }
+  .cc-empty-cta:hover { opacity: .85; }
+
+  /* SEO */
+  .cc-seo-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 3rem 0; }
+  .cc-seo-inner { max-width: 720px; }
+  .cc-seo-title { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--k-text); margin: 0 0 .875rem; }
+  .cc-seo-text { font-size: .9rem; color: var(--k-text-muted); line-height: 1.7; margin: 0 0 .75rem; }
+
+  /* Related */
+  .cc-related-section { background: var(--k-bg); padding: 2.5rem 0; border-top: 1px solid var(--k-border); }
+  .cc-related-title { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 800; color: var(--k-text); margin: 0 0 1.25rem; }
+  .cc-related-grid { display: flex; gap: .625rem; flex-wrap: wrap; }
+  .cc-related-card { display: flex; align-items: center; gap: .625rem; background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: .75rem; padding: .5rem .875rem; text-decoration: none; color: var(--k-text-muted); transition: border-color .2s, color .2s; }
+  .cc-related-card:hover { border-color: var(--rc); color: var(--rc); }
+  .cc-related-icon { font-size: 1rem; }
+  .cc-related-name { font-size: .78rem; font-weight: 600; font-family: 'Poppins', sans-serif; display: block; }
+  .cc-related-count { font-size: .65rem; color: var(--k-text-muted); }
+
+  /* Other */
+  .cc-other-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
+  .cc-other-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: space-between; }
+  .cc-other-label { font-size: .8rem; font-weight: 700; color: var(--k-text-muted); }
+  .cc-other-links { display: flex; gap: .625rem; flex-wrap: wrap; }
+  .cc-other-link { display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .625rem; background: var(--k-bg); border: 1px solid var(--k-border); border-radius: .75rem; text-decoration: none; color: var(--k-text-muted); font-size: .7rem; font-weight: 600; min-width: 64px; transition: border-color .2s, color .2s; }
+  .cc-other-link:hover { border-color: var(--mc); color: var(--mc); }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>

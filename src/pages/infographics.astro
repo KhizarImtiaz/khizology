@@ -1,0 +1,359 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import { infoCategories } from '../data/infographics';
+import { monsters } from '../data/monsters';
+
+const ACCENT = '#5CCFAF';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const infographicTypes = [
+  { slug: 'market-trend',    title: 'Market Trends',     desc: 'Visual breakdowns of industry trends and market movements.', icon: '📈', color: '#5CCFAF' },
+  { slug: 'cost-breakdown',  title: 'Cost Breakdowns',   desc: 'Where money goes — pricing, fees, and expense charts.', icon: '💸', color: '#F5CF5C' },
+  { slug: 'decision-trees',  title: 'Decision Trees',    desc: 'Flowcharts and logic paths for better decisions.', icon: '🌿', color: '#93B96A' },
+  { slug: 'comparison',      title: 'Comparisons',       desc: 'Head-to-head breakdowns of tools, ideas, and choices.', icon: '⚖️', color: '#F7933C' },
+  { slug: 'cheat-sheet',     title: 'Cheat Sheets',      desc: 'Quick reference cards and frameworks you can actually use.', icon: '📋', color: '#B699FF' },
+  { slug: 'data-stats',      title: 'Data & Stats',      desc: 'Numbers, research, and facts made visually digestible.', icon: '📊', color: '#5DB3D7' },
+  { slug: 'step-by-step',    title: 'Step-by-Step',      desc: 'Process guides and how-to formats in visual form.', icon: '📌', color: '#DF78A0' },
+  { slug: 'mistakes-fixes',  title: 'Mistakes & Fixes',  desc: 'Common errors and their solutions — learn faster.', icon: '🔧', color: '#E38D7C' },
+];
+---
+
+<BaseLayout
+  title="infooo — Infographics by khizooo"
+  description="Visual knowledge hub covering tech, psychology, finance, career, and more. Infographics that make complex ideas instantly clear."
+  accentColor={ACCENT}
+>
+  <!-- Hero -->
+  <section class="inf-hero">
+    <div class="k-container">
+      <Breadcrumb crumbs={[{ label: 'infooo', href: '/infographics' }]} accentColor={ACCENT} />
+      <div class="inf-hero-inner">
+        <div class="inf-hero-text">
+          <div class="inf-hero-badge">
+            <img src={`${base}/images/Monsters/infooo.png`} alt="infooo" width="40" height="40" class="inf-hero-monster" />
+            <span class="k-section-label" style={`color: ${ACCENT}`}>infooo · Infographics</span>
+          </div>
+          <h1 class="inf-hero-title">
+            Knowledge,<br />
+            <span class="inf-hero-accent">Visualized.</span>
+          </h1>
+          <p class="inf-hero-lead">
+            Complex ideas simplified into clean, shareable visuals. Tech, psychology,
+            finance, career, and more — all made instantly clear.
+          </p>
+          <div class="inf-coming-badge">
+            <span class="inf-badge-dot"></span>
+            Content publishing soon
+          </div>
+        </div>
+        <div class="inf-hero-visual">
+          <div class="inf-preview-cards">
+            {infoCategories.slice(0, 4).map(c => (
+              <div class="inf-preview-card" style={`--ic: ${c.color}`}>
+                <span class="inf-preview-icon">{c.icon}</span>
+                <span class="inf-preview-title">{c.title}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Learning Categories -->
+  <section class="k-section inf-learn-section">
+    <div class="k-container">
+      <span class="k-section-label" style={`color: ${ACCENT}`}>Learning Topics</span>
+      <h2 class="inf-section-title">8 Knowledge Categories</h2>
+      <p class="inf-section-sub">Each category is a curated collection of infographics on a specific domain of knowledge.</p>
+
+      <div class="inf-cat-grid">
+        {infoCategories.map(cat => (
+          <div class="inf-cat-card" style={`--ic: ${cat.color}`}>
+            <div class="inf-cat-glow"></div>
+            <div class="inf-cat-icon-wrap">
+              <span class="inf-cat-icon">{cat.icon}</span>
+            </div>
+            <div class="inf-cat-body">
+              <h3 class="inf-cat-title">{cat.title}</h3>
+              <p class="inf-cat-desc">{cat.description}</p>
+            </div>
+            <div class="inf-cat-footer">
+              {cat.postCount > 0 ? (
+                <span class="inf-cat-count">{cat.postCount} infographics</span>
+              ) : (
+                <span class="inf-cat-soon">Coming soon</span>
+              )}
+              <a href={`/infographics/${cat.slug}`} class="inf-cat-link">Explore →</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Infographic Types -->
+  <section class="k-section inf-types-section">
+    <div class="k-container">
+      <span class="k-section-label" style={`color: ${ACCENT}`}>Content Formats</span>
+      <h2 class="inf-section-title">8 Infographic Types</h2>
+      <p class="inf-section-sub">Every visual in this library follows a clear format — making it easy to find exactly what you need.</p>
+
+      <div class="inf-types-grid">
+        {infographicTypes.map(t => (
+          <div class="inf-type-card" style={`--tc: ${t.color}`}>
+            <span class="inf-type-icon">{t.icon}</span>
+            <div>
+              <h3 class="inf-type-title">{t.title}</h3>
+              <p class="inf-type-desc">{t.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why infooo -->
+  <section class="inf-why-section">
+    <div class="k-container">
+      <div class="inf-why-inner">
+        <div class="inf-why-text">
+          <span class="k-section-label" style={`color: ${ACCENT}`}>Why infooo?</span>
+          <h2 class="inf-why-title">Reading walls of text is over.</h2>
+          <p class="inf-why-desc">
+            The best ideas deserve to be understood in seconds, not hours.
+            Every infographic here is crafted to deliver real value fast — without the noise.
+          </p>
+          <ul class="inf-why-list">
+            <li>✦ Research-backed, not opinion-driven</li>
+            <li>✦ Shareable — built for social formats</li>
+            <li>✦ New visuals added regularly</li>
+            <li>✦ Covers 8 domains of knowledge</li>
+          </ul>
+        </div>
+        <div class="inf-why-cta-box">
+          <div class="inf-cta-card" style={`--ic: ${ACCENT}`}>
+            <img src={`${base}/images/Monsters/infooo.png`} alt="infooo" width="80" height="80" />
+            <h3>Be first to know</h3>
+            <p>Follow along and get notified when new infographics drop.</p>
+            <a href="/drop-a-vibe" class="inf-cta-btn" style={`background: ${ACCENT}`}>Stay in the Loop →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other monsters -->
+  <section class="inf-other-section">
+    <div class="k-container">
+      <div class="inf-other-inner">
+        <p class="inf-other-label">More khizology monsters →</p>
+        <div class="inf-other-links">
+          {monsters.filter(m => m.status === 'active' && m.id !== 'infooo').map(m => (
+            <a href={m.route} class="inf-other-link" style={`--mc: ${m.color}`}>
+              <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
+              <span>{m.module}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .inf-hero {
+    background: var(--k-bg);
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--k-border);
+  }
+  .inf-hero-inner {
+    display: grid; grid-template-columns: 1fr; gap: 3rem;
+    align-items: center; margin-top: 1rem;
+  }
+  @media (min-width: 900px) {
+    .inf-hero-inner { grid-template-columns: 1fr 1fr; }
+  }
+  .inf-hero-badge { display: flex; align-items: center; gap: .625rem; margin-bottom: .5rem; }
+  .inf-hero-monster { border-radius: .5rem; object-fit: contain; }
+  .inf-hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--k-text); margin: .25rem 0 1rem;
+  }
+  .inf-hero-accent { color: #5CCFAF; }
+  .inf-hero-lead {
+    font-size: 1rem; color: var(--k-text-muted); line-height: 1.7;
+    max-width: 480px; margin: 0 0 1.25rem;
+  }
+  .inf-coming-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .35rem .875rem; border-radius: 999px;
+    background: color-mix(in srgb, #5CCFAF 12%, transparent);
+    border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent);
+    font-size: .75rem; font-weight: 700; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif;
+  }
+  .inf-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #5CCFAF; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(1.4); }
+  }
+
+  /* Preview cards */
+  .inf-preview-cards {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem;
+  }
+  .inf-preview-card {
+    background: var(--k-bg-card); border: 1.5px solid var(--ic);
+    border-radius: 1rem; padding: 1.25rem;
+    display: flex; flex-direction: column; gap: .5rem;
+    transition: transform .2s;
+  }
+  .inf-preview-card:hover { transform: translateY(-3px); }
+  .inf-preview-icon { font-size: 1.5rem; }
+  .inf-preview-title {
+    font-family: 'Poppins', sans-serif; font-size: .875rem;
+    font-weight: 700; color: var(--k-text);
+  }
+
+  /* Section headers */
+  .inf-section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800;
+    color: var(--k-text); margin: .25rem 0 .5rem;
+  }
+  .inf-section-sub { font-size: .9rem; color: var(--k-text-muted); margin: 0 0 2rem; }
+
+  /* Category grid */
+  .inf-cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .inf-cat-card {
+    position: relative; background: var(--k-bg-card);
+    border: 1.5px solid var(--k-border); border-radius: 1.25rem;
+    padding: 1.5rem; overflow: hidden;
+    display: flex; flex-direction: column; gap: .75rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .inf-cat-card:hover { border-color: var(--ic); transform: translateY(-3px); }
+  .inf-cat-glow {
+    position: absolute; top: -20px; right: -20px;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--ic); opacity: .08; filter: blur(20px);
+    pointer-events: none; transition: opacity .3s;
+  }
+  .inf-cat-card:hover .inf-cat-glow { opacity: .18; }
+  .inf-cat-icon-wrap {
+    width: 48px; height: 48px; border-radius: .75rem;
+    background: color-mix(in srgb, var(--ic) 15%, transparent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+  }
+  .inf-cat-body { flex: 1; }
+  .inf-cat-title {
+    font-family: 'Poppins', sans-serif; font-size: 1rem;
+    font-weight: 800; color: var(--k-text); margin: 0 0 .375rem;
+  }
+  .inf-cat-desc { font-size: .8rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; }
+  .inf-cat-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: .25rem;
+  }
+  .inf-cat-count { font-size: .75rem; font-weight: 700; color: var(--ic); }
+  .inf-cat-soon {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--k-text-muted);
+    background: var(--k-bg); padding: .15rem .5rem; border-radius: 999px;
+    border: 1px solid var(--k-border);
+  }
+  .inf-cat-link {
+    font-size: .78rem; font-weight: 700; color: var(--ic);
+    font-family: 'Poppins', sans-serif; text-decoration: none;
+    transition: opacity .2s;
+  }
+  .inf-cat-link:hover { opacity: .7; }
+
+  /* Types grid */
+  .inf-types-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); }
+  .inf-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .inf-type-card {
+    background: var(--k-bg); border: 1px solid var(--k-border);
+    border-radius: 1rem; padding: 1.25rem;
+    display: flex; gap: .875rem; align-items: flex-start;
+    transition: border-color .2s;
+  }
+  .inf-type-card:hover { border-color: var(--tc); }
+  .inf-type-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: .125rem; }
+  .inf-type-title {
+    font-family: 'Poppins', sans-serif; font-size: .9rem;
+    font-weight: 800; color: var(--k-text); margin: 0 0 .25rem;
+  }
+  .inf-type-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; }
+
+  /* Why */
+  .inf-why-section { background: var(--k-bg); padding: 5rem 0; border-top: 1px solid var(--k-border); }
+  .inf-why-inner {
+    display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;
+  }
+  @media (min-width: 768px) { .inf-why-inner { grid-template-columns: 1fr 1fr; } }
+  .inf-why-title {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 900; color: var(--k-text); margin: .5rem 0 1rem;
+  }
+  .inf-why-desc { font-size: .95rem; color: var(--k-text-muted); line-height: 1.7; margin: 0 0 1.25rem; }
+  .inf-why-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+  .inf-why-list li { font-size: .875rem; color: var(--k-text-muted); }
+
+  .inf-cta-card {
+    background: var(--k-bg-card); border: 1.5px solid var(--ic);
+    border-radius: 1.5rem; padding: 2rem; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: .875rem;
+  }
+  .inf-cta-card img { border-radius: .75rem; }
+  .inf-cta-card h3 {
+    font-family: 'Poppins', sans-serif; font-size: 1.25rem;
+    font-weight: 800; color: var(--k-text); margin: 0;
+  }
+  .inf-cta-card p { font-size: .875rem; color: var(--k-text-muted); margin: 0; }
+  .inf-cta-btn {
+    display: inline-flex; align-items: center; padding: .65rem 1.5rem;
+    color: #2A3439; border-radius: .625rem; font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: .875rem; text-decoration: none;
+    transition: opacity .2s;
+  }
+  .inf-cta-btn:hover { opacity: .85; }
+
+  /* Other monsters */
+  .inf-other-section {
+    background: var(--k-bg-card); border-top: 1px solid var(--k-border);
+    padding: 2rem 0;
+  }
+  .inf-other-inner {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 1rem; justify-content: space-between;
+  }
+  .inf-other-label { font-size: .8rem; font-weight: 700; color: var(--k-text-muted); }
+  .inf-other-links { display: flex; gap: .625rem; flex-wrap: wrap; }
+  .inf-other-link {
+    display: flex; flex-direction: column; align-items: center; gap: .25rem;
+    padding: .625rem; background: var(--k-bg);
+    border: 1px solid var(--k-border); border-radius: .75rem;
+    text-decoration: none; color: var(--k-text-muted);
+    font-size: .7rem; font-weight: 600;
+    transition: border-color .2s, color .2s; min-width: 64px;
+  }
+  .inf-other-link:hover { border-color: var(--mc); color: var(--mc); }
+</style>
