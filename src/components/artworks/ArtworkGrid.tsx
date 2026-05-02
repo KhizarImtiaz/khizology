@@ -47,7 +47,7 @@ function ArtworkModal({
         <button className="aw-modal-close" onClick={onClose} aria-label="Close">✕</button>
         <div className="aw-modal-img-wrap">
           <img
-            src={`${base}/images/artworks/${artwork.filename}`}
+            src={`${base}/public/images/artworks/${artwork.filename}`}
             alt={artwork.title}
             className="aw-modal-img"
           />
@@ -149,7 +149,7 @@ export default function ArtworkGrid({ artworks, base }: Props) {
               style={{ '--aw-delay': `${(i % 12) * 0.04}s` } as React.CSSProperties}
             >
               <img
-                src={`${base}/images/artworks/${a.filename}`}
+                src={`${base}/public/images/artworks/${a.filename}`}
                 alt={a.title}
                 loading="lazy"
                 className="aw-card-img"

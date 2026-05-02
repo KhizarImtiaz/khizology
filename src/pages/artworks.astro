@@ -22,7 +22,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="art-hero-text">
           <Breadcrumb crumbs={[{ label: 'artooo', href: '/artworks' }]} accentColor={ACCENT} />
           <div class="art-hero-badge">
-            <img src={`${base}/images/Monsters/artooo.png`} alt="artooo" width="40" height="40" class="art-hero-monster" />
+            <img src={`${base}/public/images/Monsters/artooo.png`} alt="artooo" width="40" height="40" class="art-hero-monster" />
             <span class="k-section-label" style={`color: ${ACCENT}`}>artooo · Artworks</span>
           </div>
           <h1 class="art-hero-title">
@@ -53,7 +53,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             {artworks.slice(0, 6).map((a, i) => (
               <div class={`art-mosaic-cell cell-${i}`}>
                 <img
-                  src={`${base}/images/artworks/${a.filename}`}
+                  src={`${base}/public/images/artworks/${a.filename}`}
                   alt={a.title}
                   loading={i < 2 ? 'eager' : 'lazy'}
                 />

@@ -150,13 +150,13 @@ Dark mode is toggled via the `html.dark` class, persisted to `localStorage('khiz
 ### Add a new Monster
 
 1. Add entry to `src/data/monsters.ts`
-2. Drop monster PNG in `public/images/Monsters/`
+2. Drop monster PNG in `public/public/images/Monsters/`
 3. Create hub page at `src/pages/{monster-route}/index.astro`
 4. Add route to Navbar links in `src/components/layout/Navbar.astro`
 
 ### Add an Artwork
 
-1. Drop artwork JPG in `public/images/artworks/`
+1. Drop artwork JPG in `public/public/images/artworks/`
 2. Add entry to `src/data/artworks.ts` with all metadata
 
 ### Add an Infographic Post
