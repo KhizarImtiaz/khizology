@@ -556,7 +556,7 @@ const featuredFreebieCategories = [
     display: flex; align-items: center; gap: 1rem;
     padding: 1.25rem;
     background: var(--k-bg-elevated, var(--k-bg)); border: 1px solid var(--k-border);
-    border-left: 4px solid var(--cat-color, var(--k-border));
+    border-left: 4px solid #5CCFAF;
     border-radius: 0 0.875rem 0.875rem 0;
     text-decoration: none; color: inherit;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -565,30 +565,30 @@ const featuredFreebieCategories = [
   .info-cat-icon-wrap {
     width: 3rem; height: 3rem; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    background: color-mix(in srgb, var(--cat-color, var(--k-accent)) 15%, transparent);
+    background: rgba(92,207,175,0.12);
     border-radius: 0.75rem;
     transition: background 0.2s;
   }
   .info-cat-card:hover .info-cat-icon-wrap {
-    background: color-mix(in srgb, var(--cat-color, var(--k-accent)) 25%, transparent);
+    background: rgba(92,207,175,0.22);
   }
   .info-cat-icon { font-size: 1.5rem; flex-shrink: 0; }
   .info-cat-body { flex: 1; }
   .info-cat-body h3 { font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--k-text); margin: 0 0 0.25rem; transition: color 0.2s; }
-  .info-cat-card:hover .info-cat-body h3 { color: var(--cat-color, var(--k-accent)); }
+  .info-cat-card:hover .info-cat-body h3 { color: #5CCFAF; }
   .info-cat-body p { font-size: 0.8rem; color: var(--k-text-muted); margin: 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
   .info-cat-arrow { color: var(--k-text-muted); transition: transform 0.2s, color 0.2s; }
-  .info-cat-card:hover .info-cat-arrow { transform: translateX(4px); color: var(--cat-color); }
+  .info-cat-card:hover .info-cat-arrow { transform: translateX(4px); color: #5CCFAF; }
   .info-more-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
   .info-more-chip {
     display: inline-flex; align-items: center; gap: 0.25rem;
     padding: 0.375rem 0.875rem;
-    background: var(--k-bg); border: 1px solid var(--cat-color, var(--k-border));
+    background: var(--k-bg); border: 1px solid #5CCFAF;
     border-radius: 999px;
     font-size: 0.8rem; font-weight: 600; color: var(--k-text); text-decoration: none;
     transition: background 0.2s, color 0.2s;
   }
-  .info-more-chip:hover { background: var(--cat-color); color: var(--k-dark); }
+  .info-more-chip:hover { background: #5CCFAF; color: var(--k-dark); }
 
   /* FREEBIES */
   .freebies-section { background: var(--k-bg); }
