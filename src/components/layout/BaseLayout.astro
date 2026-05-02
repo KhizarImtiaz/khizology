@@ -36,6 +36,18 @@ const {
       canonical={canonical}
       noindex={noindex}
     />
+    <!-- Theme persistence script (runs before paint to prevent flash) -->
+    <script is:inline>
+      (function () {
+        try {
+          const saved = localStorage.getItem('khizology-theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (_) {}
+      })();
+    </script>
     {accentColor && (
       <style define:vars={{ accentColor, accentColorLight: accentColorLight || accentColor }}>
         :root {
@@ -52,18 +64,5 @@ const {
     </main>
     <Footer />
     <ScrollTop />
-
-    <!-- Theme persistence script (runs before paint to prevent flash) -->
-    <script is:inline>
-      (function () {
-        try {
-          const saved = localStorage.getItem('khizology-theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (saved === 'dark' || (!saved && prefersDark)) {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (_) {}
-      })();
-    </script>
   </body>
 </html>
