@@ -1,0 +1,207 @@
+---
+import type { Monster } from '../../data/monsters';
+
+interface Props {
+  monster: Monster;
+  size?: 'default' | 'large';
+}
+
+const { monster, size = 'default' } = Astro.props;
+const isActive = monster.status === 'active';
+---
+
+<a
+  href={monster.route}
+  class={`monster-card ${size === 'large' ? 'monster-card-lg' : ''} ${!isActive ? 'monster-card-locked' : ''}`}
+  style={`--m-color: ${monster.color}; --m-color-light: ${monster.colorLight}`}
+  aria-label={`${monster.name} — ${monster.module}${!isActive ? ' (Coming Soon)' : ''}`}
+>
+  <!-- Glow background -->
+  <div class="mc-glow"></div>
+
+  <!-- Monster image -->
+  <div class="mc-image-wrap">
+    <img
+      src={monster.image}
+      alt={monster.name}
+      width="72"
+      height="72"
+      class="mc-image"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- Text -->
+  <div class="mc-body">
+    <div class="mc-name-row">
+      <span class="mc-name">{monster.name}</span>
+      <span class="mc-arrow">→</span>
+      <span class="mc-module">{monster.module}</span>
+    </div>
+    <p class="mc-desc">{monster.description}</p>
+    <span class="mc-tagline">{monster.tagline}</span>
+  </div>
+
+  <!-- Coming soon overlay -->
+  {!isActive && (
+    <div class="mc-locked-overlay">
+      <span class="mc-lock-icon">🔒</span>
+      <span class="mc-lock-text">Coming Soon</span>
+    </div>
+  )}
+</a>
+
+<style>
+  .monster-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--k-bg-card);
+    border: 2px solid var(--k-border);
+    border-radius: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    cursor: pointer;
+  }
+
+  .monster-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--m-color);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.1), 0 0 0 1px var(--m-color-light);
+  }
+
+  .monster-card-locked {
+    cursor: default;
+    opacity: 0.85;
+  }
+  .monster-card-locked:hover {
+    transform: translateY(-2px);
+    border-color: var(--m-color);
+    box-shadow: none;
+  }
+
+  .mc-glow {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--m-color);
+    opacity: 0.12;
+    filter: blur(30px);
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .monster-card:hover .mc-glow { opacity: 0.25; }
+
+  .mc-image-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 1rem;
+    background: var(--m-color-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .monster-card:hover .mc-image-wrap { transform: rotate(-4deg) scale(1.05); }
+
+  .mc-image {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+
+  .mc-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    flex: 1;
+  }
+
+  .mc-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+  }
+
+  .mc-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--m-color);
+  }
+  .mc-arrow { color: var(--k-text-muted); font-size: 0.875rem; }
+  .mc-module {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--k-text);
+  }
+
+  .mc-desc {
+    font-size: 0.8rem;
+    color: var(--k-text-muted);
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .mc-tagline {
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--m-color);
+  }
+
+  /* Locked overlay */
+  .mc-locked-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(var(--k-bg-card-rgb, 255,255,255), 0.95) 80%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 1.5rem;
+    gap: 0.25rem;
+  }
+
+  html.dark .mc-locked-overlay {
+    background: linear-gradient(to bottom, transparent 40%, rgba(26,31,46,0.95) 80%);
+  }
+
+  .mc-lock-icon { font-size: 1.25rem; }
+  .mc-lock-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--m-color);
+  }
+
+  /* Large variant */
+  .monster-card-lg {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+  .monster-card-lg .mc-image-wrap { width: 88px; height: 88px; }
+  .monster-card-lg .mc-image { width: 68px; height: 68px; }
+  .monster-card-lg .mc-name { font-size: 1.1rem; }
+  .monster-card-lg .mc-desc { -webkit-line-clamp: 2; }
+</style>

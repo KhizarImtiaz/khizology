@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import { monsters } from '../data/monsters';
+---
+
+<BaseLayout
+  title="404 — Page Not Found"
+  description="This page doesn't exist. But khizology does — explore the monsters."
+  noindex={true}
+>
+  <section class="k-section not-found-section">
+    <div class="k-container">
+      <div class="nf-inner">
+        <div class="nf-monster">
+          <img src="/images/Monsters/devooo.png" alt="404 monster" width="140" height="140" class="nf-img" />
+        </div>
+        <div class="nf-content">
+          <span class="nf-code">404</span>
+          <h1>This vibe doesn't exist.</h1>
+          <p>
+            The page you're looking for got lost in the creative void.
+            It might have been moved, deleted, or never existed to begin with.
+          </p>
+          <div class="nf-ctas">
+            <a href="/" class="nf-btn-primary">← Back to Universe</a>
+            <a href="/drop-a-vibe" class="nf-btn-ghost">Report a broken link</a>
+          </div>
+        </div>
+        <div class="nf-monsters-row">
+          <p class="nf-explore">Meanwhile, explore the monsters:</p>
+          <div class="nf-monster-links">
+            {monsters.filter(m => m.status === 'active').map(m => (
+              <a href={m.route} class="nf-m-link" style={`--mc: ${m.color}`}>
+                <img src={m.image} alt={m.name} width="36" height="36" />
+                <span>{m.module}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found-section {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .nf-inner {
+    max-width: 580px;
+    margin-inline: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nf-img {
+    animation: wobble 3s ease-in-out infinite;
+    filter: grayscale(0.3);
+  }
+
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  .nf-code {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--k-border);
+    margin-bottom: 0.25rem;
+  }
+
+  .nf-content h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: var(--k-text);
+    margin: 0 0 0.75rem;
+  }
+
+  .nf-content p {
+    font-size: 0.95rem;
+    color: var(--k-text-muted);
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+  }
+
+  .nf-ctas { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+  .nf-btn-primary {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: var(--k-dark); color: var(--k-bg);
+    border-radius: 0.625rem; font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 0.875rem; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nf-btn-primary:hover { opacity: 0.85; }
+
+  .nf-btn-ghost {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: transparent; color: var(--k-text-muted);
+    border: 1px solid var(--k-border); border-radius: 0.625rem;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.875rem;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .nf-btn-ghost:hover { border-color: var(--k-text); color: var(--k-text); }
+
+  .nf-monsters-row {
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+    width: 100%;
+  }
+  .nf-explore { font-size: 0.8rem; color: var(--k-text-muted); margin: 0; }
+  .nf-monster-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+  .nf-m-link {
+    display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+    padding: 0.75rem; background: var(--k-bg-card);
+    border: 1px solid var(--k-border); border-radius: 0.75rem;
+    text-decoration: none; color: var(--k-text-muted);
+    font-size: 0.7rem; font-weight: 600;
+    transition: border-color 0.2s, color 0.2s;
+    min-width: 72px;
+  }
+  .nf-m-link:hover { border-color: var(--mc); color: var(--mc); }
+</style>

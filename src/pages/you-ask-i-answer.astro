@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import ComingSoonCard from '../components/ui/ComingSoonCard.astro';
+
+const knowledgeTopics = [
+  { emoji: '🎨', label: 'Art & Creativity', q: 'How do you start drawing when you have nothing in mind?', hint: 'A: Start with a feeling, not a plan. Draw the feeling.' },
+  { emoji: '💻', label: 'Code & Dev', q: 'What\'s the best way to learn programming?', hint: 'A: Build things that scare you a little. Read less, build more.' },
+  { emoji: '🧠', label: 'Psychology', q: 'Why do we procrastinate even when we love the work?', hint: 'A: Because starting is harder than continuing. Just begin.' },
+  { emoji: '🚀', label: 'Productivity', q: 'How do you stay motivated long-term?', hint: 'A: Don\'t chase motivation. Build systems that don\'t need it.' },
+  { emoji: '💰', label: 'Finance', q: 'What\'s the first step to financial freedom?', hint: 'A: Know exactly where every rupee/dollar goes. Awareness first.' },
+  { emoji: '🌍', label: 'Life & Wisdom', q: 'What\'s the one thing most people regret?', hint: 'A: Waiting for the perfect moment. Spoiler: it never arrives.' },
+];
+
+const comingSoonFeatures = [
+  'Live Q&A sessions',
+  'Ask-anything text box',
+  'Community upvoted questions',
+  'Voice note answers',
+  'Weekly knowledge drops',
+];
+---
+
+<BaseLayout
+  title="You Ask, I Answer"
+  description="Questions about art, code, creativity, life, finance, and everything in between. Ask khizooo anything — you ask, I answer."
+  accentColor="#F7933C"
+>
+  <div class="k-container" style="padding-top: 2rem;">
+    <Breadcrumb crumbs={[{ label: 'You Ask, I Answer' }]} accentColor="#F7933C" />
+  </div>
+
+  <!-- HERO -->
+  <section class="k-section yaia-hero">
+    <div class="k-container yaia-hero-inner">
+      <div class="yaia-hero-content">
+        <span class="k-section-label" style="color: #F7933C">You Ask, I Answer</span>
+        <h1 class="yaia-title">Curiosity deserves<br />a real answer.</h1>
+        <p class="yaia-lead">
+          This is the space where questions get answered. No gatekeeping. No jargon.
+          Just honest, direct knowledge about art, code, creativity, life, and everything in between.
+        </p>
+        <div class="yaia-preview-box">
+          <div class="ypb-label">
+            <span class="ypb-badge">💬 Interactive Q&A</span>
+            <span class="ypb-cs">Coming Soon</span>
+          </div>
+          <p class="ypb-desc">
+            An interactive ask-anything experience is being built. Until then, browse the
+            sample questions below or Drop a Vibe to ask directly.
+          </p>
+          <a href="/drop-a-vibe" class="yaia-btn">Ask Right Now →</a>
+        </div>
+      </div>
+      <div class="yaia-hero-visual">
+        <img src="/images/Monsters/infooo.png" alt="infooo" width="120" height="120" class="yaia-monster" />
+        <div class="yaia-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE Q&As -->
+  <section class="k-section sample-section">
+    <div class="k-container">
+      <div class="sample-header">
+        <h2>Sample Knowledge Drops</h2>
+        <p>A taste of what's inside this module. Real questions, real answers.</p>
+      </div>
+      <div class="sample-grid">
+        {knowledgeTopics.map(topic => (
+          <div class="sample-card">
+            <div class="sc-header">
+              <span class="sc-emoji">{topic.emoji}</span>
+              <span class="sc-category">{topic.label}</span>
+            </div>
+            <p class="sc-question">Q: {topic.q}</p>
+            <p class="sc-hint">{topic.hint}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COMING SOON FEATURES -->
+  <section class="k-section coming-features">
+    <div class="k-container cf-inner">
+      <div class="cf-content">
+        <h2>What's Being Built</h2>
+        <p>
+          You Ask, I Answer is evolving into a full interactive knowledge module.
+          Here's what's coming:
+        </p>
+        <ul class="cf-features">
+          {comingSoonFeatures.map(f => (
+            <li>
+              <span class="cf-check">→</span>
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="/drop-a-vibe" class="yaia-btn-dark">Submit a Question Early →</a>
+      </div>
+      <div class="cf-card">
+        <ComingSoonCard
+          title="Interactive Q&A"
+          description="Ask anything. Get honest, thoughtful answers from khizooo on art, code, creativity, and life."
+          accentColor="#F7933C"
+          icon="💬"
+          eta="2025"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- KNOWLEDGE CATEGORIES TEASER -->
+  <section class="k-section k-section-cats">
+    <div class="k-container">
+      <h2 class="cats-heading">Topics I Can Answer</h2>
+      <div class="cats-grid">
+        {knowledgeTopics.map(t => (
+          <div class="cat-chip">
+            {t.emoji} {t.label}
+          </div>
+        ))}
+        <div class="cat-chip cat-chip-more">+ Many More</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="k-section yaia-cta">
+    <div class="k-container">
+      <div class="yaia-cta-inner">
+        <h2>Don't wait for the feature.</h2>
+        <p>Drop your question directly. I read every message.</p>
+        <div class="yaia-cta-btns">
+          <a href="/drop-a-vibe" class="yaia-btn-dark">Drop a Vibe ✉️</a>
+          <a href="/behind-the-vibes" class="yaia-btn-ghost">Behind the Vibes →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .yaia-hero { background: var(--k-bg-card); border-bottom: 1px solid var(--k-border); }
+  .yaia-hero-inner {
+    display: grid; grid-template-columns: 1fr 240px; gap: 3rem; align-items: center;
+  }
+  .yaia-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; line-height: 1.1;
+    color: var(--k-text); margin: 0.5rem 0 1.25rem;
+  }
+  .yaia-lead { font-size: 1rem; color: var(--k-text-muted); line-height: 1.7; margin: 0 0 1.5rem; }
+
+  .yaia-preview-box {
+    background: var(--k-bg); border: 1px solid var(--k-border); border-radius: 1rem;
+    padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .ypb-label { display: flex; align-items: center; gap: 0.75rem; }
+  .ypb-badge {
+    display: inline-flex; padding: 0.25rem 0.75rem;
+    background: var(--m-toolooo, #F7933C); color: var(--k-dark);
+    border-radius: 999px; font-size: 0.75rem; font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+  }
+  .ypb-cs {
+    font-size: 0.7rem; font-weight: 700; font-family: 'Poppins', sans-serif;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--k-text-muted);
+    background: var(--k-border); padding: 0.1rem 0.5rem; border-radius: 999px;
+  }
+  .ypb-desc { font-size: 0.85rem; color: var(--k-text-muted); margin: 0; }
+
+  .yaia-btn {
+    display: inline-flex; align-items: center; padding: 0.55rem 1.25rem;
+    background: #F7933C; color: var(--k-dark);
+    border-radius: 0.5rem; font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 0.8rem; text-decoration: none;
+    align-self: flex-start;
+    transition: opacity 0.2s;
+  }
+  .yaia-btn:hover { opacity: 0.85; }
+
+  .yaia-hero-visual {
+    position: relative; display: flex; align-items: center; justify-content: center;
+  }
+  .yaia-monster { animation: floatSlow 5s ease-in-out infinite; }
+  @keyframes floatSlow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .yaia-glow {
+    position: absolute; width: 160px; height: 160px; border-radius: 50%;
+    background: #F7933C; opacity: 0.12; filter: blur(40px);
+    pointer-events: none;
+  }
+
+  /* SAMPLE Q&As */
+  .sample-section { background: var(--k-bg); }
+  .sample-header { margin-bottom: 2rem; }
+  .sample-header h2 {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 800; color: var(--k-text); margin: 0 0 0.5rem;
+  }
+  .sample-header p { font-size: 0.9rem; color: var(--k-text-muted); margin: 0; }
+
+  .sample-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .sample-card {
+    background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1rem;
+    padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .sc-header { display: flex; align-items: center; gap: 0.5rem; }
+  .sc-emoji { font-size: 1.25rem; }
+  .sc-category {
+    font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: #F7933C;
+  }
+  .sc-question {
+    font-size: 0.9rem; font-weight: 600; color: var(--k-text); margin: 0; line-height: 1.4;
+  }
+  .sc-hint {
+    font-size: 0.8rem; color: var(--k-text-muted); margin: 0; line-height: 1.5;
+    padding-left: 0.75rem; border-left: 2px solid #F7933C;
+    font-style: italic;
+  }
+
+  /* COMING FEATURES */
+  .coming-features { background: var(--k-bg-card); }
+  .cf-inner { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: center; }
+  .cf-content h2 {
+    font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800;
+    color: var(--k-text); margin: 0 0 0.75rem;
+  }
+  .cf-content > p { font-size: 0.9rem; color: var(--k-text-muted); margin: 0 0 1.25rem; }
+  .cf-features { list-style: none; margin: 0 0 1.5rem; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .cf-features li { display: flex; align-items: center; gap: 0.625rem; font-size: 0.9rem; color: var(--k-text-muted); }
+  .cf-check { color: #F7933C; font-weight: 700; }
+
+  .yaia-btn-dark {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: var(--k-dark); color: var(--k-bg);
+    border-radius: 0.625rem; font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 0.875rem; text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .yaia-btn-dark:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  /* CATEGORIES */
+  .k-section-cats { background: var(--k-bg); }
+  .cats-heading {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 800; color: var(--k-text); margin: 0 0 1.5rem;
+  }
+  .cats-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .cat-chip {
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: 999px; font-size: 0.875rem; font-weight: 600; color: var(--k-text);
+  }
+  .cat-chip-more {
+    background: var(--k-dark); color: var(--k-bg); border-color: var(--k-dark);
+    font-family: 'Poppins', sans-serif; font-weight: 700;
+  }
+
+  /* CTA */
+  .yaia-cta { background: var(--k-bg-card); }
+  .yaia-cta-inner { text-align: center; max-width: 480px; margin-inline: auto; }
+  .yaia-cta-inner h2 {
+    font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800;
+    color: var(--k-text); margin: 0 0 0.75rem;
+  }
+  .yaia-cta-inner p { font-size: 0.95rem; color: var(--k-text-muted); margin: 0 0 1.5rem; }
+  .yaia-cta-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .yaia-btn-ghost {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: transparent; color: var(--k-text-muted);
+    border: 1px solid var(--k-border); border-radius: 0.625rem;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.875rem;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .yaia-btn-ghost:hover { border-color: #F7933C; color: #F7933C; }
+
+  @media (max-width: 900px) {
+    .yaia-hero-inner { grid-template-columns: 1fr; }
+    .yaia-hero-visual { display: none; }
+    .cf-inner { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  accentColor?: string;
+  icon?: string;
+  eta?: string;
+}
+const {
+  title = 'Coming Soon',
+  description = 'Something exciting is being crafted. Stay tuned.',
+  accentColor = '#B699FF',
+  icon = '🔮',
+  eta,
+} = Astro.props;
+---
+
+<div class="coming-soon-card" style={`--accent: ${accentColor}`}>
+  <div class="cs-glow"></div>
+  <div class="cs-content">
+    <span class="cs-icon">{icon}</span>
+    <h3 class="cs-title">{title}</h3>
+    <p class="cs-desc">{description}</p>
+    {eta && <span class="cs-eta">ETA: {eta}</span>}
+    <span class="cs-badge">Coming Soon</span>
+  </div>
+</div>
+
+<style>
+  .coming-soon-card {
+    position: relative;
+    background: var(--k-bg-card);
+    border: 1px solid var(--accent, var(--k-border));
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px;
+  }
+
+  .cs-glow {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--accent, #B699FF);
+    opacity: 0.1;
+    filter: blur(32px);
+    pointer-events: none;
+  }
+
+  .cs-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cs-icon { font-size: 2rem; }
+
+  .cs-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--k-text);
+    margin: 0;
+  }
+
+  .cs-desc {
+    font-size: 0.8rem;
+    color: var(--k-text-muted);
+    margin: 0;
+    line-height: 1.5;
+    max-width: 240px;
+  }
+
+  .cs-eta {
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: var(--accent, var(--k-text-muted));
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .cs-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--accent, #B699FF);
+    color: var(--k-dark);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+</style>

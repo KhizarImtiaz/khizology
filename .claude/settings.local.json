@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Desktop_Commander__read_file",
+      "Bash(npm create *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(npm install *)",
+      "Bash(npx astro *)",
+      "Bash(cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\Monsters\\\\\"*.png \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\images\\\\Monsters\\\\\")",
+      "Bash(cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\favicon_32x32.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\\" && cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\favicon_16x16.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\\")",
+      "Bash(cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\khizooo.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\images\\\\site\\\\\" && cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\creative-01.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\images\\\\site\\\\\")",
+      "Bash(cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\lp-home-me.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\images\\\\site\\\\\" && cp \"D:\\\\khizooo\\\\khizology\\\\Old Website Content\\\\images\\\\lp-profile-img.png\" \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\\\\public\\\\images\\\\site\\\\\")",
+      "Bash(npm run *)",
+      "Bash(python3 -c ' *)",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const a=JSON.parse\\(d\\); console.log\\(JSON.stringify\\(a.slice\\(0,5\\),null,2\\)\\)\")"
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+---
+interface Props {
+  variant?: 'card' | 'artwork' | 'tool' | 'freebie';
+  count?: number;
+}
+const { variant = 'card', count = 1 } = Astro.props;
+---
+
+{Array.from({ length: count }).map(() => (
+  <div class={`skeleton-card skeleton-${variant}`} aria-hidden="true">
+    {variant === 'artwork' && (
+      <div class="sk-image skeleton"></div>
+    )}
+    {variant !== 'artwork' && (
+      <>
+        <div class="sk-icon skeleton"></div>
+        <div class="sk-title skeleton"></div>
+        <div class="sk-body skeleton"></div>
+        <div class="sk-body skeleton" style="width: 75%"></div>
+        <div class="sk-tag skeleton"></div>
+      </>
+    )}
+    {variant === 'artwork' && (
+      <div class="sk-title skeleton" style="margin: 0.75rem 0.75rem 0.5rem"></div>
+    )}
+  </div>
+))}
+
+<style>
+  .skeleton-card {
+    background: var(--k-bg-card);
+    border: 1px solid var(--k-border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .skeleton-artwork {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .sk-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 0;
+  }
+  .sk-icon  { width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; }
+  .sk-title { width: 60%; height: 1rem; }
+  .sk-body  { width: 100%; height: 0.75rem; }
+  .sk-tag   { width: 30%; height: 0.625rem; margin-top: 0.25rem; }
+</style>

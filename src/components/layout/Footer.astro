@@ -1,0 +1,190 @@
+---
+import { monsters } from '../../data/monsters';
+const activeMonsters = monsters.filter(m => m.status === 'active');
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="k-footer">
+  <div class="k-container">
+    <div class="k-footer-grid">
+
+      <!-- Brand column -->
+      <div class="k-footer-brand">
+        <a href="/" class="k-footer-logo">
+          <img src="/images/Monsters/artooo.png" alt="khizology" width="36" height="36" />
+          <span>khiz<span class="accent">ology</span></span>
+        </a>
+        <p class="k-footer-tagline">
+          Art meets Code.<br />
+          A monster-powered creative knowledge universe.
+        </p>
+        <div class="k-footer-socials">
+          <a href="#" aria-label="Instagram" class="social-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter / X" class="social-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://github.com/khizarooo" aria-label="GitHub" class="social-link" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Monsters column -->
+      <div class="k-footer-col">
+        <h3 class="k-footer-heading">Monsters</h3>
+        <ul>
+          {activeMonsters.map(m => (
+            <li>
+              <a href={m.route} class="k-footer-link" style={`--hover: ${m.color}`}>
+                {m.emoji} {m.name} → {m.module}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="/future-monsters" class="k-footer-link" style="--hover: #B699FF">
+              🔮 Future Monsters
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Pages column -->
+      <div class="k-footer-col">
+        <h3 class="k-footer-heading">Explore</h3>
+        <ul>
+          <li><a href="/my-portfolio" class="k-footer-link">My Portfolio</a></li>
+          <li><a href="/behind-the-vibes" class="k-footer-link">Behind the Vibes</a></li>
+          <li><a href="/you-ask-i-answer" class="k-footer-link">You Ask, I Answer</a></li>
+          <li><a href="/drop-a-vibe" class="k-footer-link">Drop a Vibe</a></li>
+        </ul>
+      </div>
+
+      <!-- Toolbox quick column -->
+      <div class="k-footer-col">
+        <h3 class="k-footer-heading">Toolbox</h3>
+        <ul>
+          <li><a href="/toolbox" class="k-footer-link">All Tools</a></li>
+          <li><a href="/toolbox/calculators/math/percentage-calculator" class="k-footer-link">Percentage Calculator</a></li>
+          <li><a href="/toolbox/calculators/everyday-life/age-calculator" class="k-footer-link">Age Calculator</a></li>
+          <li><a href="/toolbox/calculators/finance/profit-margin-calculator" class="k-footer-link">Profit Margin</a></li>
+          <li><a href="/toolbox/tools/instagram-bio-score" class="k-footer-link">Instagram Bio Score</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="k-footer-bottom">
+      <p>© {currentYear} <strong>khizology</strong> · Crafted with art & code by <strong>khizooo</strong></p>
+      <p class="k-footer-note">By luck a programmer. By nature an artist.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .k-footer {
+    background: var(--k-bg-card);
+    border-top: 1px solid var(--k-border);
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    margin-top: auto;
+  }
+
+  .k-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .k-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--k-text);
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+  }
+  .k-footer-logo .accent { color: var(--m-artooo); }
+
+  .k-footer-tagline {
+    color: var(--k-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .k-footer-socials {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .social-link {
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--k-border);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--k-text-muted);
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .social-link:hover {
+    color: var(--k-text);
+    border-color: var(--k-text);
+    background: var(--k-bg);
+  }
+
+  .k-footer-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--k-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .k-footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .k-footer-link {
+    color: var(--k-text-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .k-footer-link:hover { color: var(--hover, var(--k-text)); }
+
+  .k-footer-bottom {
+    border-top: 1px solid var(--k-border);
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--k-text-muted);
+  }
+  .k-footer-note { font-style: italic; }
+
+  @media (max-width: 900px) {
+    .k-footer-grid { grid-template-columns: 1fr 1fr; }
+    .k-footer-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 600px) {
+    .k-footer-grid { grid-template-columns: 1fr; }
+    .k-footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>

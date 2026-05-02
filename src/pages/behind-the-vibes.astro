@@ -1,0 +1,320 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+
+const principles = [
+  { icon: '🎨', title: 'Art is Language', body: 'Every sketch, every line, every color choice is a word in a sentence. Art doesn\'t need translation — it speaks directly to whoever is ready to listen.' },
+  { icon: '⚡', title: 'Code is a Brush', body: 'Programming isn\'t a cold, logical act. It\'s a creative process. The way you structure a system, name a variable, design an interface — it\'s all art with a different medium.' },
+  { icon: '🧠', title: 'Knowledge Should Be Free', body: 'The best ideas grow when they\'re shared. khizology exists to make knowledge accessible, visual, and useful — because learning shouldn\'t be locked behind paywalls.' },
+  { icon: '🔮', title: 'Monsters Represent Ideas', body: 'Each monster in khizology is a living module — a personality with a purpose. They\'re not just mascots. They\'re the brand itself, the creative DNA of the universe.' },
+  { icon: '🌱', title: 'Slow and Intentional', body: 'Nothing here is rushed. Every artwork, every infographic, every tool is made with intention. Quality over quantity. Meaning over noise.' },
+  { icon: '🚀', title: 'Always Building', body: 'khizology is never finished. It\'s a living project that grows with time, ideas, and new monsters waiting to be unleashed. The journey is the destination.' },
+];
+
+const faqs = [
+  {
+    q: 'What is khizology?',
+    a: 'khizology is a personal creative brand universe by khizooo — a space where artworks, visual knowledge, tools, and free resources live together. It\'s powered by "monsters" — each one representing a module of content.',
+  },
+  {
+    q: 'Who is khizooo?',
+    a: 'khizooo is the creator. A programmer by profession and an artist by nature. Someone who believes that the best work lives at the intersection of logic and creativity.',
+  },
+  {
+    q: 'Why "monsters"?',
+    a: 'Monsters are bold, memorable, and full of personality. Each monster module (artooo, infooo, toolooo, freeooo) has its own identity, color, and purpose. Monsters don\'t follow rules — and neither does creativity.',
+  },
+  {
+    q: 'Is khizology free to use?',
+    a: 'Yes. All tools, infographics, and freebie resources on khizology are free. The artworks are original creative work and protected, but the knowledge and utilities are shared openly.',
+  },
+  {
+    q: 'How often does new content appear?',
+    a: 'Regularly. New artworks, infographics, tools, and resources are added as they\'re made. There\'s no rigid schedule — only intention and quality.',
+  },
+];
+---
+
+<BaseLayout
+  title="Behind the Vibes"
+  description="The story behind khizology — why it exists, how it was built, what drives it. A candid look at the creative universe of khizooo."
+  accentColor="#B699FF"
+>
+  <div class="k-container" style="padding-top: 2rem;">
+    <Breadcrumb crumbs={[{ label: 'Behind the Vibes' }]} accentColor="#B699FF" />
+  </div>
+
+  <!-- HERO -->
+  <section class="k-section btv-hero">
+    <div class="k-container btv-hero-inner">
+      <div class="btv-hero-content">
+        <span class="k-section-label" style="color: #B699FF">Behind the Vibes</span>
+        <h1 class="btv-title">The Story Behind<br />the Universe</h1>
+        <p class="btv-lead">
+          khizology didn't start as a plan. It started as a feeling — the need to create
+          something that was entirely, authentically, unmistakably <em>mine</em>.
+          A place where art and code didn't compete but collaborated.
+        </p>
+      </div>
+      <div class="btv-hero-quote">
+        <blockquote>
+          "By luck, I am a programmer.<br />
+          By nature, I am an artist."
+          <cite>— khizooo</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE STORY -->
+  <section class="k-section story-section">
+    <div class="k-container story-inner">
+      <div class="story-content">
+        <h2>How It Started</h2>
+        <p>
+          I've always drawn. Notebooks, sticky notes, margins of textbooks — anything flat
+          became a canvas. When I discovered programming, I thought I'd left art behind.
+          But art kept showing up. In the way I designed interfaces. In the way I structured
+          systems. In the way I named things.
+        </p>
+        <p>
+          So I stopped fighting it and started building with it. khizology is the result:
+          a creative universe where the two sides of my brain finally shake hands.
+        </p>
+        <h2>Why Monsters?</h2>
+        <p>
+          When I decided to organize my work into sections, I didn't want boring category names.
+          I wanted something with personality. Something with life. Monsters felt right —
+          they're bold, they're memorable, and they don't apologize for who they are.
+        </p>
+        <p>
+          Each monster represents a core part of khizology:
+          <strong>artooo</strong> (artworks), <strong>infooo</strong> (infographics),
+          <strong>toolooo</strong> (tools), and <strong>freeooo</strong> (freebies).
+          Five more are in the lab, waiting to be unleashed.
+        </p>
+        <h2>What Drives This</h2>
+        <p>
+          Not money. Not metrics. Not algorithms. Curiosity. The desire to make something
+          that lasts. The need to share what I know and what I feel. khizology is proof that
+          you can build something genuinely yours and share it with the world — no brand deal
+          required, no artificial persona needed.
+        </p>
+      </div>
+      <div class="story-sidebar">
+        <div class="story-facts">
+          <div class="sf-item">
+            <span class="sf-num">168+</span>
+            <span class="sf-label">Original Artworks</span>
+          </div>
+          <div class="sf-item">
+            <span class="sf-num">8</span>
+            <span class="sf-label">Knowledge Categories</span>
+          </div>
+          <div class="sf-item">
+            <span class="sf-num">50+</span>
+            <span class="sf-label">Free Online Tools</span>
+          </div>
+          <div class="sf-item">
+            <span class="sf-num">13</span>
+            <span class="sf-label">Freebie Categories</span>
+          </div>
+          <div class="sf-item">
+            <span class="sf-num">4</span>
+            <span class="sf-label">Live Monsters</span>
+          </div>
+          <div class="sf-item">
+            <span class="sf-num">5</span>
+            <span class="sf-label">Monsters Coming</span>
+          </div>
+        </div>
+        <div class="story-monsters">
+          {['artooo', 'infooo', 'toolooo', 'freeooo'].map(m => (
+            <img src={`/images/Monsters/${m}.png`} alt={m} width="52" height="52" />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATIVE PRINCIPLES -->
+  <section class="k-section principles-section">
+    <div class="k-container">
+      <h2 class="principles-heading">What I Believe</h2>
+      <div class="principles-grid">
+        {principles.map(p => (
+          <div class="principle-card">
+            <span class="principle-icon">{p.icon}</span>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="k-section faq-section">
+    <div class="k-container faq-inner">
+      <h2 class="faq-heading">Common Questions</h2>
+      <div class="faq-list">
+        {faqs.map(item => (
+          <details class="faq-item">
+            <summary class="faq-question">{item.q}</summary>
+            <div class="faq-answer"><p>{item.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="k-section btv-cta">
+    <div class="k-container">
+      <div class="btv-cta-inner">
+        <h2>Still curious?</h2>
+        <p>Drop a vibe, ask a question, or just explore the universe.</p>
+        <div class="btv-cta-btns">
+          <a href="/drop-a-vibe" class="btv-btn-dark">Drop a Vibe ✉️</a>
+          <a href="/you-ask-i-answer" class="btv-btn-outline">You Ask, I Answer →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .btv-hero { background: var(--k-bg-card); border-bottom: 1px solid var(--k-border); }
+  .btv-hero-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+  }
+  .btv-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; line-height: 1.1;
+    color: var(--k-text); margin: 0.5rem 0 1.25rem;
+  }
+  .btv-lead {
+    font-size: 1.05rem; color: var(--k-text-muted); line-height: 1.7; margin: 0;
+  }
+  .btv-hero-quote {
+    display: flex; align-items: center; justify-content: center;
+  }
+  blockquote {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem; font-weight: 700; font-style: italic;
+    color: var(--k-text); line-height: 1.6;
+    border-left: 4px solid #B699FF;
+    padding-left: 1.5rem; margin: 0;
+  }
+  blockquote cite {
+    display: block; margin-top: 0.75rem;
+    font-size: 0.8rem; font-style: normal; font-weight: 600;
+    color: #B699FF;
+  }
+
+  /* STORY */
+  .story-section { background: var(--k-bg); }
+  .story-inner { display: grid; grid-template-columns: 1fr 320px; gap: 4rem; align-items: flex-start; }
+  .story-content h2 {
+    font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800;
+    color: var(--k-text); margin: 0 0 0.875rem;
+  }
+  .story-content h2:not(:first-child) { margin-top: 2.5rem; }
+  .story-content p { font-size: 0.95rem; color: var(--k-text-muted); line-height: 1.75; margin: 0 0 1rem; }
+
+  .story-sidebar { position: sticky; top: 5rem; }
+  .story-facts {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: 1rem; padding: 1.25rem; margin-bottom: 1.5rem;
+  }
+  .sf-item { display: flex; flex-direction: column; gap: 0.1rem; }
+  .sf-num {
+    font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 900;
+    color: #B699FF;
+  }
+  .sf-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--k-text-muted); }
+
+  .story-monsters {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: 1rem; padding: 1rem;
+  }
+  .story-monsters img { width:52px;height:52px;object-fit:contain; }
+
+  /* PRINCIPLES */
+  .principles-section { background: var(--k-bg-card); }
+  .principles-heading {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800;
+    color: var(--k-text); margin: 0 0 2rem;
+  }
+  .principles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .principle-card {
+    background: var(--k-bg); border: 1px solid var(--k-border); border-radius: 1rem;
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 0.625rem;
+  }
+  .principle-icon { font-size: 1.75rem; }
+  .principle-card h3 { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--k-text); margin: 0; }
+  .principle-card p { font-size: 0.8rem; color: var(--k-text-muted); line-height: 1.6; margin: 0; }
+
+  /* FAQ */
+  .faq-section { background: var(--k-bg); }
+  .faq-inner { max-width: 720px; }
+  .faq-heading {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 800;
+    color: var(--k-text); margin: 0 0 2rem;
+  }
+  .faq-list { display: flex; flex-direction: column; gap: 0; }
+  .faq-item {
+    border-bottom: 1px solid var(--k-border);
+    padding: 0;
+  }
+  .faq-item:first-child { border-top: 1px solid var(--k-border); }
+  .faq-question {
+    font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700;
+    color: var(--k-text); cursor: pointer; padding: 1.125rem 0;
+    display: flex; align-items: center; justify-content: space-between;
+    list-style: none; gap: 1rem;
+    user-select: none;
+  }
+  .faq-question::after {
+    content: '+'; font-size: 1.25rem; color: #B699FF; flex-shrink: 0; transition: transform 0.3s;
+  }
+  .faq-item[open] .faq-question::after { transform: rotate(45deg); }
+  .faq-answer { padding: 0 0 1.125rem; }
+  .faq-answer p { font-size: 0.9rem; color: var(--k-text-muted); line-height: 1.7; margin: 0; }
+
+  /* CTA */
+  .btv-cta { background: var(--k-bg-card); }
+  .btv-cta-inner { text-align: center; max-width: 480px; margin-inline: auto; }
+  .btv-cta-inner h2 {
+    font-family: 'Poppins', sans-serif; font-size: 1.75rem; font-weight: 800;
+    color: var(--k-text); margin: 0 0 0.75rem;
+  }
+  .btv-cta-inner p { font-size: 0.95rem; color: var(--k-text-muted); margin: 0 0 1.5rem; }
+  .btv-cta-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .btv-btn-dark {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: var(--k-dark); color: var(--k-bg);
+    border-radius: 0.625rem; font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 0.875rem; text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btv-btn-dark:hover { opacity: 0.85; transform: translateY(-2px); }
+  .btv-btn-outline {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: transparent; color: var(--k-text-muted);
+    border: 1px solid var(--k-border); border-radius: 0.625rem;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.875rem;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .btv-btn-outline:hover { border-color: #B699FF; color: #B699FF; }
+
+  @media (max-width: 900px) {
+    .story-inner { grid-template-columns: 1fr; }
+    .story-sidebar { position: static; }
+    .btv-hero-inner { grid-template-columns: 1fr; }
+  }
+</style>

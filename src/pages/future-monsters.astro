@@ -1,0 +1,398 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import { monsters } from '../data/monsters';
+
+const futureMonsters = monsters.filter(m => m.status === 'coming-soon');
+const activeMonsters = monsters.filter(m => m.status === 'active');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Future Monsters — khizology Universe Expanding"
+  description="5 new monsters are being built inside the khizology creative lab. Each one has a color, a purpose, and a mystery. Catch a glimpse of what's coming."
+  accentColor="#B699FF"
+>
+  <!-- Hero -->
+  <section class="fm-hero">
+    <div class="k-container">
+      <Breadcrumb crumbs={[{ label: 'Future Monsters' }]} accentColor="#B699FF" />
+      <div class="fm-hero-inner">
+        <div class="fm-hero-text">
+          <div class="fm-lab-badge">
+            <span class="fm-lab-dot"></span>
+            The Lab is active
+          </div>
+          <h1 class="fm-hero-title">
+            5 Monsters<br />
+            <span class="fm-hero-accent">Being Unleashed.</span>
+          </h1>
+          <p class="fm-hero-lead">
+            The khizology universe is expanding. These monsters are alive in the creative lab —
+            taking shape, gaining power. They have colors, personalities, and purposes.
+            But they're not ready to be named yet.
+          </p>
+        </div>
+        <div class="fm-hero-visual">
+          <div class="fm-orbs-grid">
+            {futureMonsters.map((m, i) => (
+              <div class="fm-orb" style={`--fc: ${m.color}; --idx: ${i}`}>
+                <div class="fm-orb-glow"></div>
+                <img src={`${base}${m.image}`} alt={`Future monster ${i + 1}`} width="48" height="48" loading={i < 2 ? 'eager' : 'lazy'} />
+                <span class="fm-orb-emoji">{m.emoji}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Monster cards -->
+  <section class="k-section fm-cards-section">
+    <div class="k-container">
+      <span class="k-section-label" style="color: #B699FF">Inside the Lab</span>
+      <h2 class="fm-section-title">5 Upcoming Monsters</h2>
+      <p class="fm-section-sub">Each one is taking shape. Each one is a universe of its own.</p>
+
+      <div class="fm-grid">
+        {futureMonsters.map((m, i) => (
+          <div class="fm-card" style={`--fc: ${m.color}; --delay: ${i * 0.1}s`}>
+            <div class="fm-card-glow"></div>
+            <div class="fm-card-top">
+              <div class="fm-img-wrap">
+                <img src={`${base}${m.image}`} alt={`Mystery monster ${i + 1}`} width="64" height="64" loading="lazy" />
+              </div>
+              <div class="fm-card-meta">
+                <span class="fm-locked-badge">🔒 LOCKED</span>
+                <span class="fm-num">#{String(i + 1).padStart(2, '0')}</span>
+              </div>
+            </div>
+            <div class="fm-card-body">
+              <div class="fm-name-row">
+                <span class="fm-name">{m.emoji} ???ooo</span>
+              </div>
+              <p class="fm-desc">{m.description}</p>
+              <span class="fm-tagline">{m.tagline}</span>
+            </div>
+            <div class="fm-card-footer">
+              <div class="fm-color-swatch" style={`background: ${m.color}`}></div>
+              <span class="fm-color-label" style={`color: ${m.color}`}>{m.color}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline tease -->
+  <section class="fm-timeline-section">
+    <div class="k-container">
+      <div class="fm-timeline-inner">
+        <div class="fm-timeline-text">
+          <span class="k-section-label" style="color: #B699FF">The Process</span>
+          <h2 class="fm-timeline-title">When do they arrive?</h2>
+          <p class="fm-timeline-desc">
+            No fixed date. Each monster releases when it's truly ready — not a day before.
+            The khizology creative process doesn't rush. Follow along and you'll know first.
+          </p>
+          <div class="fm-steps">
+            <div class="fm-step done">
+              <span class="fm-step-dot"></span>
+              <div>
+                <strong>Identity</strong>
+                <p>Color, personality, and purpose defined.</p>
+              </div>
+            </div>
+            <div class="fm-step done">
+              <span class="fm-step-dot"></span>
+              <div>
+                <strong>Design</strong>
+                <p>Visual concept being crafted in the lab.</p>
+              </div>
+            </div>
+            <div class="fm-step active">
+              <span class="fm-step-dot pulse"></span>
+              <div>
+                <strong>Build</strong>
+                <p>Content and features in development.</p>
+              </div>
+            </div>
+            <div class="fm-step">
+              <span class="fm-step-dot"></span>
+              <div>
+                <strong>Launch</strong>
+                <p>Unleashed into the universe.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fm-cta-box">
+          <div class="fm-cta-card">
+            <span class="fm-cta-emoji">🔔</span>
+            <h3>Be first to know</h3>
+            <p>Drop a vibe to stay notified when new monsters unlock.</p>
+            <a href="/drop-a-vibe" class="fm-cta-btn">Stay in the Loop →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Active monsters -->
+  <section class="fm-active-section">
+    <div class="k-container">
+      <div class="fm-active-header">
+        <span class="k-section-label" style="color: #B699FF">Meanwhile</span>
+        <h2 class="fm-active-title">4 Active Monsters Are Ready</h2>
+      </div>
+      <div class="fm-active-grid">
+        {activeMonsters.map(m => (
+          <a href={m.route} class="fm-active-card" style={`--mc: ${m.color}`}>
+            <div class="fm-active-glow"></div>
+            <img src={`${base}${m.image}`} alt={m.name} width="56" height="56" loading="lazy" />
+            <div>
+              <h3 class="fm-active-name">{m.name}</h3>
+              <p class="fm-active-module">{m.module}</p>
+            </div>
+            <span class="fm-active-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .fm-hero {
+    background: var(--k-bg); padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--k-border);
+  }
+  .fm-hero-inner {
+    display: grid; grid-template-columns: 1fr; gap: 3rem;
+    align-items: center; margin-top: 1rem;
+  }
+  @media (min-width: 900px) { .fm-hero-inner { grid-template-columns: 1fr 1fr; } }
+
+  .fm-lab-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .35rem .875rem; border-radius: 999px;
+    background: color-mix(in srgb, #B699FF 10%, transparent);
+    border: 1px solid color-mix(in srgb, #B699FF 30%, transparent);
+    font-size: .75rem; font-weight: 700; color: #B699FF;
+    font-family: 'Poppins', sans-serif; margin-bottom: .75rem;
+  }
+  .fm-lab-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #B699FF;
+    animation: labPulse 2s ease-in-out infinite;
+  }
+  @keyframes labPulse {
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(182,153,255,.4); }
+    50% { opacity: .7; transform: scale(1.3); box-shadow: 0 0 0 6px rgba(182,153,255,0); }
+  }
+
+  .fm-hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-weight: 900; line-height: 1.1; color: var(--k-text); margin: 0 0 1rem;
+  }
+  .fm-hero-accent { color: #B699FF; }
+  .fm-hero-lead {
+    font-size: 1rem; color: var(--k-text-muted); line-height: 1.7;
+    max-width: 480px; margin: 0;
+  }
+
+  /* Orbs visual */
+  .fm-orbs-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem;
+  }
+  .fm-orb {
+    position: relative; background: var(--k-bg-card);
+    border: 1.5px dashed var(--fc); border-radius: 1.125rem;
+    aspect-ratio: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: .375rem;
+    overflow: hidden; transition: border-style .2s;
+    animation: orbIn .4s ease both;
+    animation-delay: calc(var(--idx) * .1s);
+  }
+  .fm-orb:hover { border-style: solid; }
+  .fm-orb-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, var(--fc) 0%, transparent 70%);
+    opacity: .07; pointer-events: none; transition: opacity .3s;
+  }
+  .fm-orb:hover .fm-orb-glow { opacity: .15; }
+  .fm-orb img { filter: grayscale(.4); width: 48px; height: 48px; object-fit: contain; }
+  .fm-orb-emoji { font-size: .875rem; }
+  @keyframes orbIn {
+    from { opacity: 0; transform: scale(.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Section */
+  .fm-section-title {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800; color: var(--k-text); margin: .25rem 0 .5rem;
+  }
+  .fm-section-sub { font-size: .9rem; color: var(--k-text-muted); margin: 0 0 2rem; }
+
+  /* Monster cards */
+  .fm-cards-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); }
+  .fm-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;
+  }
+  .fm-card {
+    position: relative; background: var(--k-bg);
+    border: 2px dashed var(--fc); border-radius: 1.25rem;
+    padding: 1.5rem; overflow: hidden;
+    display: flex; flex-direction: column; gap: .875rem;
+    transition: border-style .2s, transform .2s;
+    animation: cardIn .4s ease both; animation-delay: var(--delay, 0s);
+  }
+  .fm-card:hover { border-style: solid; transform: translateY(-3px); }
+  .fm-card-glow {
+    position: absolute; top: -30px; right: -30px;
+    width: 100px; height: 100px; border-radius: 50%;
+    background: var(--fc); opacity: .08; filter: blur(25px);
+    pointer-events: none; transition: opacity .3s;
+  }
+  .fm-card:hover .fm-card-glow { opacity: .18; }
+  .fm-card-top { display: flex; align-items: center; justify-content: space-between; }
+  .fm-img-wrap {
+    width: 64px; height: 64px; border-radius: .875rem;
+    background: color-mix(in srgb, var(--fc) 15%, transparent);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .fm-img-wrap img { width: 52px; height: 52px; object-fit: contain; filter: grayscale(.5); }
+  .fm-card-meta { display: flex; flex-direction: column; align-items: flex-end; gap: .375rem; }
+  .fm-locked-badge {
+    font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--k-text-muted); background: var(--k-bg-card);
+    padding: .15rem .5rem; border-radius: 999px; border: 1px solid var(--k-border);
+    font-family: 'Poppins', sans-serif;
+  }
+  .fm-num {
+    font-family: 'Poppins', sans-serif; font-size: .7rem; font-weight: 700;
+    color: var(--fc); opacity: .6;
+  }
+  .fm-card-body { display: flex; flex-direction: column; gap: .375rem; }
+  .fm-name-row { display: flex; align-items: center; justify-content: space-between; }
+  .fm-name {
+    font-family: 'Poppins', sans-serif; font-size: 1rem;
+    font-weight: 800; color: var(--fc);
+  }
+  .fm-desc { font-size: .8rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; }
+  .fm-tagline {
+    font-size: .7rem; font-weight: 700; font-family: 'Poppins', sans-serif;
+    text-transform: uppercase; letter-spacing: .08em; color: var(--fc); opacity: .7;
+  }
+  .fm-card-footer {
+    display: flex; align-items: center; gap: .5rem; padding-top: .25rem;
+    border-top: 1px solid var(--k-border);
+  }
+  .fm-color-swatch { width: 14px; height: 14px; border-radius: 50%; }
+  .fm-color-label { font-size: .7rem; font-weight: 700; font-family: 'Poppins', monospace; }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Timeline */
+  .fm-timeline-section {
+    background: var(--k-bg); padding: 5rem 0; border-top: 1px solid var(--k-border);
+  }
+  .fm-timeline-inner {
+    display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;
+  }
+  @media (min-width: 768px) { .fm-timeline-inner { grid-template-columns: 1fr 1fr; } }
+  .fm-timeline-title {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 900; color: var(--k-text); margin: .5rem 0 1rem;
+  }
+  .fm-timeline-desc { font-size: .95rem; color: var(--k-text-muted); line-height: 1.7; margin: 0 0 1.5rem; }
+
+  .fm-steps { display: flex; flex-direction: column; gap: 1rem; }
+  .fm-step {
+    display: flex; gap: .875rem; align-items: flex-start;
+  }
+  .fm-step-dot {
+    width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+    background: var(--k-border); margin-top: .125rem;
+    border: 2px solid var(--k-border);
+  }
+  .fm-step.done .fm-step-dot { background: #B699FF; border-color: #B699FF; }
+  .fm-step.active .fm-step-dot {
+    background: #B699FF; border-color: #B699FF;
+    animation: stepPulse 2s ease-in-out infinite;
+  }
+  @keyframes stepPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(182,153,255,.4); }
+    50% { box-shadow: 0 0 0 6px rgba(182,153,255,0); }
+  }
+  .fm-step strong {
+    font-family: 'Poppins', sans-serif; font-size: .875rem; font-weight: 700; color: var(--k-text);
+  }
+  .fm-step p { font-size: .78rem; color: var(--k-text-muted); margin: .125rem 0 0; }
+  .fm-step.done strong, .fm-step.active strong { color: #B699FF; }
+
+  .fm-cta-card {
+    background: var(--k-bg-card); border: 1.5px solid #B699FF;
+    border-radius: 1.5rem; padding: 2rem; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: .875rem;
+  }
+  .fm-cta-emoji { font-size: 2.5rem; }
+  .fm-cta-card h3 {
+    font-family: 'Poppins', sans-serif; font-size: 1.25rem;
+    font-weight: 800; color: var(--k-text); margin: 0;
+  }
+  .fm-cta-card p { font-size: .875rem; color: var(--k-text-muted); margin: 0; }
+  .fm-cta-btn {
+    display: inline-flex; align-items: center; padding: .65rem 1.5rem;
+    background: #B699FF; color: #2A3439; border-radius: .625rem;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .875rem;
+    text-decoration: none; transition: opacity .2s;
+  }
+  .fm-cta-btn:hover { opacity: .85; }
+
+  /* Active monsters */
+  .fm-active-section {
+    background: var(--k-bg-card); border-top: 1px solid var(--k-border);
+    padding: 4rem 0;
+  }
+  .fm-active-header { margin-bottom: 1.5rem; }
+  .fm-active-title {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 800; color: var(--k-text); margin: .25rem 0 0;
+  }
+  .fm-active-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;
+  }
+  .fm-active-card {
+    position: relative; background: var(--k-bg); border: 1.5px solid var(--k-border);
+    border-radius: 1.125rem; padding: 1.25rem;
+    display: flex; align-items: center; gap: .875rem;
+    text-decoration: none; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .fm-active-card:hover { border-color: var(--mc); transform: translateY(-2px); }
+  .fm-active-glow {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 0 50%, var(--mc) 0%, transparent 60%);
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .fm-active-card:hover .fm-active-glow { opacity: .06; }
+  .fm-active-card img { border-radius: .5rem; flex-shrink: 0; object-fit: contain; }
+  .fm-active-name {
+    font-family: 'Poppins', sans-serif; font-size: .9rem;
+    font-weight: 800; color: var(--k-text); margin: 0 0 .125rem;
+  }
+  .fm-active-module { font-size: .75rem; color: var(--k-text-muted); margin: 0; }
+  .fm-active-arrow {
+    margin-left: auto; color: var(--mc); font-size: 1rem;
+    font-weight: 700; opacity: 0; transition: opacity .2s;
+  }
+  .fm-active-card:hover .fm-active-arrow { opacity: 1; }
+</style>

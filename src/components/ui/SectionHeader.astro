@@ -1,0 +1,82 @@
+---
+interface Props {
+  label?: string;
+  title: string;
+  description?: string;
+  accentColor?: string;
+  align?: 'left' | 'center';
+  cta?: { label: string; href: string };
+}
+const {
+  label,
+  title,
+  description,
+  accentColor,
+  align = 'left',
+  cta,
+} = Astro.props;
+---
+
+<div class={`section-header align-${align}`}>
+  {label && (
+    <span class="sh-label" style={accentColor ? `color: ${accentColor}` : ''}>
+      {label}
+    </span>
+  )}
+  <h2 class="sh-title">{title}</h2>
+  {description && <p class="sh-desc">{description}</p>}
+  {cta && (
+    <a href={cta.href} class="sh-cta" style={accentColor ? `border-color: ${accentColor}; color: ${accentColor}` : ''}>
+      {cta.label} →
+    </a>
+  )}
+</div>
+
+<style>
+  .section-header { margin-bottom: 2.5rem; }
+  .align-center { text-align: center; }
+  .align-left { text-align: left; }
+
+  .sh-label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--m-accent, var(--k-text-muted));
+    margin-bottom: 0.5rem;
+  }
+
+  .sh-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--k-text);
+    margin: 0 0 0.75rem;
+  }
+
+  .sh-desc {
+    font-size: 1rem;
+    color: var(--k-text-muted);
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+    max-width: 600px;
+  }
+  .align-center .sh-desc { margin-inline: auto; }
+
+  .sh-cta {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    font-family: 'Poppins', sans-serif;
+    border-bottom: 2px solid currentColor;
+    color: var(--k-text);
+    text-decoration: none;
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+  .sh-cta:hover { opacity: 0.7; }
+</style>

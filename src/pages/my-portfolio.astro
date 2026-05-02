@@ -1,0 +1,344 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+
+const skills = [
+  { category: 'Creative', items: ['Drawing & Illustration', 'Digital Art', 'Concept Art', 'Storytelling', 'Visual Design', 'Typography'] },
+  { category: 'Development', items: ['HTML/CSS/JS', 'TypeScript', 'React', 'Astro', 'Tailwind CSS', 'Git & GitHub'] },
+  { category: 'Content', items: ['Infographic Design', 'Content Strategy', 'Social Media', 'Knowledge Sharing', 'Brand Building'] },
+];
+
+const projects = [
+  {
+    name: 'khizology',
+    desc: 'A monster-powered creative knowledge universe. Artworks, Infographics, Toolbox, and Freebies — all in one creative brand.',
+    tags: ['Astro', 'TypeScript', 'Tailwind', 'Personal Brand'],
+    link: '/',
+    color: '#F5CF5C',
+    emoji: '🌍',
+  },
+  {
+    name: 'artooo — Artworks',
+    desc: '168+ original artworks including sketches, illustrations, character designs, and emotional storytelling through lines.',
+    tags: ['Drawing', 'Illustration', 'Character Design'],
+    link: '/artworks',
+    color: '#F5CF5C',
+    emoji: '🎨',
+  },
+  {
+    name: 'infooo — Infographics',
+    desc: 'Visual knowledge hub covering tech, psychology, productivity, finance, and more — knowledge made beautiful.',
+    tags: ['Design', 'Knowledge', 'Visual Communication'],
+    link: '/infographics',
+    color: '#5CCFAF',
+    emoji: '📊',
+  },
+  {
+    name: 'toolooo — Toolbox',
+    desc: 'Free online calculators and tools to simplify everyday tasks. Built to drive organic traffic and genuine value.',
+    tags: ['React', 'Tools', 'Calculators', 'SEO'],
+    link: '/toolbox',
+    color: '#F7933C',
+    emoji: '🔧',
+  },
+  {
+    name: 'freeooo — Freebies',
+    desc: 'Curated collection of free resources: 13 categories of icons, illustrations, backgrounds, fonts, and more.',
+    tags: ['Curation', 'Resources', 'Design Assets'],
+    link: '/freebies',
+    color: '#6CA6FF',
+    emoji: '🎁',
+  },
+];
+
+const timeline = [
+  { year: '2024', event: 'Launched khizology — the monster-powered creative universe' },
+  { year: '2024', event: 'Published 168+ original artworks in the artooo module' },
+  { year: '2023', event: 'Built the Toolbox with 50+ calculator tools across 8 categories' },
+  { year: '2023', event: 'Launched freeooo with 13 curated freebie categories' },
+  { year: '2022', event: 'Started creating digital infographics and sharing knowledge online' },
+  { year: '2021', event: 'Began the khizooo creative journey — art meets code' },
+];
+---
+
+<BaseLayout
+  title="My Portfolio"
+  description="khizooo's creative portfolio — a programmer by luck and an artist by nature. Explore artworks, projects, skills, and the story behind khizology."
+  accentColor="#F5CF5C"
+>
+  <div class="k-container" style="padding-top: 2rem;">
+    <Breadcrumb crumbs={[{ label: 'My Portfolio' }]} accentColor="#F5CF5C" />
+  </div>
+
+  <!-- ABOUT HERO -->
+  <section class="portfolio-hero k-section">
+    <div class="k-container">
+      <div class="ph-inner">
+        <div class="ph-content">
+          <span class="k-section-label" style="color: #F5CF5C">My Portfolio</span>
+          <h1 class="ph-title">By luck, a programmer.<br />By nature, an artist.</h1>
+          <div class="ph-bio">
+            <p>
+              I'm <strong>khizooo</strong> — a creative who lives between a sketchpad and a keyboard.
+              My world is built from imagination and logic, where every idea becomes a color, a line,
+              or a line of code. I believe in creating things that feel real and full of emotion.
+            </p>
+            <p>
+              I've worked on many projects that taught me about creativity, people, and passion.
+              I believe in keeping things simple, meaningful, and original — because true art is
+              something you feel, not just see.
+            </p>
+            <p>
+              <strong>khizology</strong> is the living proof of that belief: a universe where artworks,
+              knowledge, tools, and resources come together, powered by imagination.
+            </p>
+          </div>
+          <div class="ph-ctas">
+            <a href="/drop-a-vibe" class="ph-btn-primary">Get in Touch ✉️</a>
+            <a href="/behind-the-vibes" class="ph-btn-ghost">Behind the Vibes →</a>
+          </div>
+        </div>
+        <div class="ph-visual">
+          <div class="ph-img-wrap">
+            <img src="/images/site/lp-profile-img.png" alt="khizooo" loading="eager" />
+            <div class="ph-img-badge">
+              <span>🎨 Art meets Code</span>
+            </div>
+          </div>
+          <div class="ph-img-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="k-section skills-section">
+    <div class="k-container">
+      <SectionHeader
+        label="Skills"
+        title="What I Bring"
+        accentColor="#F5CF5C"
+      />
+      <div class="skills-grid">
+        {skills.map(group => (
+          <div class="skill-group">
+            <h3 class="skill-category">{group.category}</h3>
+            <div class="skill-tags">
+              {group.items.map(skill => (
+                <span class="skill-tag">{skill}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="k-section projects-section">
+    <div class="k-container">
+      <SectionHeader
+        label="Projects"
+        title="What I've Built"
+        description="khizology is the flagship. Each monster module is a project in its own right."
+        accentColor="#F5CF5C"
+      />
+      <div class="projects-grid">
+        {projects.map(p => (
+          <a href={p.link} class="project-card" style={`--p-color: ${p.color}`}>
+            <div class="pc-header">
+              <span class="pc-emoji">{p.emoji}</span>
+              <h3 class="pc-name">{p.name}</h3>
+            </div>
+            <p class="pc-desc">{p.desc}</p>
+            <div class="pc-tags">
+              {p.tags.map(tag => <span class="pc-tag">{tag}</span>)}
+            </div>
+            <span class="pc-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="k-section timeline-section">
+    <div class="k-container">
+      <SectionHeader
+        label="Journey"
+        title="How It Started"
+        accentColor="#F5CF5C"
+      />
+      <div class="timeline">
+        {timeline.map((item, i) => (
+          <div class="timeline-item">
+            <div class="timeline-year">{item.year}</div>
+            <div class="timeline-connector">
+              <div class="timeline-dot"></div>
+              {i < timeline.length - 1 && <div class="timeline-line"></div>}
+            </div>
+            <div class="timeline-content">{item.event}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="k-section portfolio-cta">
+    <div class="k-container">
+      <div class="pcta-inner">
+        <div class="pcta-monster">
+          <img src="/images/Monsters/artooo.png" alt="" width="64" height="64" />
+        </div>
+        <h2>Want to collaborate or just say hi?</h2>
+        <p>I'm open to creative collaborations, feedback, and good conversations about art and code.</p>
+        <a href="/drop-a-vibe" class="ph-btn-primary">Drop a Vibe →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .portfolio-hero { background: var(--k-bg-card); border-bottom: 1px solid var(--k-border); }
+  .ph-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+
+  .ph-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 900; line-height: 1.15;
+    color: var(--k-text); margin: 0 0 1.5rem;
+  }
+
+  .ph-bio { display: flex; flex-direction: column; gap: 0.875rem; margin-bottom: 2rem; }
+  .ph-bio p { font-size: 0.95rem; color: var(--k-text-muted); line-height: 1.7; margin: 0; }
+
+  .ph-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  .ph-btn-primary {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: var(--k-dark); color: var(--k-bg);
+    border-radius: 0.625rem; font-family: 'Poppins', sans-serif;
+    font-weight: 700; font-size: 0.875rem; text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .ph-btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  .ph-btn-ghost {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+    background: transparent; color: var(--k-text-muted);
+    border: 1px solid var(--k-border); border-radius: 0.625rem;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.875rem;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .ph-btn-ghost:hover { border-color: var(--k-text); color: var(--k-text); }
+
+  .ph-visual { position: relative; display: flex; justify-content: center; }
+  .ph-img-wrap {
+    position: relative;
+    width: 340px; max-width: 100%;
+    border-radius: 1.5rem; overflow: hidden;
+    border: 2px solid var(--k-border);
+  }
+  .ph-img-wrap img { width: 100%; object-fit: cover; display: block; }
+  .ph-img-badge {
+    position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
+    padding: 0.4rem 1rem; border-radius: 999px;
+    font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700;
+    color: var(--k-dark); white-space: nowrap;
+  }
+  html.dark .ph-img-badge { background: rgba(26,31,46,0.9); color: #fff; }
+  .ph-img-glow {
+    position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+    width: 250px; height: 250px; border-radius: 50%;
+    background: var(--m-artooo); opacity: 0.12; filter: blur(50px);
+    pointer-events: none;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--k-bg); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .skill-group { display: flex; flex-direction: column; gap: 0.75rem; }
+  .skill-category {
+    font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--m-artooo);
+    margin: 0;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .skill-tag {
+    display: inline-flex; padding: 0.3rem 0.75rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--k-text);
+  }
+
+  /* PROJECTS */
+  .projects-section { background: var(--k-bg-card); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .project-card {
+    position: relative;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    padding: 1.5rem;
+    background: var(--k-bg); border: 1px solid var(--k-border); border-radius: 1rem;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, transform 0.2s;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--p-color, var(--m-artooo));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .project-card:hover { border-color: var(--p-color, var(--m-artooo)); transform: translateY(-3px); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .pc-header { display: flex; align-items: center; gap: 0.75rem; }
+  .pc-emoji { font-size: 1.5rem; }
+  .pc-name { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 700; color: var(--k-text); margin: 0; }
+  .pc-desc { font-size: 0.8rem; color: var(--k-text-muted); line-height: 1.6; margin: 0; flex: 1; }
+  .pc-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .pc-tag {
+    display: inline-flex; padding: 0.2rem 0.6rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: 999px; font-size: 0.7rem; font-weight: 600; color: var(--k-text-muted);
+  }
+  .pc-arrow { color: var(--p-color, var(--m-artooo)); font-weight: 700; font-size: 1rem; align-self: flex-end; }
+
+  /* TIMELINE */
+  .timeline-section { background: var(--k-bg); }
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item { display: grid; grid-template-columns: 4rem 2rem 1fr; gap: 0.75rem; align-items: flex-start; }
+  .timeline-year {
+    font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700;
+    color: var(--m-artooo); padding-top: 0.125rem; text-align: right;
+  }
+  .timeline-connector { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .timeline-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--m-artooo); flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+  .timeline-line { width: 2px; flex: 1; min-height: 2rem; background: var(--k-border); }
+  .timeline-content { font-size: 0.9rem; color: var(--k-text); padding-bottom: 1.5rem; padding-top: 0.125rem; }
+
+  /* CTA */
+  .portfolio-cta { background: var(--k-bg-card); }
+  .pcta-inner { text-align: center; max-width: 520px; margin-inline: auto; }
+  .pcta-monster { margin-bottom: 1rem; }
+  .pcta-inner h2 {
+    font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800;
+    color: var(--k-text); margin: 0 0 0.75rem;
+  }
+  .pcta-inner p { font-size: 0.95rem; color: var(--k-text-muted); margin: 0 0 1.5rem; }
+
+  @media (max-width: 768px) {
+    .ph-inner { grid-template-columns: 1fr; }
+    .ph-visual { order: -1; }
+    .ph-img-wrap { width: 100%; max-width: 320px; }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>

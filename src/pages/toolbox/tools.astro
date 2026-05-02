@@ -1,0 +1,240 @@
+---
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { toolGroups, mvpWebTools } from '../../data/toolsData';
+import { monsters } from '../../data/monsters';
+
+const ACCENT = '#F7933C';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
+---
+
+<BaseLayout
+  title="Free Online Tools — toolooo by khizooo"
+  description={`${totalTools}+ free web tools for creators, businesses, and developers. Instagram bio scorer, caption generators, SEO tools, and more.`}
+  accentColor={ACCENT}
+>
+  <!-- Hero -->
+  <section class="tl-hero">
+    <div class="k-container">
+      <Breadcrumb
+        crumbs={[{ label: 'Toolbox', href: '/toolbox' }, { label: 'Tools' }]}
+        accentColor={ACCENT}
+      />
+      <div class="tl-hero-inner">
+        <div class="tl-hero-text">
+          <div class="tl-hero-badge">
+            <img src={`${base}/images/Monsters/toolooo.png`} alt="toolooo" width="36" height="36" />
+            <span class="k-section-label" style={`color: ${ACCENT}`}>toolooo · Web Tools</span>
+          </div>
+          <h1 class="tl-hero-title">
+            Free Tools for<br />
+            <span class="tl-hero-accent">Creators & Builders.</span>
+          </h1>
+          <p class="tl-hero-lead">
+            Social media tools, business copy generators, SEO helpers, and developer utilities.
+            All free. No signup required.
+          </p>
+          <div class="tl-hero-stats">
+            <div class="tl-stat"><span class="tl-stat-num">{totalTools}</span><span class="tl-stat-label">Tools</span></div>
+            <div class="tl-stat"><span class="tl-stat-num">{toolGroups.length}</span><span class="tl-stat-label">Categories</span></div>
+            <div class="tl-stat"><span class="tl-stat-num">Free</span><span class="tl-stat-label">Always</span></div>
+          </div>
+        </div>
+        <div class="tl-hero-visual">
+          <div class="tl-mvp-preview">
+            {mvpWebTools.map((t, i) => (
+              <div class="tl-mvp-chip" style={`--idx: ${i}`}>
+                <span>{t.icon}</span>
+                <span>{t.name}</span>
+                <span class="tl-mvp-label">MVP</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool groups -->
+  {toolGroups.map(group => (
+    <section class="k-section tl-group-section" id={group.slug}>
+      <div class="k-container">
+        <div class="tl-group-header">
+          <div class="tl-group-icon-wrap" style={`background: color-mix(in srgb, ${group.color} 15%, transparent)`}>
+            <span>{group.icon}</span>
+          </div>
+          <div>
+            <span class="k-section-label" style={`color: ${ACCENT}`}>{group.tools.length} tools</span>
+            <h2 class="tl-group-title">{group.title}</h2>
+            <p class="tl-group-desc">{group.description}</p>
+          </div>
+        </div>
+        <div class="tl-tools-grid">
+          {group.tools.map(tool => (
+            <div class={`tl-tool-card${tool.isMVP ? ' mvp' : ''}`} style={`--tc: ${group.color}`}>
+              <div class="tl-tool-top">
+                <div class="tl-tool-icon-wrap">
+                  <span class="tl-tool-icon">{tool.icon}</span>
+                </div>
+                <div class="tl-tool-badges">
+                  {tool.isMVP && <span class="tl-badge mvp">MVP</span>}
+                  {tool.isNew && <span class="tl-badge new">New</span>}
+                  {tool.isPopular && <span class="tl-badge popular">Popular</span>}
+                  {!tool.isMVP && <span class="tl-badge soon">Soon</span>}
+                </div>
+              </div>
+              <h3 class="tl-tool-name">{tool.name}</h3>
+              <p class="tl-tool-desc">{tool.description}</p>
+              {tool.live ? (
+                <a href={`/toolbox/tools/${tool.slug}`} class="tl-tool-btn live">Open Tool →</a>
+              ) : (
+                <button class="tl-tool-btn disabled" disabled>Coming Soon</button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Nav between tools/calculators -->
+  <section class="tl-switch-section">
+    <div class="k-container">
+      <div class="tl-switch-inner">
+        <div class="tl-switch-card active">
+          <span>🔧</span>
+          <strong>Web Tools</strong>
+          <span class="tl-switch-you">← You are here</span>
+        </div>
+        <a href="/toolbox/calculators" class="tl-switch-card link">
+          <span>🧮</span>
+          <strong>Calculators</strong>
+          <span class="tl-switch-arrow">Explore 200+ →</span>
+        </a>
+        <a href="/toolbox" class="tl-switch-card link">
+          <span>🏠</span>
+          <strong>All Toolbox</strong>
+          <span class="tl-switch-arrow">Back to hub →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other monsters strip -->
+  <section class="tl-other-section">
+    <div class="k-container">
+      <div class="tl-other-inner">
+        <p class="tl-other-label">More khizology →</p>
+        <div class="tl-other-links">
+          {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
+            <a href={m.route} class="tl-other-link" style={`--mc: ${m.color}`}>
+              <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
+              <span>{m.module}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .tl-hero { background: var(--k-bg); padding: 3rem 0 2rem; border-bottom: 1px solid var(--k-border); }
+  .tl-hero-inner { display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: center; margin-top: 1rem; }
+  @media (min-width: 900px) { .tl-hero-inner { grid-template-columns: 1fr 1fr; } }
+  .tl-hero-badge { display: flex; align-items: center; gap: .625rem; margin-bottom: .5rem; }
+  .tl-hero-badge img { border-radius: .5rem; }
+  .tl-hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 900; line-height: 1.1; color: var(--k-text); margin: .25rem 0 1rem; }
+  .tl-hero-accent { color: #F7933C; }
+  .tl-hero-lead { font-size: 1rem; color: var(--k-text-muted); line-height: 1.7; max-width: 460px; margin: 0 0 1.5rem; }
+  .tl-hero-stats { display: flex; gap: 2rem; }
+  .tl-stat { display: flex; flex-direction: column; gap: .125rem; }
+  .tl-stat-num { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 900; color: #F7933C; line-height: 1; }
+  .tl-stat-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--k-text-muted); }
+
+  .tl-mvp-preview { display: flex; flex-direction: column; gap: .625rem; }
+  .tl-mvp-chip {
+    display: flex; align-items: center; gap: .75rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: .875rem; padding: .75rem 1rem;
+    font-size: .875rem; color: var(--k-text); font-family: 'Poppins', sans-serif; font-weight: 600;
+    animation: slideIn .3s ease both; animation-delay: calc(var(--idx) * .07s);
+  }
+  .tl-mvp-label {
+    margin-left: auto; font-size: .65rem; font-weight: 700; text-transform: uppercase;
+    color: #F7933C; background: color-mix(in srgb, #F7933C 12%, transparent);
+    padding: .15rem .5rem; border-radius: 999px;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+
+  /* Group sections */
+  .tl-group-section { background: var(--k-bg); border-top: 1px solid var(--k-border); }
+  .tl-group-section:nth-child(even) { background: var(--k-bg-card); }
+  .tl-group-header { display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; }
+  .tl-group-icon-wrap { width: 56px; height: 56px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; flex-shrink: 0; }
+  .tl-group-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 800; color: var(--k-text); margin: .125rem 0 .375rem; }
+  .tl-group-desc { font-size: .875rem; color: var(--k-text-muted); margin: 0; }
+
+  .tl-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.125rem; }
+  .tl-tool-card {
+    background: var(--k-bg-card); border: 1.5px solid var(--k-border);
+    border-radius: 1.125rem; padding: 1.375rem;
+    display: flex; flex-direction: column; gap: .625rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .tl-group-section:nth-child(even) .tl-tool-card { background: var(--k-bg); }
+  .tl-tool-card:hover, .tl-tool-card.mvp { border-color: var(--tc); }
+  .tl-tool-card:hover { transform: translateY(-2px); }
+  .tl-tool-top { display: flex; align-items: center; justify-content: space-between; }
+  .tl-tool-icon-wrap { width: 44px; height: 44px; border-radius: .75rem; background: color-mix(in srgb, var(--tc) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.375rem; }
+  .tl-tool-badges { display: flex; gap: .375rem; flex-wrap: wrap; justify-content: flex-end; }
+
+  /* Badges */
+  .tl-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
+  .tl-badge.mvp { background: color-mix(in srgb, #F7933C 15%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 30%, transparent); }
+  .tl-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
+  .tl-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
+  .tl-badge.soon { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); }
+
+  .tl-tool-name { font-family: 'Poppins', sans-serif; font-size: .9rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .tl-tool-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
+  .tl-tool-btn {
+    align-self: flex-start; padding: .4rem .875rem; border-radius: .5rem;
+    font-weight: 700; font-size: .78rem; font-family: 'Poppins', sans-serif;
+    text-decoration: none; transition: opacity .2s;
+  }
+  .tl-tool-btn.live { background: #F7933C; color: #fff; border: none; cursor: pointer; }
+  .tl-tool-btn.live:hover { opacity: .85; }
+  .tl-tool-btn.disabled { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); cursor: not-allowed; opacity: .6; }
+
+  /* Switch nav */
+  .tl-switch-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
+  .tl-switch-inner { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .tl-switch-card {
+    flex: 1; min-width: 180px; background: var(--k-bg); border: 1.5px solid var(--k-border);
+    border-radius: 1rem; padding: 1.25rem;
+    display: flex; flex-direction: column; gap: .25rem;
+    font-size: .875rem; color: var(--k-text); font-family: 'Poppins', sans-serif;
+  }
+  .tl-switch-card strong { font-size: 1rem; font-weight: 800; }
+  .tl-switch-card.active { border-color: #F7933C; }
+  .tl-switch-card.link { text-decoration: none; transition: border-color .2s, transform .2s; cursor: pointer; }
+  .tl-switch-card.link:hover { border-color: #F7933C; transform: translateY(-2px); }
+  .tl-switch-you { font-size: .72rem; color: #F7933C; font-weight: 700; }
+  .tl-switch-arrow { font-size: .78rem; color: var(--k-text-muted); }
+
+  /* Other */
+  .tl-other-section { background: var(--k-bg); border-top: 1px solid var(--k-border); padding: 2rem 0; }
+  .tl-other-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: space-between; }
+  .tl-other-label { font-size: .8rem; font-weight: 700; color: var(--k-text-muted); }
+  .tl-other-links { display: flex; gap: .625rem; flex-wrap: wrap; }
+  .tl-other-link {
+    display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .625rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: .75rem;
+    text-decoration: none; color: var(--k-text-muted); font-size: .7rem; font-weight: 600; min-width: 64px;
+    transition: border-color .2s, color .2s;
+  }
+  .tl-other-link:hover { border-color: var(--mc); color: var(--mc); }
+</style>
