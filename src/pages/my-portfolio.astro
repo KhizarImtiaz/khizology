@@ -15,7 +15,7 @@ const projects = [
     desc: 'A monster-powered creative knowledge universe. Artworks, Infographics, Toolbox, and Freebies — all in one creative brand.',
     tags: ['Astro', 'TypeScript', 'Tailwind', 'Personal Brand'],
     link: '/',
-    color: '#F5CF5C',
+    color: 'var(--k-accent)',
     emoji: '🌍',
   },
   {
@@ -65,10 +65,10 @@ const timeline = [
 <BaseLayout
   title="My Portfolio"
   description="khizooo's creative portfolio — a programmer by luck and an artist by nature. Explore artworks, projects, skills, and the story behind khizology."
-  accentColor="#F5CF5C"
+  accentColor="var(--k-accent)"
 >
   <div class="k-container" style="padding-top: 2rem;">
-    <Breadcrumb crumbs={[{ label: 'My Portfolio' }]} accentColor="#F5CF5C" />
+    <Breadcrumb crumbs={[{ label: 'My Portfolio' }]} accentColor="var(--k-accent)" />
   </div>
 
   <!-- ABOUT HERO -->
@@ -76,7 +76,7 @@ const timeline = [
     <div class="k-container">
       <div class="ph-inner">
         <div class="ph-content">
-          <span class="k-section-label" style="color: #F5CF5C">My Portfolio</span>
+          <span class="k-section-label" style="color: var(--k-accent)">My Portfolio</span>
           <h1 class="ph-title">By luck, a programmer.<br />By nature, an artist.</h1>
           <div class="ph-bio">
             <p>
@@ -101,7 +101,7 @@ const timeline = [
         </div>
         <div class="ph-visual">
           <div class="ph-img-wrap">
-            <img src="/images/site/lp-profile-img.png" alt="khizooo" loading="eager" />
+            <img src="/public/images/site/lp-profile-img.png" alt="khizooo" loading="eager" />
             <div class="ph-img-badge">
               <span>🎨 Art meets Code</span>
             </div>
@@ -118,7 +118,7 @@ const timeline = [
       <SectionHeader
         label="Skills"
         title="What I Bring"
-        accentColor="#F5CF5C"
+        accentColor="var(--k-accent)"
       />
       <div class="skills-grid">
         {skills.map(group => (
@@ -142,7 +142,7 @@ const timeline = [
         label="Projects"
         title="What I've Built"
         description="khizology is the flagship. Each monster module is a project in its own right."
-        accentColor="#F5CF5C"
+        accentColor="var(--k-accent)"
       />
       <div class="projects-grid">
         {projects.map(p => (
@@ -168,7 +168,7 @@ const timeline = [
       <SectionHeader
         label="Journey"
         title="How It Started"
-        accentColor="#F5CF5C"
+        accentColor="var(--k-accent)"
       />
       <div class="timeline">
         {timeline.map((item, i) => (
@@ -190,7 +190,7 @@ const timeline = [
     <div class="k-container">
       <div class="pcta-inner">
         <div class="pcta-monster">
-          <img src="/images/Monsters/artooo.png" alt="" width="64" height="64" />
+          <img src="/public/images/Monsters/khizooo.png" alt="" width="128" height="128" style="display: inline-block;background: var(--k-accent);padding: 12px;border-radius: 50%;}"/>
         </div>
         <h2>Want to collaborate or just say hi?</h2>
         <p>I'm open to creative collaborations, feedback, and good conversations about art and code.</p>
@@ -243,7 +243,7 @@ const timeline = [
     border-radius: 1.5rem; overflow: hidden;
     border: 2px solid var(--k-border);
   }
-  .ph-img-wrap img { width: 100%; object-fit: cover; display: block; }
+  .ph-img-wrap img { width: 100%; object-fit: cover; display: inline-block; }
   .ph-img-badge {
     position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
     background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
@@ -255,7 +255,7 @@ const timeline = [
   .ph-img-glow {
     position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
     width: 250px; height: 250px; border-radius: 50%;
-    background: var(--m-artooo); opacity: 0.12; filter: blur(50px);
+    background: var(--k-accent); opacity: 0.12; filter: blur(50px);
     pointer-events: none;
   }
 
@@ -265,7 +265,7 @@ const timeline = [
   .skill-group { display: flex; flex-direction: column; gap: 0.75rem; }
   .skill-category {
     font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--m-artooo);
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--k-accent);
     margin: 0;
   }
   .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -290,11 +290,11 @@ const timeline = [
   .project-card::before {
     content: '';
     position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: var(--p-color, var(--m-artooo));
+    background: var(--p-color, var(--k-accent));
     transform: scaleX(0); transform-origin: left;
     transition: transform 0.3s ease;
   }
-  .project-card:hover { border-color: var(--p-color, var(--m-artooo)); transform: translateY(-3px); }
+  .project-card:hover { border-color: var(--p-color, var(--k-accent)); transform: translateY(-3px); }
   .project-card:hover::before { transform: scaleX(1); }
   .pc-header { display: flex; align-items: center; gap: 0.75rem; }
   .pc-emoji { font-size: 1.5rem; }
@@ -306,7 +306,7 @@ const timeline = [
     background: var(--k-bg-card); border: 1px solid var(--k-border);
     border-radius: 999px; font-size: 0.7rem; font-weight: 600; color: var(--k-text-muted);
   }
-  .pc-arrow { color: var(--p-color, var(--m-artooo)); font-weight: 700; font-size: 1rem; align-self: flex-end; }
+  .pc-arrow { color: var(--p-color, var(--k-accent)); font-weight: 700; font-size: 1rem; align-self: flex-end; }
 
   /* TIMELINE */
   .timeline-section { background: var(--k-bg); }
@@ -314,12 +314,12 @@ const timeline = [
   .timeline-item { display: grid; grid-template-columns: 4rem 2rem 1fr; gap: 0.75rem; align-items: flex-start; }
   .timeline-year {
     font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700;
-    color: var(--m-artooo); padding-top: 0.125rem; text-align: right;
+    color: var(--k-accent); padding-top: 0.125rem; text-align: right;
   }
   .timeline-connector { display: flex; flex-direction: column; align-items: center; gap: 0; }
   .timeline-dot {
     width: 10px; height: 10px; border-radius: 50%;
-    background: var(--m-artooo); flex-shrink: 0;
+    background: var(--k-accent); flex-shrink: 0;
     margin-top: 0.2rem;
   }
   .timeline-line { width: 2px; flex: 1; min-height: 2rem; background: var(--k-border); }

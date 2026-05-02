@@ -56,19 +56,19 @@ const featuredFreebieCategories = [
       <div class="hero-visual">
         <div class="hero-monster-cluster">
           <div class="hm-card hm-main">
-            <img src="/images/Monsters/artooo.png" alt="artooo" width="72" height="72" />
+            <img src="/public/images/Monsters/artooo.png" alt="artooo" width="72" height="72" />
             <span>artooo</span>
           </div>
           <div class="hm-card hm-secondary hm-top">
-            <img src="/images/Monsters/infooo.png" alt="infooo" width="48" height="48" />
+            <img src="/public/images/Monsters/infooo.png" alt="infooo" width="48" height="48" />
             <span>infooo</span>
           </div>
           <div class="hm-card hm-secondary hm-right">
-            <img src="/images/Monsters/toolooo.png" alt="toolooo" width="48" height="48" />
+            <img src="/public/images/Monsters/toolooo.png" alt="toolooo" width="48" height="48" />
             <span>toolooo</span>
           </div>
           <div class="hm-card hm-secondary hm-bottom">
-            <img src="/images/Monsters/freeooo.png" alt="freeooo" width="48" height="48" />
+            <img src="/public/images/Monsters/freeooo.png" alt="freeooo" width="48" height="48" />
             <span>freeooo</span>
           </div>
         </div>
@@ -89,7 +89,7 @@ const featuredFreebieCategories = [
         label="The Universe"
         title="Meet the Monsters"
         description="Each monster is a creative module — a world of its own. 4 are live. 5 are being unleashed."
-        accentColor="#F5CF5C"
+        accentColor="var(--k-accent)"
         align="center"
       />
       <div class="monsters-grid">
@@ -116,7 +116,7 @@ const featuredFreebieCategories = [
             aria-label={art.title}
           >
             <img
-              src={`/images/artworks/${art.filename}`}
+              src={`/public/images/artworks/${art.filename}`}
               alt={art.title}
               loading="lazy"
               width="300"
@@ -240,7 +240,7 @@ const featuredFreebieCategories = [
     <div class="k-container">
       <div class="btv-inner">
         <div class="btv-content">
-          <span class="k-section-label" style="color: #B699FF">Behind the Vibes</span>
+          <span class="k-section-label" style="color: var(--k-accent)">Behind the Vibes</span>
           <h2>By luck, a programmer.<br />By nature, an artist.</h2>
           <p>
             khizology isn't just a website — it's a living record of ideas, experiments,
@@ -253,7 +253,7 @@ const featuredFreebieCategories = [
           </div>
         </div>
         <div class="btv-visual">
-          <img src="/images/site/creative-01.png" alt="khizooo creative" loading="lazy" />
+          <img src="/public/images/site/creative-01.png" alt="khizooo creative" loading="lazy" />
         </div>
       </div>
     </div>
@@ -265,7 +265,7 @@ const featuredFreebieCategories = [
       <div class="follow-inner">
         <div class="follow-monsters">
           {['artooo', 'infooo', 'toolooo', 'freeooo'].map(name => (
-            <img src={`/images/Monsters/${name}.png`} alt={name} width="48" height="48" class="follow-monster-img" />
+            <img src={`/public/images/Monsters/${name}.png`} alt={name} width="48" height="48" class="follow-monster-img" />
           ))}
         </div>
         <h2>Stay in the universe.</h2>
@@ -313,7 +313,7 @@ const featuredFreebieCategories = [
   .eyebrow-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
-    background: var(--m-artooo);
+    background: var(--k-accent);
     flex-shrink: 0;
     animation: blink 2s infinite;
   }
@@ -402,9 +402,9 @@ const featuredFreebieCategories = [
     animation: floatMain 5s ease-in-out infinite;
   }
   .hm-secondary { width: 80px; height: 80px; }
-  .hm-top { top: 0; left: 50%; transform: translateX(-50%); animation: floatY 5.5s ease-in-out infinite 0.5s; }
-  .hm-right { top: 50%; right: 0; transform: translateY(-50%); animation: floatX 6s ease-in-out infinite 1s; }
-  .hm-bottom { bottom: 0; left: 50%; transform: translateX(-50%); animation: floatYR 4.5s ease-in-out infinite 1.5s; }
+  .hm-top { top: 0; left: 50%; transform: translateX(-50%); animation: floatY 5.5s ease-in-out infinite 0.5s; border-color: var(--m-infooo); }
+  .hm-right { top: 50%; right: 0; transform: translateY(-50%); animation: floatX 6s ease-in-out infinite 1s; border-color: var(--m-toolooo);}
+  .hm-bottom { bottom: 0; left: 50%; transform: translateX(-50%); animation: floatYR 4.5s ease-in-out infinite 1.5s; border-color: var(--m-freeooo);}
   @keyframes floatMain { 0%,100%{transform:translate(-50%,-50%)} 50%{transform:translate(-50%,calc(-50% - 8px))} }
   @keyframes floatY { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
   @keyframes floatX { 0%,100%{transform:translateY(-50%) translateX(0)} 50%{transform:translateY(-50%) translateX(6px)} }
@@ -641,7 +641,7 @@ const featuredFreebieCategories = [
   .follow-ctas { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
   .btn-primary-inv {
     display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
-    background: var(--m-artooo); color: var(--k-dark);
+    background: var(--k-accent); color: var(--k-dark);
     border-radius: 0.625rem; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.875rem;
     text-decoration: none; transition: opacity 0.2s, transform 0.2s;
   }

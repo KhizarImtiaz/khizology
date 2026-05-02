@@ -16,7 +16,7 @@ const currentPath = Astro.url.pathname;
     <nav class="k-nav-inner" aria-label="Main navigation">
       <!-- Logo -->
       <a href="/" class="k-logo" aria-label="khizology home">
-        <img src="/images/Monsters/artooo.png" alt="" width="32" height="32" class="k-logo-img" />
+        <img src="/public/images/Monsters/khizooo.png" alt="" width="32" height="32" class="k-logo-img" />
         <span class="k-logo-text">khiz<span class="k-logo-accent">ology</span></span>
       </a>
 
@@ -97,19 +97,22 @@ const currentPath = Astro.url.pathname;
     gap: 0.5rem;
     font-family: 'Poppins', sans-serif;
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     color: var(--k-text);
     text-decoration: none;
     white-space: nowrap;
     flex-shrink: 0;
   }
   .k-logo-img {
-    width: 32px;
-    height: 32px;
+    width: 35px;
+    height: 35px;
     object-fit: contain;
     animation: float 6s ease-in-out infinite;
+    background: var(--k-accent);
+    padding: 4px;
+    border-radius: 50%;
   }
-  .k-logo-accent { color: var(--m-artooo); }
+  .k-logo-accent { color: var(--k-accent); }
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -244,7 +247,7 @@ const currentPath = Astro.url.pathname;
   .k-mobile-cta {
     color: var(--k-dark);
     font-weight: 700;
-    border-left-color: var(--m-artooo) !important;
+    border-left-color: var(--k-accent) !important;
   }
 
   @media (max-width: 768px) {

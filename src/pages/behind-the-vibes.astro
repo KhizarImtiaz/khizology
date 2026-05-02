@@ -38,17 +38,17 @@ const faqs = [
 <BaseLayout
   title="Behind the Vibes"
   description="The story behind khizology — why it exists, how it was built, what drives it. A candid look at the creative universe of khizooo."
-  accentColor="#B699FF"
+  accentColor="var(--k-accent)"
 >
   <div class="k-container" style="padding-top: 2rem;">
-    <Breadcrumb crumbs={[{ label: 'Behind the Vibes' }]} accentColor="#B699FF" />
+    <Breadcrumb crumbs={[{ label: 'Behind the Vibes' }]} accentColor="var(--k-accent)" />
   </div>
 
   <!-- HERO -->
   <section class="k-section btv-hero">
     <div class="k-container btv-hero-inner">
       <div class="btv-hero-content">
-        <span class="k-section-label" style="color: #B699FF">Behind the Vibes</span>
+        <span class="k-section-label" style="color:var(--k-accent)">Behind the Vibes</span>
         <h1 class="btv-title">The Story Behind<br />the Universe</h1>
         <p class="btv-lead">
           khizology didn't start as a plan. It started as a feeling — the need to create
@@ -130,7 +130,7 @@ const faqs = [
         </div>
         <div class="story-monsters">
           {['artooo', 'infooo', 'toolooo', 'freeooo'].map(m => (
-            <img src={`/images/Monsters/${m}.png`} alt={m} width="52" height="52" />
+            <img src={`/public/images/Monsters/${m}.png`} alt={m} width="52" height="52" />
           ))}
         </div>
       </div>
