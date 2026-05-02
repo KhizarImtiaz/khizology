@@ -1,5 +1,6 @@
 ---
 import type { Monster } from '../../data/monsters';
+import { url, img } from '../../utils/url';
 
 interface Props {
   monster: Monster;
@@ -11,7 +12,7 @@ const isActive = monster.status === 'active';
 ---
 
 <a
-  href={monster.route}
+  href={url(monster.route)}
   class={`monster-card ${size === 'large' ? 'monster-card-lg' : ''} ${!isActive ? 'monster-card-locked' : ''}`}
   style={`--m-color: ${monster.color}; --m-color-light: ${monster.colorLight}`}
   aria-label={`${monster.name} — ${monster.module}${!isActive ? ' (Coming Soon)' : ''}`}
@@ -22,7 +23,7 @@ const isActive = monster.status === 'active';
   <!-- Monster image -->
   <div class="mc-image-wrap">
     <img
-      src={monster.image}
+      src={img(monster.image)}
       alt={monster.name}
       width="72"
       height="72"

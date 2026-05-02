@@ -3,6 +3,7 @@ import BaseLayout from '../../../components/layout/BaseLayout.astro';
 import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
 import { calculatorCategories, calculatorItemsMap } from '../../../data/calculators';
 import { monsters } from '../../../data/monsters';
+import { url } from '../../../utils/url';
 import ProfitMarginCalc from '../../../components/calculators/ProfitMarginCalc';
 import WebsiteCostCalc from '../../../components/calculators/WebsiteCostCalc';
 import PercentageCalc from '../../../components/calculators/PercentageCalc';
@@ -175,7 +176,7 @@ const genericFaqs = [
         {items.length > 0 ? (
           <div class="cc-cards-grid">
             {items.map((c, i) => (
-              <a href={`/toolbox/calculators/${c.slug}`} class={`cc-calc-card${c.isMVP ? ' mvp' : ''}`} style={`--cc: ${category.color}; --delay: ${i * 0.05}s`}>
+              <a href={url(`/toolbox/calculators/${c.slug}`)} class={`cc-calc-card${c.isMVP ? ' mvp' : ''}`} style={`--cc: ${category.color}; --delay: ${i * 0.05}s`}>
                 <div class="cc-calc-top">
                   <div class="cc-calc-icon-wrap"><span>{c.icon}</span></div>
                   <div class="cc-calc-badges">
@@ -226,7 +227,7 @@ const genericFaqs = [
         <h2 class="cc-related-title">Other Calculator Categories</h2>
         <div class="cc-related-grid">
           {relatedCats.map(rc => (
-            <a href={`/toolbox/calculators/${rc.slug}-calculator`} class="cc-related-card" style={`--rc: ${rc.color}`}>
+            <a href={url(`/toolbox/calculators/${rc.slug}-calculator`)} class="cc-related-card" style={`--rc: ${rc.color}`}>
               <span class="cc-related-icon">{rc.icon}</span>
               <span class="cc-related-name">{rc.title}</span>
               <span class="cc-related-count">{rc.count}+</span>
@@ -308,8 +309,8 @@ const genericFaqs = [
                     <div class="cd-cs-feat">✦ No account needed</div>
                   </div>
                   <div class="cd-cs-actions">
-                    <a href={`/toolbox/calculators/${categorySlug}-calculator`} class="cd-cs-btn-primary">← Back to {category?.title}</a>
-                    <a href="/toolbox/calculators" class="cd-cs-btn-secondary">All Calculators</a>
+                    <a href={url(`/toolbox/calculators/${categorySlug}-calculator`)} class="cd-cs-btn-primary">← Back to {category?.title}</a>
+                    <a href={url("/toolbox/calculators")} class="cd-cs-btn-secondary">All Calculators</a>
                   </div>
                 </div>
               </div>
@@ -360,7 +361,7 @@ const genericFaqs = [
                 <h3 class="cd-sidebar-h3">Related Calculators</h3>
                 <div class="cd-related-calcs">
                   {relatedCalcs.map(rc => (
-                    <a href={`/toolbox/calculators/${rc.slug}`} class="cd-rel-item">
+                    <a href={url(`/toolbox/calculators/${rc.slug}`)} class="cd-rel-item">
                       <span class="cd-rel-icon">{rc.icon}</span>
                       <span class="cd-rel-name">{rc.name}</span>
                     </a>
@@ -373,7 +374,7 @@ const genericFaqs = [
               <h3 class="cd-sidebar-h3">More khizology</h3>
               <div class="cd-monsters">
                 {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
-                  <a href={m.route} class="cd-monster-link" style={`--mc: ${m.color}`}>
+                  <a href={url(m.route)} class="cd-monster-link" style={`--mc: ${m.color}`}>
                     <img src={`${base}${m.image}`} alt={m.name} width="22" height="22" />
                     <span>{m.module}</span>
                   </a>

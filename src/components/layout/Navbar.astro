@@ -1,11 +1,13 @@
 ---
+import { url, img } from '../../utils/url';
+
 const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Artworks', href: '/artworks', accent: '#F5CF5C' },
-  { label: 'Infographics', href: '/infographics', accent: '#5CCFAF' },
-  { label: 'Toolbox', href: '/toolbox', accent: '#F7933C' },
-  { label: 'Freebies', href: '/freebies', accent: '#6CA6FF' },
-  { label: 'Portfolio', href: '/my-portfolio' },
+  { label: 'Home', href: url('/') },
+  { label: 'Artworks', href: url('/artworks'), accent: '#F5CF5C' },
+  { label: 'Infographics', href: url('/infographics'), accent: '#5CCFAF' },
+  { label: 'Toolbox', href: url('/toolbox'), accent: '#F7933C' },
+  { label: 'Freebies', href: url('/freebies'), accent: '#6CA6FF' },
+  { label: 'Portfolio', href: url('/my-portfolio') },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -15,8 +17,8 @@ const currentPath = Astro.url.pathname;
   <div class="k-container">
     <nav class="k-nav-inner" aria-label="Main navigation">
       <!-- Logo -->
-      <a href="/" class="k-logo" aria-label="khizology home">
-        <img src="/public/images/Monsters/khizooo.png" alt="" width="32" height="32" class="k-logo-img" />
+      <a href={url('/')} class="k-logo" aria-label="khizology home">
+        <img src={img('/images/Monsters/khizooo.png')} alt="" width="32" height="32" class="k-logo-img" />
         <span class="k-logo-text">khiz<span class="k-logo-accent">ology</span></span>
       </a>
 
@@ -37,10 +39,14 @@ const currentPath = Astro.url.pathname;
 
       <!-- Right controls -->
       <div class="k-nav-controls">
-        <a href="/drop-a-vibe" class="k-cta-btn">Drop a Vibe</a>
+        <a href={url('/drop-a-vibe')} class="k-cta-btn">Drop a Vibe</a>
         <button id="theme-toggle" class="k-theme-btn" aria-label="Toggle dark/light theme">
-          <span class="theme-icon-sun">☀️</span>
-          <span class="theme-icon-moon">🌙</span>
+          <span class="theme-icon-sun">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span class="theme-icon-moon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
         </button>
         <!-- Mobile hamburger -->
         <button id="mobile-menu-btn" class="k-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -65,7 +71,7 @@ const currentPath = Astro.url.pathname;
         </li>
       ))}
       <li>
-        <a href="/drop-a-vibe" class="k-mobile-link k-mobile-cta">Drop a Vibe ✉️</a>
+        <a href={url('/drop-a-vibe')} class="k-mobile-link k-mobile-cta">Drop a Vibe</a>
       </li>
     </ul>
   </div>
@@ -190,7 +196,6 @@ const currentPath = Astro.url.pathname;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
     transition: background 0.2s;
     color: var(--k-text);
   }
@@ -199,7 +204,7 @@ const currentPath = Astro.url.pathname;
   /* Sun/moon icons controlled by dark class */
   .theme-icon-moon { display: none; }
   html.dark .theme-icon-sun { display: none; }
-  html.dark .theme-icon-moon { display: block; }
+  html.dark .theme-icon-moon { display: flex; }
 
   /* Hamburger */
   .k-hamburger {

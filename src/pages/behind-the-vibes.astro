@@ -1,14 +1,15 @@
 ---
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import { url, img } from '../utils/url';
 
 const principles = [
-  { icon: '🎨', title: 'Art is Language', body: 'Every sketch, every line, every color choice is a word in a sentence. Art doesn\'t need translation — it speaks directly to whoever is ready to listen.' },
-  { icon: '⚡', title: 'Code is a Brush', body: 'Programming isn\'t a cold, logical act. It\'s a creative process. The way you structure a system, name a variable, design an interface — it\'s all art with a different medium.' },
-  { icon: '🧠', title: 'Knowledge Should Be Free', body: 'The best ideas grow when they\'re shared. khizology exists to make knowledge accessible, visual, and useful — because learning shouldn\'t be locked behind paywalls.' },
-  { icon: '🔮', title: 'Monsters Represent Ideas', body: 'Each monster in khizology is a living module — a personality with a purpose. They\'re not just mascots. They\'re the brand itself, the creative DNA of the universe.' },
-  { icon: '🌱', title: 'Slow and Intentional', body: 'Nothing here is rushed. Every artwork, every infographic, every tool is made with intention. Quality over quantity. Meaning over noise.' },
-  { icon: '🚀', title: 'Always Building', body: 'khizology is never finished. It\'s a living project that grows with time, ideas, and new monsters waiting to be unleashed. The journey is the destination.' },
+  { title: 'Art is Language', body: 'Every sketch, every line, every color choice is a word in a sentence. Art doesn\'t need translation — it speaks directly to whoever is ready to listen.' },
+  { title: 'Code is a Brush', body: 'Programming isn\'t a cold, logical act. It\'s a creative process. The way you structure a system, name a variable, design an interface — it\'s all art with a different medium.' },
+  { title: 'Knowledge Should Be Free', body: 'The best ideas grow when they\'re shared. khizology exists to make knowledge accessible, visual, and useful — because learning shouldn\'t be locked behind paywalls.' },
+  { title: 'Monsters Represent Ideas', body: 'Each monster in khizology is a living module — a personality with a purpose. They\'re not just mascots. They\'re the brand itself, the creative DNA of the universe.' },
+  { title: 'Slow and Intentional', body: 'Nothing here is rushed. Every artwork, every infographic, every tool is made with intention. Quality over quantity. Meaning over noise.' },
+  { title: 'Always Building', body: 'khizology is never finished. It\'s a living project that grows with time, ideas, and new monsters waiting to be unleashed. The journey is the destination.' },
 ];
 
 const faqs = [
@@ -108,8 +109,8 @@ const faqs = [
             <span class="sf-label">Original Artworks</span>
           </div>
           <div class="sf-item">
-            <span class="sf-num">8</span>
-            <span class="sf-label">Knowledge Categories</span>
+            <span class="sf-num">16</span>
+            <span class="sf-label">Knowledge Sections</span>
           </div>
           <div class="sf-item">
             <span class="sf-num">50+</span>
@@ -130,7 +131,7 @@ const faqs = [
         </div>
         <div class="story-monsters">
           {['artooo', 'infooo', 'toolooo', 'freeooo'].map(m => (
-            <img src={`/public/images/Monsters/${m}.png`} alt={m} width="52" height="52" />
+            <img src={img('/images/Monsters/' + m + '.png')} alt={m} width="52" height="52" />
           ))}
         </div>
       </div>
@@ -144,7 +145,6 @@ const faqs = [
       <div class="principles-grid">
         {principles.map(p => (
           <div class="principle-card">
-            <span class="principle-icon">{p.icon}</span>
             <h3>{p.title}</h3>
             <p>{p.body}</p>
           </div>
@@ -175,8 +175,8 @@ const faqs = [
         <h2>Still curious?</h2>
         <p>Drop a vibe, ask a question, or just explore the universe.</p>
         <div class="btv-cta-btns">
-          <a href="/drop-a-vibe" class="btv-btn-dark">Drop a Vibe ✉️</a>
-          <a href="/you-ask-i-answer" class="btv-btn-outline">You Ask, I Answer →</a>
+          <a href={url('/drop-a-vibe')} class="btv-btn-dark">Drop a Vibe</a>
+          <a href={url('/you-ask-i-answer')} class="btv-btn-outline">You Ask, I Answer →</a>
         </div>
       </div>
     </div>
@@ -205,13 +205,13 @@ const faqs = [
     font-family: 'Poppins', sans-serif;
     font-size: 1.1rem; font-weight: 700; font-style: italic;
     color: var(--k-text); line-height: 1.6;
-    border-left: 4px solid #B699FF;
+    border-left: 4px solid var(--k-accent);
     padding-left: 1.5rem; margin: 0;
   }
   blockquote cite {
     display: block; margin-top: 0.75rem;
     font-size: 0.8rem; font-style: normal; font-weight: 600;
-    color: #B699FF;
+    color: var(--k-accent);
   }
 
   /* STORY */
@@ -233,7 +233,7 @@ const faqs = [
   .sf-item { display: flex; flex-direction: column; gap: 0.1rem; }
   .sf-num {
     font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 900;
-    color: #B699FF;
+    color: var(--k-accent);
   }
   .sf-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--k-text-muted); }
 
@@ -252,10 +252,11 @@ const faqs = [
   }
   .principles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
   .principle-card {
-    background: var(--k-bg); border: 1px solid var(--k-border); border-radius: 1rem;
+    background: var(--k-bg); border: 1px solid var(--k-border);
+    border-left: 3px solid var(--k-accent);
+    border-radius: 0 1rem 1rem 0;
     padding: 1.5rem; display: flex; flex-direction: column; gap: 0.625rem;
   }
-  .principle-icon { font-size: 1.75rem; }
   .principle-card h3 { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--k-text); margin: 0; }
   .principle-card p { font-size: 0.8rem; color: var(--k-text-muted); line-height: 1.6; margin: 0; }
 
@@ -280,7 +281,7 @@ const faqs = [
     user-select: none;
   }
   .faq-question::after {
-    content: '+'; font-size: 1.25rem; color: #B699FF; flex-shrink: 0; transition: transform 0.3s;
+    content: '+'; font-size: 1.25rem; color: var(--k-accent); flex-shrink: 0; transition: transform 0.3s;
   }
   .faq-item[open] .faq-question::after { transform: rotate(45deg); }
   .faq-answer { padding: 0 0 1.125rem; }
@@ -310,7 +311,7 @@ const faqs = [
     font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.875rem;
     text-decoration: none; transition: border-color 0.2s, color 0.2s;
   }
-  .btv-btn-outline:hover { border-color: #B699FF; color: #B699FF; }
+  .btv-btn-outline:hover { border-color: var(--k-accent); color: var(--k-accent); }
 
   @media (max-width: 900px) {
     .story-inner { grid-template-columns: 1fr; }

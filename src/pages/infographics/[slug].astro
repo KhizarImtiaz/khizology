@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../components/layout/BaseLayout.astro';
+import { url } from '../../utils/url';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import { allInfographicSections, getInfographicSection } from '../../data/infographicsData';
 import { monsters } from '../../data/monsters';
@@ -89,7 +90,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
       {hasPosts ? (
         <div class="ig-posts-grid">
           {section.posts.map(post => (
-            <a href={`/infographics/${section.slug}/${post.slug}`} class="ig-post-card" style={`--ic: ${section.color}`}>
+            <a href={url(`/infographics/${section.slug}/${post.slug}`)} class="ig-post-card" style={`--ic: ${section.color}`}>
               <div class="ig-post-img-placeholder skeleton"></div>
               <div class="ig-post-body">
                 <div class="ig-post-meta">
@@ -135,7 +136,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
               <span class="ig-cta-icon">{section.icon}</span>
               <h3>Be first when {section.title} drops</h3>
               <p>Follow khizology and get notified when new infographics go live.</p>
-              <a href="/drop-a-vibe" class="ig-cta-btn" style={`background: ${ACCENT}`}>Stay in the Loop →</a>
+              <a href={url("/drop-a-vibe")} class="ig-cta-btn" style={`background: ${ACCENT}`}>Stay in the Loop →</a>
             </div>
           </div>
         </div>
@@ -149,7 +150,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
       <h2 class="ig-related-title">More Infographic Categories</h2>
       <div class="ig-related-grid">
         {relatedSections.map(s => (
-          <a href={`/infographics/${s.slug}`} class="ig-related-card" style={`--rc: ${s.color}`}>
+          <a href={url(`/infographics/${s.slug}`)} class="ig-related-card" style={`--rc: ${s.color}`}>
             <span class="ig-related-icon">{s.icon}</span>
             <span class="ig-related-name">{s.title}</span>
           </a>
@@ -168,7 +169,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
         </div>
         <div class="ig-cross-links">
           {monsters.filter(m => m.status === 'active').map(m => (
-            <a href={m.route} class="ig-cross-link" style={`--mc: ${m.color}`}>
+            <a href={url(m.route)} class="ig-cross-link" style={`--mc: ${m.color}`}>
               <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
               <span>{m.module}</span>
             </a>

@@ -3,6 +3,7 @@ import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import { freebiesCategories } from '../data/freebies';
 import { monsters } from '../data/monsters';
+import { url } from '../utils/url';
 
 const ACCENT = '#6CA6FF';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -18,11 +19,11 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
   <!-- Hero -->
   <section class="fr-hero">
     <div class="k-container">
-      <Breadcrumb crumbs={[{ label: 'freeooo', href: '/freebies' }]} accentColor={ACCENT} />
+      <Breadcrumb crumbs={[{ label: 'freeooo', href: url('/freebies') }]} accentColor={ACCENT} />
       <div class="fr-hero-inner">
         <div class="fr-hero-text">
           <div class="fr-hero-badge">
-            <img src={`${base}/public/images/Monsters/freeooo.png`} alt="freeooo" width="40" height="40" class="fr-hero-monster" />
+            <img src={`${base}/images/Monsters/freeooo.png`} alt="freeooo" width="40" height="40" class="fr-hero-monster" />
             <span class="k-section-label" style={`color: ${ACCENT}`}>freeooo · Freebies</span>
           </div>
           <h1 class="fr-hero-title">
@@ -51,7 +52,7 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
         <div class="fr-hero-visual">
           <div class="fr-cat-chips">
             {freebiesCategories.slice(0, 8).map((c, i) => (
-              <a href={`/freebies/${c.slug}`} class="fr-chip" style={`--fc: ${c.color}; --idx: ${i}`}>
+              <a href={url(`/freebies/${c.slug}`)} class="fr-chip" style={`--fc: ${c.color}; --idx: ${i}`}>
                 <span>{c.icon}</span>
                 <span>{c.title}</span>
                 <span class="fr-chip-count">{c.resourceCount}</span>
@@ -74,7 +75,7 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
 
       <div class="fr-cats-grid">
         {freebiesCategories.map(cat => (
-          <a href={`/freebies/${cat.slug}`} class="fr-cat-card" style={`--fc: ${cat.color}`}>
+          <a href={url(`/freebies/${cat.slug}`)} class="fr-cat-card" style={`--fc: ${cat.color}`}>
             <div class="fr-cat-glow"></div>
             <div class="fr-cat-top">
               <div class="fr-cat-icon-wrap">
@@ -114,10 +115,10 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
         </div>
         <div class="fr-why-cta">
           <div class="fr-cta-card" style={`--fc: ${ACCENT}`}>
-            <img src={`${base}/public/images/Monsters/freeooo.png`} alt="freeooo" width="80" height="80" />
+            <img src={`${base}/images/Monsters/freeooo.png`} alt="freeooo" width="80" height="80" />
             <h3>Know a great resource?</h3>
             <p>Drop a vibe and suggest a resource to add to the library.</p>
-            <a href="/drop-a-vibe" class="fr-cta-btn" style={`background: ${ACCENT}`}>Suggest a Resource →</a>
+            <a href={url('/drop-a-vibe')} class="fr-cta-btn" style={`background: ${ACCENT}`}>Suggest a Resource →</a>
           </div>
         </div>
       </div>
@@ -131,7 +132,7 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
         <p class="fr-other-label">More khizology monsters →</p>
         <div class="fr-other-links">
           {monsters.filter(m => m.status === 'active' && m.id !== 'freeooo').map(m => (
-            <a href={m.route} class="fr-other-link" style={`--mc: ${m.color}`}>
+            <a href={url(m.route)} class="fr-other-link" style={`--mc: ${m.color}`}>
               <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
               <span>{m.module}</span>
             </a>
