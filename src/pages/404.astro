@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import { monsters } from '../data/monsters';
+import { url, img } from '../utils/url';
 ---
 
 <BaseLayout
@@ -12,7 +13,7 @@ import { monsters } from '../data/monsters';
     <div class="k-container">
       <div class="nf-inner">
         <div class="nf-monster">
-          <img src="/public/images/Monsters/devooo.png" alt="404 monster" width="140" height="140" class="nf-img" />
+          <img src={img('/images/Monsters/devooo.png')} alt="404 monster" width="140" height="140" class="nf-img" />
         </div>
         <div class="nf-content">
           <span class="nf-code">404</span>
@@ -22,16 +23,16 @@ import { monsters } from '../data/monsters';
             It might have been moved, deleted, or never existed to begin with.
           </p>
           <div class="nf-ctas">
-            <a href="/" class="nf-btn-primary">← Back to Universe</a>
-            <a href="/drop-a-vibe" class="nf-btn-ghost">Report a broken link</a>
+            <a href={url('/')} class="nf-btn-primary">← Back to Universe</a>
+            <a href={url('/drop-a-vibe')} class="nf-btn-ghost">Report a broken link</a>
           </div>
         </div>
         <div class="nf-monsters-row">
           <p class="nf-explore">Meanwhile, explore the monsters:</p>
           <div class="nf-monster-links">
             {monsters.filter(m => m.status === 'active').map(m => (
-              <a href={m.route} class="nf-m-link" style={`--mc: ${m.color}`}>
-                <img src={m.image} alt={m.name} width="36" height="36" />
+              <a href={url(m.route)} class="nf-m-link" style={`--mc: ${m.color}`}>
+                <img src={img(m.image)} alt={m.name} width="36" height="36" />
                 <span>{m.module}</span>
               </a>
             ))}

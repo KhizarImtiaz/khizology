@@ -4,6 +4,7 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import { calculatorCategories, mvpCalculators } from '../data/calculators';
 import { toolCategories, mvpTools } from '../data/toolbox';
 import { monsters } from '../data/monsters';
+import { url } from '../utils/url';
 
 const ACCENT = '#F7933C';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -26,11 +27,11 @@ const webTools = [
   <!-- Hero -->
   <section class="tb-hero">
     <div class="k-container">
-      <Breadcrumb crumbs={[{ label: 'toolooo', href: '/toolbox' }]} accentColor={ACCENT} />
+      <Breadcrumb crumbs={[{ label: 'toolooo', href: url('/toolbox') }]} accentColor={ACCENT} />
       <div class="tb-hero-inner">
         <div class="tb-hero-text">
           <div class="tb-hero-badge">
-            <img src={`${base}/public/images/Monsters/toolooo.png`} alt="toolooo" width="40" height="40" class="tb-hero-monster" />
+            <img src={`${base}/images/Monsters/toolooo.png`} alt="toolooo" width="40" height="40" class="tb-hero-monster" />
             <span class="k-section-label" style={`color: ${ACCENT}`}>toolooo · Toolbox</span>
           </div>
           <h1 class="tb-hero-title">
@@ -185,7 +186,7 @@ const webTools = [
           </div>
         </div>
         <div class="tb-why-img">
-          <img src={`${base}/public/images/Monsters/toolooo.png`} alt="toolooo monster" width="220" height="220" class="tb-why-monster" />
+          <img src={`${base}/images/Monsters/toolooo.png`} alt="toolooo monster" width="220" height="220" class="tb-why-monster" />
         </div>
       </div>
     </div>
@@ -198,7 +199,7 @@ const webTools = [
         <p class="tb-other-label">More khizology monsters →</p>
         <div class="tb-other-links">
           {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
-            <a href={m.route} class="tb-other-link" style={`--mc: ${m.color}`}>
+            <a href={url(m.route)} class="tb-other-link" style={`--mc: ${m.color}`}>
               <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
               <span>{m.module}</span>
             </a>

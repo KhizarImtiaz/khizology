@@ -1,129 +1,235 @@
 ---
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
-import SectionHeader from '../components/ui/SectionHeader.astro';
+import { url, img } from '../utils/url';
 
-const skills = [
-  { category: 'Creative', items: ['Drawing & Illustration', 'Digital Art', 'Concept Art', 'Storytelling', 'Visual Design', 'Typography'] },
-  { category: 'Development', items: ['HTML/CSS/JS', 'TypeScript', 'React', 'Astro', 'Tailwind CSS', 'Git & GitHub'] },
-  { category: 'Content', items: ['Infographic Design', 'Content Strategy', 'Social Media', 'Knowledge Sharing', 'Brand Building'] },
+const stats = [
+  { num: '8+', label: 'Years Experience' },
+  { num: '20+', label: 'Projects Delivered' },
+  { num: '168+', label: 'Original Artworks' },
+  { num: '50+', label: 'Free Online Tools' },
+];
+
+const strengths = [
+  'Full-Stack Development',
+  'Technical Team Leadership',
+  'Client & Stakeholder Management',
+  'Blockchain & Web3',
+  'AI / ML Integration',
+  'Agile / Scrum Delivery',
+  'System Architecture',
+  'Creative Design',
+  'Visual Communication',
+  'Product Strategy',
+];
+
+const skillGroups = [
+  {
+    category: 'Programming & Frameworks',
+    items: ['React', 'Next.js', 'Node.js', 'TypeScript', 'JavaScript', 'Python', 'HTML / CSS', 'Astro', 'Tailwind CSS'],
+  },
+  {
+    category: 'Blockchain & Web3',
+    items: ['Solidity', 'Ethereum', 'Smart Contracts', 'NFTs', 'DeFi', 'Web3.js'],
+  },
+  {
+    category: 'Databases & Cloud',
+    items: ['MongoDB', 'PostgreSQL', 'MySQL', 'Redis', 'AWS (EC2, S3, Lambda)', 'GCP Basics'],
+  },
+  {
+    category: 'AI & Architecture',
+    items: ['OpenAI API', 'LangChain', 'Prompt Engineering', 'Microservices', 'REST API', 'GraphQL', 'Clean Architecture'],
+  },
+  {
+    category: 'DevOps & Security',
+    items: ['Docker', 'CI/CD Pipelines', 'Git / GitHub', 'JWT', 'OAuth', 'SSL', 'Jira', 'Agile / Scrum'],
+  },
+  {
+    category: 'Design & Creative',
+    items: ['Figma', 'Adobe Suite', 'Digital Illustration', 'Creative Direction', 'Infographic Design', 'Brand Building'],
+  },
+];
+
+const experience = [
+  {
+    role: 'Technical Delivery Manager',
+    company: 'VAIVAL Technologies',
+    period: 'Jun 2022 — Present',
+    current: true,
+    bullets: [
+      'Leading delivery of enterprise-grade web and mobile products end-to-end',
+      'Managing cross-functional teams of 15+ engineers and designers',
+      'Client success, sprint planning, and stakeholder communication',
+      'Driving AI/ML and blockchain integration across projects',
+      'Ensuring on-time delivery with zero-compromise quality standards',
+    ],
+  },
+  {
+    role: 'Technical Team Lead',
+    company: 'VAIVAL Technologies',
+    period: 'Jan 2020 — Jun 2022',
+    current: false,
+    bullets: [
+      'Led frontend and full-stack development teams across multiple projects',
+      'Architected React-based SPAs and Node.js backends',
+      'Mentored junior developers and enforced coding standards',
+      'Delivered 20+ production projects across diverse industries',
+    ],
+  },
+  {
+    role: 'Web Developer',
+    company: 'VAIVAL Technologies',
+    period: 'Mar 2017 — Jan 2020',
+    current: false,
+    bullets: [
+      'Built full-stack web applications from scratch for various clients',
+      'Specialised in React, JavaScript, and modern CSS',
+      'Collaborated with design and product teams on 15+ projects',
+    ],
+  },
+  {
+    role: 'Co-founder / Technical Lead',
+    company: 'Evento.pk (Startup)',
+    period: 'Side Project',
+    current: false,
+    bullets: [
+      'Co-founded an events discovery and ticketing platform',
+      'Built the entire product from scratch — frontend and backend',
+      'Hands-on experience with startup culture and product iteration',
+    ],
+  },
 ];
 
 const projects = [
   {
     name: 'khizology',
-    desc: 'A monster-powered creative knowledge universe. Artworks, Infographics, Toolbox, and Freebies — all in one creative brand.',
-    tags: ['Astro', 'TypeScript', 'Tailwind', 'Personal Brand'],
-    link: '/',
-    color: 'var(--k-accent)',
-    emoji: '🌍',
+    desc: 'A monster-powered creative knowledge universe. Artworks, Infographics, Toolbox, and Freebies — all in one creative brand built with Astro, TypeScript, and React.',
+    tags: ['Astro', 'TypeScript', 'Tailwind', 'React', 'Personal Brand'],
+    link: url('/'),
   },
   {
-    name: 'artooo — Artworks',
-    desc: '168+ original artworks including sketches, illustrations, character designs, and emotional storytelling through lines.',
-    tags: ['Drawing', 'Illustration', 'Character Design'],
-    link: '/artworks',
-    color: '#F5CF5C',
-    emoji: '🎨',
+    name: 'artooo — 168+ Artworks',
+    desc: 'Original artworks — sketches, illustrations, character designs, and emotional storytelling through lines. Every piece made by hand.',
+    tags: ['Drawing', 'Illustration', 'Character Design', 'Digital Art'],
+    link: url('/artworks'),
   },
   {
-    name: 'infooo — Infographics',
-    desc: 'Visual knowledge hub covering tech, psychology, productivity, finance, and more — knowledge made beautiful.',
-    tags: ['Design', 'Knowledge', 'Visual Communication'],
-    link: '/infographics',
-    color: '#5CCFAF',
-    emoji: '📊',
+    name: 'toolooo — 50+ Free Tools',
+    desc: 'Free online calculators and productivity tools. Built with React and deployed as interactive islands. Real utility for real people.',
+    tags: ['React', 'Calculators', 'SEO', 'Tools'],
+    link: url('/toolbox'),
   },
   {
-    name: 'toolooo — Toolbox',
-    desc: 'Free online calculators and tools to simplify everyday tasks. Built to drive organic traffic and genuine value.',
-    tags: ['React', 'Tools', 'Calculators', 'SEO'],
-    link: '/toolbox',
-    color: '#F7933C',
-    emoji: '🔧',
+    name: 'Enterprise SaaS Products',
+    desc: 'Multiple enterprise-grade web platforms delivered at VAIVAL — covering fintech, HR tech, e-commerce, and operations management.',
+    tags: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
+    link: null,
   },
   {
-    name: 'freeooo — Freebies',
-    desc: 'Curated collection of free resources: 13 categories of icons, illustrations, backgrounds, fonts, and more.',
-    tags: ['Curation', 'Resources', 'Design Assets'],
-    link: '/freebies',
-    color: '#6CA6FF',
-    emoji: '🎁',
+    name: 'Blockchain / Web3 dApps',
+    desc: 'Smart contract development and Web3 frontend integrations for NFT marketplaces and DeFi applications.',
+    tags: ['Solidity', 'Ethereum', 'Web3.js', 'Smart Contracts'],
+    link: null,
+  },
+  {
+    name: 'AI-Powered Applications',
+    desc: 'Integrated OpenAI and LangChain into production applications, including AI content assistants, data extractors, and chat interfaces.',
+    tags: ['OpenAI', 'LangChain', 'Python', 'Node.js'],
+    link: null,
   },
 ];
 
-const timeline = [
-  { year: '2024', event: 'Launched khizology — the monster-powered creative universe' },
-  { year: '2024', event: 'Published 168+ original artworks in the artooo module' },
-  { year: '2023', event: 'Built the Toolbox with 50+ calculator tools across 8 categories' },
-  { year: '2023', event: 'Launched freeooo with 13 curated freebie categories' },
-  { year: '2022', event: 'Started creating digital infographics and sharing knowledge online' },
-  { year: '2021', event: 'Began the khizooo creative journey — art meets code' },
-];
+const softSkills = ['Leadership', 'Communication', 'Problem-Solving', 'Creativity', 'Empathy', 'Attention to Detail', 'Adaptability', 'Continuous Learning', 'Mentoring'];
+const hobbies = ['Drawing & Illustration', 'Digital Art', 'Travel', 'Photography', 'Reading', 'Exploring New Tech', 'Playing with AI Tools'];
 ---
 
 <BaseLayout
-  title="My Portfolio"
-  description="khizooo's creative portfolio — a programmer by luck and an artist by nature. Explore artworks, projects, skills, and the story behind khizology."
+  title="My Portfolio — Khizar Imtiaz"
+  description="Khizar Imtiaz (khizooo) — Technical Delivery Manager, full-stack developer, and artist. 8+ years at VAIVAL. Creator of khizology."
   accentColor="var(--k-accent)"
 >
   <div class="k-container" style="padding-top: 2rem;">
     <Breadcrumb crumbs={[{ label: 'My Portfolio' }]} accentColor="var(--k-accent)" />
   </div>
 
-  <!-- ABOUT HERO -->
-  <section class="portfolio-hero k-section">
+  <!-- HERO -->
+  <section class="pf-hero k-section">
     <div class="k-container">
-      <div class="ph-inner">
-        <div class="ph-content">
+      <div class="pf-hero-inner">
+        <div class="pf-hero-content">
           <span class="k-section-label" style="color: var(--k-accent)">My Portfolio</span>
-          <h1 class="ph-title">By luck, a programmer.<br />By nature, an artist.</h1>
-          <div class="ph-bio">
+          <h1 class="pf-title">Khizar Imtiaz</h1>
+          <p class="pf-role">Technical Delivery Manager &amp; Creative Developer</p>
+          <div class="pf-bio">
             <p>
-              I'm <strong>khizooo</strong> — a creative who lives between a sketchpad and a keyboard.
-              My world is built from imagination and logic, where every idea becomes a color, a line,
-              or a line of code. I believe in creating things that feel real and full of emotion.
+              8+ years at VAIVAL Technologies — leading teams, shipping products, and solving complex problems at scale. Expert in full-stack development, blockchain/Web3, and AI integration.
             </p>
             <p>
-              I've worked on many projects that taught me about creativity, people, and passion.
-              I believe in keeping things simple, meaningful, and original — because true art is
-              something you feel, not just see.
-            </p>
-            <p>
-              <strong>khizology</strong> is the living proof of that belief: a universe where artworks,
-              knowledge, tools, and resources come together, powered by imagination.
+              By luck, a programmer. By nature, an artist. I believe the best digital experiences live at the intersection of technical excellence and creative vision. <strong>khizology</strong> is proof of that.
             </p>
           </div>
-          <div class="ph-ctas">
-            <a href="/drop-a-vibe" class="ph-btn-primary">Get in Touch ✉️</a>
-            <a href="/behind-the-vibes" class="ph-btn-ghost">Behind the Vibes →</a>
+          <div class="pf-hero-ctas">
+            <a href={url('/drop-a-vibe')} class="pf-btn-primary">Get in Touch →</a>
+            <a href="https://www.linkedin.com/in/khizar-imtiaz" target="_blank" rel="noopener" class="pf-btn-ghost">LinkedIn</a>
+            <a href="https://github.com/KhizaroOo" target="_blank" rel="noopener" class="pf-btn-ghost">GitHub</a>
           </div>
         </div>
-        <div class="ph-visual">
-          <div class="ph-img-wrap">
-            <img src="/public/images/site/lp-profile-img.png" alt="khizooo" loading="eager" />
-            <div class="ph-img-badge">
-              <span>🎨 Art meets Code</span>
-            </div>
+        <div class="pf-hero-visual">
+          <div class="pf-img-wrap">
+            <img src={img('/images/site/lp-profile-img.png')} alt="Khizar Imtiaz" loading="eager" />
+            <div class="pf-img-badge">Technical Delivery Manager</div>
           </div>
-          <div class="ph-img-glow"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section class="k-section skills-section">
+  <!-- STATS STRIP -->
+  <div class="pf-stats-strip">
     <div class="k-container">
-      <SectionHeader
-        label="Skills"
-        title="What I Bring"
-        accentColor="var(--k-accent)"
-      />
-      <div class="skills-grid">
-        {skills.map(group => (
+      <div class="pf-stats-grid">
+        {stats.map(s => (
+          <div class="pf-stat">
+            <span class="pf-stat-num">{s.num}</span>
+            <span class="pf-stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <section class="k-section pf-summary-section">
+    <div class="k-container">
+      <div class="pf-summary-card">
+        <div class="pf-summary-label">Professional Summary</div>
+        <p class="pf-summary-text">
+          Technical Delivery Manager with 8+ years at VAIVAL Technologies. Expert in full-stack development, technical team leadership, client management, blockchain/Web3, AI/ML integration, and creative design. I bridge the gap between technical complexity and business objectives — ensuring products are not just built, but built right. Outside of engineering, I am an artist and the creator of khizology — a monster-powered creative universe.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE STRENGTHS -->
+  <section class="k-section pf-strengths-section">
+    <div class="k-container">
+      <h2 class="pf-section-title">Core Strengths</h2>
+      <div class="strengths-grid">
+        {strengths.map(s => (
+          <div class="strength-chip">{s}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNICAL SKILLS -->
+  <section class="k-section pf-skills-section">
+    <div class="k-container">
+      <h2 class="pf-section-title">Technical Skills</h2>
+      <div class="skills-groups">
+        {skillGroups.map(group => (
           <div class="skill-group">
-            <h3 class="skill-category">{group.category}</h3>
+            <h3 class="skill-group-label">{group.category}</h3>
             <div class="skill-tags">
               {group.items.map(skill => (
                 <span class="skill-tag">{skill}</span>
@@ -135,66 +241,92 @@ const timeline = [
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section class="k-section projects-section">
+  <!-- EXPERIENCE -->
+  <section class="k-section pf-exp-section">
     <div class="k-container">
-      <SectionHeader
-        label="Projects"
-        title="What I've Built"
-        description="khizology is the flagship. Each monster module is a project in its own right."
-        accentColor="var(--k-accent)"
-      />
-      <div class="projects-grid">
-        {projects.map(p => (
-          <a href={p.link} class="project-card" style={`--p-color: ${p.color}`}>
-            <div class="pc-header">
-              <span class="pc-emoji">{p.emoji}</span>
-              <h3 class="pc-name">{p.name}</h3>
+      <h2 class="pf-section-title">Experience</h2>
+      <div class="exp-timeline">
+        {experience.map((job, i) => (
+          <div class="exp-item">
+            <div class="exp-connector">
+              <div class={`exp-dot ${job.current ? 'exp-dot-current' : ''}`}></div>
+              {i < experience.length - 1 && <div class="exp-line"></div>}
             </div>
-            <p class="pc-desc">{p.desc}</p>
-            <div class="pc-tags">
-              {p.tags.map(tag => <span class="pc-tag">{tag}</span>)}
+            <div class="exp-content">
+              <div class="exp-header">
+                <div class="exp-title-group">
+                  <h3 class="exp-role">{job.role}</h3>
+                  <span class="exp-company">{job.company}</span>
+                </div>
+                <div class="exp-meta">
+                  <span class="exp-period">{job.period}</span>
+                  {job.current && <span class="exp-current-badge">Current</span>}
+                </div>
+              </div>
+              <ul class="exp-bullets">
+                {job.bullets.map(b => (
+                  <li>{b}</li>
+                ))}
+              </ul>
             </div>
-            <span class="pc-arrow">→</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- TIMELINE -->
-  <section class="k-section timeline-section">
-    <div class="k-container">
-      <SectionHeader
-        label="Journey"
-        title="How It Started"
-        accentColor="var(--k-accent)"
-      />
-      <div class="timeline">
-        {timeline.map((item, i) => (
-          <div class="timeline-item">
-            <div class="timeline-year">{item.year}</div>
-            <div class="timeline-connector">
-              <div class="timeline-dot"></div>
-              {i < timeline.length - 1 && <div class="timeline-line"></div>}
-            </div>
-            <div class="timeline-content">{item.event}</div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="k-section portfolio-cta">
+  <!-- PROJECTS -->
+  <section class="k-section pf-projects-section">
     <div class="k-container">
-      <div class="pcta-inner">
-        <div class="pcta-monster">
-          <img src="/public/images/Monsters/khizooo.png" alt="" width="128" height="128" style="display: inline-block;background: var(--k-accent);padding: 12px;border-radius: 50%;}"/>
+      <h2 class="pf-section-title">Projects &amp; Contributions</h2>
+      <div class="projects-grid">
+        {projects.map(p => (
+          <div class="project-card">
+            <div class="project-card-inner">
+              <h3 class="pc-name">{p.name}</h3>
+              <p class="pc-desc">{p.desc}</p>
+              <div class="pc-tags">
+                {p.tags.map(tag => <span class="pc-tag">{tag}</span>)}
+              </div>
+            </div>
+            {p.link && (
+              <a href={p.link} class="pc-link">View →</a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SOFT SKILLS + HOBBIES -->
+  <section class="k-section pf-extras-section">
+    <div class="k-container pf-extras-inner">
+      <div class="pf-extra-block">
+        <h2 class="pf-section-title">Soft Skills</h2>
+        <div class="extras-chips">
+          {softSkills.map(s => <span class="extra-chip">{s}</span>)}
         </div>
-        <h2>Want to collaborate or just say hi?</h2>
-        <p>I'm open to creative collaborations, feedback, and good conversations about art and code.</p>
-        <a href="/drop-a-vibe" class="ph-btn-primary">Drop a Vibe →</a>
+      </div>
+      <div class="pf-extra-block">
+        <h2 class="pf-section-title">Hobbies &amp; Interests</h2>
+        <div class="extras-chips">
+          {hobbies.map(h => <span class="extra-chip">{h}</span>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="k-section pf-cta-section">
+    <div class="k-container">
+      <div class="pf-cta-inner">
+        <img src={img('/images/Monsters/khizooo.png')} alt="" width="96" height="96" class="pf-cta-monster" />
+        <h2>Want to work together or just say hi?</h2>
+        <p>Open to creative collaborations, tech discussions, and good conversations about art and code.</p>
+        <div class="pf-cta-btns">
+          <a href={url('/drop-a-vibe')} class="pf-btn-primary">Drop a Vibe →</a>
+          <a href={url('/behind-the-vibes')} class="pf-btn-ghost">Behind the Vibes</a>
+        </div>
       </div>
     </div>
   </section>
@@ -203,142 +335,239 @@ const timeline = [
 
 <style>
   /* HERO */
-  .portfolio-hero { background: var(--k-bg-card); border-bottom: 1px solid var(--k-border); }
-  .ph-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-
-  .ph-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    font-weight: 900; line-height: 1.15;
-    color: var(--k-text); margin: 0 0 1.5rem;
+  .pf-hero { background: var(--k-bg-card); border-bottom: 1px solid var(--k-border); }
+  .pf-hero-inner {
+    display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center;
   }
+  .pf-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; line-height: 1.1;
+    color: var(--k-text); margin: 0.5rem 0 0.5rem;
+  }
+  .pf-role {
+    font-family: 'Poppins', sans-serif; font-size: 1.05rem; font-weight: 600;
+    color: var(--k-accent); margin: 0 0 1.5rem;
+  }
+  .pf-bio { display: flex; flex-direction: column; gap: 0.875rem; margin-bottom: 2rem; }
+  .pf-bio p { font-size: 0.95rem; color: var(--k-text-muted); line-height: 1.7; margin: 0; }
+  .pf-hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
-  .ph-bio { display: flex; flex-direction: column; gap: 0.875rem; margin-bottom: 2rem; }
-  .ph-bio p { font-size: 0.95rem; color: var(--k-text-muted); line-height: 1.7; margin: 0; }
-
-  .ph-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-  .ph-btn-primary {
+  .pf-btn-primary {
     display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
     background: var(--k-dark); color: var(--k-bg);
     border-radius: 0.625rem; font-family: 'Poppins', sans-serif;
     font-weight: 700; font-size: 0.875rem; text-decoration: none;
     transition: opacity 0.2s, transform 0.2s;
   }
-  .ph-btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+  .pf-btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
 
-  .ph-btn-ghost {
-    display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
+  .pf-btn-ghost {
+    display: inline-flex; align-items: center; padding: 0.65rem 1.25rem;
     background: transparent; color: var(--k-text-muted);
     border: 1px solid var(--k-border); border-radius: 0.625rem;
     font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.875rem;
     text-decoration: none; transition: border-color 0.2s, color 0.2s;
   }
-  .ph-btn-ghost:hover { border-color: var(--k-text); color: var(--k-text); }
+  .pf-btn-ghost:hover { border-color: var(--k-accent); color: var(--k-accent); }
 
-  .ph-visual { position: relative; display: flex; justify-content: center; }
-  .ph-img-wrap {
-    position: relative;
-    width: 340px; max-width: 100%;
-    border-radius: 1.5rem; overflow: hidden;
+  .pf-img-wrap {
+    position: relative; width: 300px; max-width: 100%;
+    border-radius: 1.25rem; overflow: hidden;
     border: 2px solid var(--k-border);
   }
-  .ph-img-wrap img { width: 100%; object-fit: cover; display: inline-block; }
-  .ph-img-badge {
-    position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
-    background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
-    padding: 0.4rem 1rem; border-radius: 999px;
-    font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700;
-    color: var(--k-dark); white-space: nowrap;
-  }
-  html.dark .ph-img-badge { background: rgba(26,31,46,0.9); color: #fff; }
-  .ph-img-glow {
-    position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
-    width: 250px; height: 250px; border-radius: 50%;
-    background: var(--k-accent); opacity: 0.12; filter: blur(50px);
-    pointer-events: none;
+  .pf-img-wrap img { width: 100%; object-fit: cover; display: block; }
+  .pf-img-badge {
+    position: absolute; bottom: 0.875rem; left: 50%; transform: translateX(-50%);
+    background: var(--k-bg-card); backdrop-filter: blur(8px);
+    padding: 0.35rem 0.875rem; border-radius: 999px;
+    font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700;
+    color: var(--k-text); white-space: nowrap;
+    border: 1px solid var(--k-border);
   }
 
+  /* STATS STRIP */
+  .pf-stats-strip {
+    background: var(--k-bg); border-bottom: 1px solid var(--k-border);
+    padding: 1.5rem 0;
+  }
+  .pf-stats-grid {
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .pf-stat {
+    display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+    padding: 0.5rem 2rem;
+    border-right: 1px solid var(--k-border);
+  }
+  .pf-stat:last-child { border-right: none; }
+  .pf-stat-num {
+    font-family: 'Poppins', sans-serif; font-size: 1.75rem; font-weight: 900;
+    color: var(--k-accent);
+  }
+  .pf-stat-label {
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--k-text-muted);
+  }
+
+  /* SECTION TITLE */
+  .pf-section-title {
+    font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 800; color: var(--k-text); margin: 0 0 1.75rem;
+  }
+
+  /* PROFESSIONAL SUMMARY */
+  .pf-summary-section { background: var(--k-bg-card); }
+  .pf-summary-card {
+    background: var(--k-bg); border: 1px solid var(--k-border);
+    border-left: 4px solid var(--k-accent);
+    border-radius: 0 1rem 1rem 0;
+    padding: 2rem;
+  }
+  .pf-summary-label {
+    font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--k-accent); margin-bottom: 0.875rem;
+  }
+  .pf-summary-text {
+    font-size: 1rem; color: var(--k-text-muted); line-height: 1.8; margin: 0;
+  }
+
+  /* STRENGTHS */
+  .pf-strengths-section { background: var(--k-bg); }
+  .strengths-grid {
+    display: flex; flex-wrap: wrap; gap: 0.625rem;
+  }
+  .strength-chip {
+    display: inline-flex; padding: 0.5rem 1.125rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-accent);
+    border-radius: 999px; font-family: 'Poppins', sans-serif;
+    font-size: 0.825rem; font-weight: 600; color: var(--k-text);
+    transition: background 0.2s, color 0.2s;
+  }
+  .strength-chip:hover { background: var(--k-accent); color: #fff; }
+
   /* SKILLS */
-  .skills-section { background: var(--k-bg); }
-  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-  .skill-group { display: flex; flex-direction: column; gap: 0.75rem; }
-  .skill-category {
-    font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700;
+  .pf-skills-section { background: var(--k-bg-card); }
+  .skills-groups { display: flex; flex-direction: column; gap: 1.75rem; }
+  .skill-group { display: flex; flex-direction: column; gap: 0.625rem; }
+  .skill-group-label {
+    font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.1em; color: var(--k-accent);
     margin: 0;
   }
   .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .skill-tag {
     display: inline-flex; padding: 0.3rem 0.75rem;
-    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    background: var(--k-bg); border: 1px solid var(--k-border);
     border-radius: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--k-text);
   }
 
+  /* EXPERIENCE */
+  .pf-exp-section { background: var(--k-bg); }
+  .exp-timeline { display: flex; flex-direction: column; gap: 0; }
+  .exp-item { display: grid; grid-template-columns: 2rem 1fr; gap: 1.25rem; align-items: flex-start; }
+  .exp-connector { display: flex; flex-direction: column; align-items: center; padding-top: 0.25rem; }
+  .exp-dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+    background: var(--k-border); border: 2px solid var(--k-accent);
+  }
+  .exp-dot-current { background: var(--k-accent); }
+  .exp-line { width: 2px; flex: 1; min-height: 2rem; background: var(--k-border); margin: 4px 0; }
+  .exp-content { padding-bottom: 2rem; }
+  .exp-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 1rem; margin-bottom: 0.875rem; flex-wrap: wrap;
+  }
+  .exp-role {
+    font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 800;
+    color: var(--k-text); margin: 0 0 0.2rem;
+  }
+  .exp-company {
+    font-size: 0.85rem; font-weight: 600; color: var(--k-accent);
+    font-family: 'Poppins', sans-serif;
+  }
+  .exp-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; }
+  .exp-period { font-size: 0.8rem; color: var(--k-text-muted); white-space: nowrap; }
+  .exp-current-badge {
+    display: inline-flex; padding: 0.15rem 0.6rem;
+    background: var(--k-accent); color: #fff;
+    border-radius: 999px; font-size: 0.65rem; font-weight: 700;
+    font-family: 'Poppins', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .exp-bullets {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .exp-bullets li {
+    font-size: 0.875rem; color: var(--k-text-muted); line-height: 1.5;
+    padding-left: 1rem; position: relative;
+  }
+  .exp-bullets li::before {
+    content: '–'; position: absolute; left: 0;
+    color: var(--k-accent); font-weight: 700;
+  }
+
   /* PROJECTS */
-  .projects-section { background: var(--k-bg-card); }
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .pf-projects-section { background: var(--k-bg-card); }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem;
+  }
   .project-card {
-    position: relative;
-    display: flex; flex-direction: column; gap: 0.75rem;
-    padding: 1.5rem;
     background: var(--k-bg); border: 1px solid var(--k-border); border-radius: 1rem;
-    text-decoration: none; color: inherit;
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;
     transition: border-color 0.2s, transform 0.2s;
-    overflow: hidden;
   }
-  .project-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: var(--p-color, var(--k-accent));
-    transform: scaleX(0); transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .project-card:hover { border-color: var(--p-color, var(--k-accent)); transform: translateY(-3px); }
-  .project-card:hover::before { transform: scaleX(1); }
-  .pc-header { display: flex; align-items: center; gap: 0.75rem; }
-  .pc-emoji { font-size: 1.5rem; }
-  .pc-name { font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 700; color: var(--k-text); margin: 0; }
+  .project-card:hover { border-color: var(--k-accent); transform: translateY(-2px); }
+  .project-card-inner { flex: 1; display: flex; flex-direction: column; gap: 0.625rem; }
+  .pc-name { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--k-text); margin: 0; }
   .pc-desc { font-size: 0.8rem; color: var(--k-text-muted); line-height: 1.6; margin: 0; flex: 1; }
-  .pc-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .pc-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
   .pc-tag {
     display: inline-flex; padding: 0.2rem 0.6rem;
     background: var(--k-bg-card); border: 1px solid var(--k-border);
     border-radius: 999px; font-size: 0.7rem; font-weight: 600; color: var(--k-text-muted);
   }
-  .pc-arrow { color: var(--p-color, var(--k-accent)); font-weight: 700; font-size: 1rem; align-self: flex-end; }
+  .pc-link {
+    display: inline-flex; align-items: center;
+    font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700;
+    color: var(--k-accent); text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .pc-link:hover { text-decoration: underline; }
 
-  /* TIMELINE */
-  .timeline-section { background: var(--k-bg); }
-  .timeline { display: flex; flex-direction: column; gap: 0; }
-  .timeline-item { display: grid; grid-template-columns: 4rem 2rem 1fr; gap: 0.75rem; align-items: flex-start; }
-  .timeline-year {
-    font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700;
-    color: var(--k-accent); padding-top: 0.125rem; text-align: right;
+  /* EXTRAS */
+  .pf-extras-section { background: var(--k-bg); }
+  .pf-extras-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .extras-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .extra-chip {
+    display: inline-flex; padding: 0.375rem 0.875rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: 999px; font-size: 0.8rem; font-weight: 600; color: var(--k-text);
   }
-  .timeline-connector { display: flex; flex-direction: column; align-items: center; gap: 0; }
-  .timeline-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--k-accent); flex-shrink: 0;
-    margin-top: 0.2rem;
-  }
-  .timeline-line { width: 2px; flex: 1; min-height: 2rem; background: var(--k-border); }
-  .timeline-content { font-size: 0.9rem; color: var(--k-text); padding-bottom: 1.5rem; padding-top: 0.125rem; }
 
   /* CTA */
-  .portfolio-cta { background: var(--k-bg-card); }
-  .pcta-inner { text-align: center; max-width: 520px; margin-inline: auto; }
-  .pcta-monster { margin-bottom: 1rem; }
-  .pcta-inner h2 {
+  .pf-cta-section { background: var(--k-bg-card); }
+  .pf-cta-inner { text-align: center; max-width: 540px; margin-inline: auto; }
+  .pf-cta-monster {
+    width: 80px; height: 80px; object-fit: contain;
+    background: var(--k-accent); padding: 10px; border-radius: 50%;
+    margin-bottom: 1rem; display: inline-block;
+  }
+  .pf-cta-inner h2 {
     font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800;
     color: var(--k-text); margin: 0 0 0.75rem;
   }
-  .pcta-inner p { font-size: 0.95rem; color: var(--k-text-muted); margin: 0 0 1.5rem; }
+  .pf-cta-inner p { font-size: 0.95rem; color: var(--k-text-muted); margin: 0 0 1.5rem; }
+  .pf-cta-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
-  @media (max-width: 768px) {
-    .ph-inner { grid-template-columns: 1fr; }
-    .ph-visual { order: -1; }
-    .ph-img-wrap { width: 100%; max-width: 320px; }
-    .skills-grid { grid-template-columns: 1fr; }
+  @media (max-width: 900px) {
+    .pf-hero-inner { grid-template-columns: 1fr; }
+    .pf-hero-visual { order: -1; }
+    .pf-img-wrap { width: 240px; max-width: 100%; }
+    .pf-extras-inner { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 600px) {
+    .pf-stat { padding: 0.5rem 1rem; }
+    .exp-item { grid-template-columns: 1.5rem 1fr; }
   }
 </style>

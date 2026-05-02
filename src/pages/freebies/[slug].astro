@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../components/layout/BaseLayout.astro';
+import { url } from '../../utils/url';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import { freebiesCategories } from '../../data/freebies';
 import { freebiesResourceMap } from '../../data/freebiesResources';
@@ -115,7 +116,7 @@ const related = freebiesCategories.filter(c => c.slug !== cat.slug).slice(0, 6);
           <p class="fr-cs-desc">
             We're curating the best free {cat.title.toLowerCase()} resources. Check back soon!
           </p>
-          <a href="/freebies" class="fr-cs-btn" style={`background: ${cat.color}`}>
+          <a href={url("/freebies")} class="fr-cs-btn" style={`background: ${cat.color}`}>
             ← Back to freeooo
           </a>
         </div>
@@ -130,7 +131,7 @@ const related = freebiesCategories.filter(c => c.slug !== cat.slug).slice(0, 6);
       <h2 class="fr-related-title">Explore Other Categories</h2>
       <div class="fr-related-grid">
         {related.map(rc => (
-          <a href={`/freebies/${rc.slug}`} class="fr-related-card" style={`--rc: ${rc.color}`}>
+          <a href={url(`/freebies/${rc.slug}`)} class="fr-related-card" style={`--rc: ${rc.color}`}>
             <span class="fr-related-icon">{rc.icon}</span>
             <span class="fr-related-name">{rc.title}</span>
             <span class="fr-related-count">{rc.resourceCount}+</span>
@@ -147,7 +148,7 @@ const related = freebiesCategories.filter(c => c.slug !== cat.slug).slice(0, 6);
         <p class="fr-monsters-label">More khizology →</p>
         <div class="fr-monsters-links">
           {monsters.filter(m => m.status === 'active' && m.id !== 'freeooo').map(m => (
-            <a href={m.route} class="fr-monster-link" style={`--mc: ${m.color}`}>
+            <a href={url(m.route)} class="fr-monster-link" style={`--mc: ${m.color}`}>
               <img src={`${base}${m.image}`} alt={m.name} width="28" height="28" />
               <span>{m.module}</span>
             </a>

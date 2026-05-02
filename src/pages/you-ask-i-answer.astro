@@ -2,14 +2,15 @@
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import ComingSoonCard from '../components/ui/ComingSoonCard.astro';
+import { url, img } from '../utils/url';
 
 const knowledgeTopics = [
-  { emoji: '🎨', label: 'Art & Creativity', q: 'How do you start drawing when you have nothing in mind?', hint: 'A: Start with a feeling, not a plan. Draw the feeling.' },
-  { emoji: '💻', label: 'Code & Dev', q: 'What\'s the best way to learn programming?', hint: 'A: Build things that scare you a little. Read less, build more.' },
-  { emoji: '🧠', label: 'Psychology', q: 'Why do we procrastinate even when we love the work?', hint: 'A: Because starting is harder than continuing. Just begin.' },
-  { emoji: '🚀', label: 'Productivity', q: 'How do you stay motivated long-term?', hint: 'A: Don\'t chase motivation. Build systems that don\'t need it.' },
-  { emoji: '💰', label: 'Finance', q: 'What\'s the first step to financial freedom?', hint: 'A: Know exactly where every rupee/dollar goes. Awareness first.' },
-  { emoji: '🌍', label: 'Life & Wisdom', q: 'What\'s the one thing most people regret?', hint: 'A: Waiting for the perfect moment. Spoiler: it never arrives.' },
+  { label: 'Art & Creativity', q: 'How do you start drawing when you have nothing in mind?', hint: 'A: Start with a feeling, not a plan. Draw the feeling.' },
+  { label: 'Code & Dev', q: 'What\'s the best way to learn programming?', hint: 'A: Build things that scare you a little. Read less, build more.' },
+  { label: 'Psychology', q: 'Why do we procrastinate even when we love the work?', hint: 'A: Because starting is harder than continuing. Just begin.' },
+  { label: 'Productivity', q: 'How do you stay motivated long-term?', hint: 'A: Don\'t chase motivation. Build systems that don\'t need it.' },
+  { label: 'Finance', q: 'What\'s the first step to financial freedom?', hint: 'A: Know exactly where every rupee/dollar goes. Awareness first.' },
+  { label: 'Life & Wisdom', q: 'What\'s the one thing most people regret?', hint: 'A: Waiting for the perfect moment. Spoiler: it never arrives.' },
 ];
 
 const comingSoonFeatures = [
@@ -24,17 +25,17 @@ const comingSoonFeatures = [
 <BaseLayout
   title="You Ask, I Answer"
   description="Questions about art, code, creativity, life, finance, and everything in between. Ask khizooo anything — you ask, I answer."
-  accentColor="#F7933C"
+  accentColor="var(--k-accent)"
 >
   <div class="k-container" style="padding-top: 2rem;">
-    <Breadcrumb crumbs={[{ label: 'You Ask, I Answer' }]} accentColor="#F7933C" />
+    <Breadcrumb crumbs={[{ label: 'You Ask, I Answer' }]} accentColor="var(--k-accent)" />
   </div>
 
   <!-- HERO -->
   <section class="k-section yaia-hero">
     <div class="k-container yaia-hero-inner">
       <div class="yaia-hero-content">
-        <span class="k-section-label" style="color: #F7933C">You Ask, I Answer</span>
+        <span class="k-section-label" style="color: var(--k-accent)">You Ask, I Answer</span>
         <h1 class="yaia-title">Curiosity deserves<br />a real answer.</h1>
         <p class="yaia-lead">
           This is the space where questions get answered. No gatekeeping. No jargon.
@@ -42,18 +43,18 @@ const comingSoonFeatures = [
         </p>
         <div class="yaia-preview-box">
           <div class="ypb-label">
-            <span class="ypb-badge">💬 Interactive Q&A</span>
+            <span class="ypb-badge">Interactive Q&amp;A</span>
             <span class="ypb-cs">Coming Soon</span>
           </div>
           <p class="ypb-desc">
             An interactive ask-anything experience is being built. Until then, browse the
             sample questions below or Drop a Vibe to ask directly.
           </p>
-          <a href="/drop-a-vibe" class="yaia-btn">Ask Right Now →</a>
+          <a href={url('/drop-a-vibe')} class="yaia-btn">Ask Right Now →</a>
         </div>
       </div>
       <div class="yaia-hero-visual">
-        <img src="/public/images/Monsters/infooo.png" alt="infooo" width="120" height="120" class="yaia-monster" />
+        <img src={img('/images/Monsters/infooo.png')} alt="infooo" width="120" height="120" class="yaia-monster" />
         <div class="yaia-glow"></div>
       </div>
     </div>
@@ -70,7 +71,6 @@ const comingSoonFeatures = [
         {knowledgeTopics.map(topic => (
           <div class="sample-card">
             <div class="sc-header">
-              <span class="sc-emoji">{topic.emoji}</span>
               <span class="sc-category">{topic.label}</span>
             </div>
             <p class="sc-question">Q: {topic.q}</p>
@@ -98,14 +98,14 @@ const comingSoonFeatures = [
             </li>
           ))}
         </ul>
-        <a href="/drop-a-vibe" class="yaia-btn-dark">Submit a Question Early →</a>
+        <a href={url('/drop-a-vibe')} class="yaia-btn-dark">Submit a Question Early →</a>
       </div>
       <div class="cf-card">
         <ComingSoonCard
           title="Interactive Q&A"
           description="Ask anything. Get honest, thoughtful answers from khizooo on art, code, creativity, and life."
-          accentColor="#F7933C"
-          icon="💬"
+          accentColor="var(--k-accent)"
+          icon="?"
           eta="2025"
         />
       </div>
@@ -118,9 +118,7 @@ const comingSoonFeatures = [
       <h2 class="cats-heading">Topics I Can Answer</h2>
       <div class="cats-grid">
         {knowledgeTopics.map(t => (
-          <div class="cat-chip">
-            {t.emoji} {t.label}
-          </div>
+          <div class="cat-chip">{t.label}</div>
         ))}
         <div class="cat-chip cat-chip-more">+ Many More</div>
       </div>
@@ -134,8 +132,8 @@ const comingSoonFeatures = [
         <h2>Don't wait for the feature.</h2>
         <p>Drop your question directly. I read every message.</p>
         <div class="yaia-cta-btns">
-          <a href="/drop-a-vibe" class="yaia-btn-dark">Drop a Vibe ✉️</a>
-          <a href="/behind-the-vibes" class="yaia-btn-ghost">Behind the Vibes →</a>
+          <a href={url('/drop-a-vibe')} class="yaia-btn-dark">Drop a Vibe</a>
+          <a href={url('/behind-the-vibes')} class="yaia-btn-ghost">Behind the Vibes →</a>
         </div>
       </div>
     </div>
@@ -163,7 +161,7 @@ const comingSoonFeatures = [
   .ypb-label { display: flex; align-items: center; gap: 0.75rem; }
   .ypb-badge {
     display: inline-flex; padding: 0.25rem 0.75rem;
-    background: var(--m-toolooo, #F7933C); color: var(--k-dark);
+    background: var(--k-accent); color: #fff;
     border-radius: 999px; font-size: 0.75rem; font-weight: 700;
     font-family: 'Poppins', sans-serif;
   }
@@ -177,7 +175,7 @@ const comingSoonFeatures = [
 
   .yaia-btn {
     display: inline-flex; align-items: center; padding: 0.55rem 1.25rem;
-    background: #F7933C; color: var(--k-dark);
+    background: var(--k-accent); color: #fff;
     border-radius: 0.5rem; font-family: 'Poppins', sans-serif;
     font-weight: 700; font-size: 0.8rem; text-decoration: none;
     align-self: flex-start;
@@ -192,7 +190,7 @@ const comingSoonFeatures = [
   @keyframes floatSlow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
   .yaia-glow {
     position: absolute; width: 160px; height: 160px; border-radius: 50%;
-    background: #F7933C; opacity: 0.12; filter: blur(40px);
+    background: var(--k-accent); opacity: 0.1; filter: blur(40px);
     pointer-events: none;
   }
 
@@ -211,18 +209,17 @@ const comingSoonFeatures = [
     padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
   }
   .sc-header { display: flex; align-items: center; gap: 0.5rem; }
-  .sc-emoji { font-size: 1.25rem; }
   .sc-category {
     font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.08em;
-    color: #F7933C;
+    color: var(--k-accent);
   }
   .sc-question {
     font-size: 0.9rem; font-weight: 600; color: var(--k-text); margin: 0; line-height: 1.4;
   }
   .sc-hint {
     font-size: 0.8rem; color: var(--k-text-muted); margin: 0; line-height: 1.5;
-    padding-left: 0.75rem; border-left: 2px solid #F7933C;
+    padding-left: 0.75rem; border-left: 2px solid var(--k-accent);
     font-style: italic;
   }
 
@@ -236,7 +233,7 @@ const comingSoonFeatures = [
   .cf-content > p { font-size: 0.9rem; color: var(--k-text-muted); margin: 0 0 1.25rem; }
   .cf-features { list-style: none; margin: 0 0 1.5rem; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
   .cf-features li { display: flex; align-items: center; gap: 0.625rem; font-size: 0.9rem; color: var(--k-text-muted); }
-  .cf-check { color: #F7933C; font-weight: 700; }
+  .cf-check { color: var(--k-accent); font-weight: 700; }
 
   .yaia-btn-dark {
     display: inline-flex; align-items: center; padding: 0.65rem 1.5rem;
@@ -259,7 +256,9 @@ const comingSoonFeatures = [
     padding: 0.5rem 1rem;
     background: var(--k-bg-card); border: 1px solid var(--k-border);
     border-radius: 999px; font-size: 0.875rem; font-weight: 600; color: var(--k-text);
+    transition: border-color 0.2s, color 0.2s;
   }
+  .cat-chip:hover { border-color: var(--k-accent); color: var(--k-accent); }
   .cat-chip-more {
     background: var(--k-dark); color: var(--k-bg); border-color: var(--k-dark);
     font-family: 'Poppins', sans-serif; font-weight: 700;
@@ -281,7 +280,7 @@ const comingSoonFeatures = [
     font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.875rem;
     text-decoration: none; transition: border-color 0.2s, color 0.2s;
   }
-  .yaia-btn-ghost:hover { border-color: #F7933C; color: #F7933C; }
+  .yaia-btn-ghost:hover { border-color: var(--k-accent); color: var(--k-accent); }
 
   @media (max-width: 900px) {
     .yaia-hero-inner { grid-template-columns: 1fr; }

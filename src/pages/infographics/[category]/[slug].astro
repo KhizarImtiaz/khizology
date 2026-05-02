@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../components/layout/BaseLayout.astro';
+import { url } from '../../../utils/url';
 import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
 import { allInfographicSections, getAllInfographicPosts } from '../../../data/infographicsData';
 import { monsters } from '../../../data/monsters';
@@ -156,7 +157,7 @@ const jsonLd = JSON.stringify({
             </div>
             <h3 class="id-sidebar-h3">{section.title}</h3>
             <p class="id-sidebar-desc">{section.description}</p>
-            <a href={`/infographics/${section.slug}`} class="id-sidebar-link" style={`color: ${ACCENT}`}>
+            <a href={url(`/infographics/${section.slug}`)} class="id-sidebar-link" style={`color: ${ACCENT}`}>
               See all {section.title} →
             </a>
           </div>
@@ -174,7 +175,7 @@ const jsonLd = JSON.stringify({
             <h3 class="id-sidebar-h3">More khizology</h3>
             <div class="id-monsters-list">
               {monsters.filter(m => m.status === 'active' && m.id !== 'infooo').map(m => (
-                <a href={m.route} class="id-monster-pill" style={`--mc: ${m.color}`}>
+                <a href={url(m.route)} class="id-monster-pill" style={`--mc: ${m.color}`}>
                   <img src={`${base}${m.image}`} alt={m.name} width="22" height="22" />
                   <span>{m.module}</span>
                 </a>
@@ -191,7 +192,7 @@ const jsonLd = JSON.stringify({
           <h2 class="id-related-title">Related Infographics</h2>
           <div class="id-related-grid">
             {related.map(rp => (
-              <a href={`/infographics/${section.slug}/${rp.slug}`} class="id-related-card" style={`--ic: ${ACCENT}`}>
+              <a href={url(`/infographics/${section.slug}/${rp.slug}`)} class="id-related-card" style={`--ic: ${ACCENT}`}>
                 <div class="id-related-icon">{section.icon}</div>
                 <h3 class="id-related-name">{rp.title}</h3>
                 <p class="id-related-summary">{rp.summary.slice(0, 90)}…</p>
@@ -211,7 +212,7 @@ const jsonLd = JSON.stringify({
           <h2 class="id-related-title">Other {section.kind === 'type' ? 'Formats' : 'Topics'}</h2>
           <div class="id-cross-grid">
             {crossSections.map(cs => (
-              <a href={`/infographics/${cs.slug}`} class="id-cross-card" style={`--ic: ${cs.color}`}>
+              <a href={url(`/infographics/${cs.slug}`)} class="id-cross-card" style={`--ic: ${cs.color}`}>
                 <span class="id-cross-icon">{cs.icon}</span>
                 <span class="id-cross-name">{cs.title}</span>
                 <span class="id-cross-count">{cs.posts.length} posts</span>
@@ -239,7 +240,7 @@ const jsonLd = JSON.stringify({
         </details>
         <details class="id-faq-item">
           <summary class="id-faq-q">Are there more {section.title.toLowerCase()} infographics?</summary>
-          <p class="id-faq-a">Yes, we have {section.posts.length} planned in this category. <a href={`/infographics/${section.slug}`} style={`color: ${ACCENT}`}>Browse all {section.title} infographics →</a></p>
+          <p class="id-faq-a">Yes, we have {section.posts.length} planned in this category. <a href={url(`/infographics/${section.slug}`)} style={`color: ${ACCENT}`}>Browse all {section.title} infographics →</a></p>
         </details>
       </div>
     </div>

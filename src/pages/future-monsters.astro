@@ -2,6 +2,7 @@
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import { monsters } from '../data/monsters';
+import { url } from '../utils/url';
 
 const futureMonsters = monsters.filter(m => m.status === 'coming-soon');
 const activeMonsters = monsters.filter(m => m.status === 'active');
@@ -132,7 +133,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <span class="fm-cta-emoji">🔔</span>
             <h3>Be first to know</h3>
             <p>Drop a vibe to stay notified when new monsters unlock.</p>
-            <a href="/drop-a-vibe" class="fm-cta-btn">Stay in the Loop →</a>
+            <a href={url('/drop-a-vibe')} class="fm-cta-btn">Stay in the Loop →</a>
           </div>
         </div>
       </div>
@@ -148,7 +149,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
       <div class="fm-active-grid">
         {activeMonsters.map(m => (
-          <a href={m.route} class="fm-active-card" style={`--mc: ${m.color}`}>
+          <a href={url(m.route)} class="fm-active-card" style={`--mc: ${m.color}`}>
             <div class="fm-active-glow"></div>
             <img src={`${base}${m.image}`} alt={m.name} width="56" height="56" loading="lazy" />
             <div>

@@ -8,7 +8,7 @@ export const SITE = {
   authorHandle: '@khizooo',
   tagline: 'Art meets Code.',
   subTagline: 'A monster-powered creative knowledge universe.',
-  ogImage: '/public/images/site/khizooo.png',
+  ogImage: '/images/site/khizooo.png',
   twitterCard: 'summary_large_image' as const,
   themeColor: '#f82d48',
 };

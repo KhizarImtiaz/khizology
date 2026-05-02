@@ -3,6 +3,7 @@ import BaseLayout from '../../../components/layout/BaseLayout.astro';
 import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
 import { toolGroups, allTools } from '../../../data/toolsData';
 import { monsters } from '../../../data/monsters';
+import { url } from '../../../utils/url';
 import InstagramBioScore from '../../../components/tools/InstagramBioScore';
 
 export async function getStaticPaths() {
@@ -126,8 +127,8 @@ const comingSoonFaqs = [
                   </ul>
                 </div>
                 <div class="td-cs-actions">
-                  <a href="/toolbox/tools" class="td-cs-btn-primary">← Back to All Tools</a>
-                  <a href="/toolbox" class="td-cs-btn-secondary">Explore Toolbox</a>
+                  <a href={url("/toolbox/tools")} class="td-cs-btn-primary">← Back to All Tools</a>
+                  <a href={url("/toolbox")} class="td-cs-btn-secondary">Explore Toolbox</a>
                 </div>
               </div>
             </div>
@@ -203,7 +204,7 @@ const comingSoonFaqs = [
               <h3 class="td-sidebar-h3">Related Tools</h3>
               <div class="td-related-list">
                 {related.map(rt => (
-                  <a href={`/toolbox/tools/${rt.slug}`} class="td-related-item">
+                  <a href={url(`/toolbox/tools/${rt.slug}`)} class="td-related-item">
                     <span class="td-related-icon">{rt.icon}</span>
                     <div>
                       <div class="td-related-name">{rt.name}</div>
@@ -220,7 +221,7 @@ const comingSoonFaqs = [
             <h3 class="td-sidebar-h3">More khizology</h3>
             <div class="td-monsters">
               {monsters.filter(m => m.status === 'active' && m.id !== 'toolooo').map(m => (
-                <a href={m.route} class="td-monster-link" style={`--mc: ${m.color}`}>
+                <a href={url(m.route)} class="td-monster-link" style={`--mc: ${m.color}`}>
                   <img src={`${base}${m.image}`} alt={m.name} width="22" height="22" />
                   <span>{m.module}</span>
                 </a>
