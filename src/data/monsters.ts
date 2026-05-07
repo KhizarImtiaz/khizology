@@ -72,8 +72,8 @@ export const monsters: Monster[] = [
     tagline: 'Free. Always.',
   },
   {
-    id: 'devooo',
-    name: 'devooo',
+    id: 'future-1',
+    name: '???ooo',
     module: 'Unknown',
     description:
       'A mystery. A future module. Identity unknown — but it is coming.',
@@ -86,8 +86,8 @@ export const monsters: Monster[] = [
     tagline: 'Coming soon.',
   },
   {
-    id: 'summooo',
-    name: 'summooo',
+    id: 'future-2',
+    name: '???ooo',
     module: 'Unknown',
     description:
       'A mystery. A future module. Identity unknown — but it is coming.',
@@ -104,7 +104,7 @@ export const monsters: Monster[] = [
     name: '???ooo',
     module: 'Unknown',
     description:
-      'Something bold is incubating. A new monster is forming in the creative lab. Stay tuned.',
+      'A mystery. A future module. Identity unknown — but it is coming.',
     color: '#DF78A0',
     colorLight: '#FBCFE8',
     textColor: '#2A3439',
@@ -118,7 +118,7 @@ export const monsters: Monster[] = [
     name: '???ooo',
     module: 'Unknown',
     description:
-      'An experimental idea in its early form. This monster has yet to reveal its name and power.',
+      'A mystery. A future module. Identity unknown — but it is coming.',
     color: '#93B96A',
     colorLight: '#D9F99D',
     textColor: '#2A3439',
@@ -132,7 +132,7 @@ export const monsters: Monster[] = [
     name: '???ooo',
     module: 'Unknown',
     description:
-      'The last mystery. The biggest surprise. When this monster wakes, the universe expands.',
+      'A mystery. A future module. Identity unknown — but it is coming.',
     color: '#E38D7C',
     colorLight: '#FED7AA',
     textColor: '#2A3439',

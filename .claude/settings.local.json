@@ -32,7 +32,11 @@
       "Bash(curl --version)",
       "Bash(git remote *)",
       "Bash(git config *)",
-      "Bash(git fetch *)"
+      "Bash(git fetch *)",
+      "Bash(git commit -m 'fix: use infooo base color \\(#5CCFAF\\) for all infographics section accents *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git commit -m 'fix: replace devooo color #B699FF with var\\(--k-accent\\) on Future Monsters footer link *)",
+      "Bash(git commit -m 'fix: replace all #B699FF \\(devooo purple\\) with var\\(--k-accent\\) on future-monsters page *)"
     ]
   }
 }
