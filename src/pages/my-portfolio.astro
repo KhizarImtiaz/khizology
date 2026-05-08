@@ -26,27 +26,92 @@ const strengths = [
 const skillGroups = [
   {
     category: 'Programming & Frameworks',
-    items: ['React', 'Next.js', 'Node.js', 'TypeScript', 'JavaScript', 'Python', 'HTML / CSS', 'Astro', 'Tailwind CSS'],
+    sub: [
+      { label: 'Frontend Development', items: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'TypeScript', 'React.js', 'Angular', 'Responsive & Mobile-First Design', 'UI/UX Design', 'Wireframing'] },
+      { label: 'Backend Development', items: ['C#', '.NET Core', 'Blazor', 'React', 'Node.js'] },
+      { label: 'Web API', items: ['RESTful APIs', 'SOAP APIs', 'GraphQL APIs', 'gRPC APIs', 'WebSockets', 'RPC API'] },
+      { label: 'Authentication', items: ['Basic', 'Token-Based', 'OAuth 2.0', 'OpenID Connect', 'Multi-Factor Authentication', 'SAML'] },
+      { label: 'Authorization', items: ['Role-Based Access Control', 'Attribute-Based Access Control', 'Permissions-Based Access Control', 'Discretionary Access Control', 'Mandatory Access Control'] },
+    ],
   },
   {
-    category: 'Blockchain & Web3',
-    items: ['Solidity', 'Ethereum', 'Smart Contracts', 'NFTs', 'DeFi', 'Web3.js'],
+    category: 'Blockchain & Web3 Development',
+    sub: [
+      { label: 'Applications', items: ['Exchange', 'Chain'] },
+      { label: 'Smart Contract Development', items: ['Solidity', 'Rust'] },
+      { label: 'Blockchain Frameworks & Tools', items: ['Web3.js', 'Ethers.js', 'Infura', 'Alchemy', 'DApps'] },
+      { label: 'Consensus Mechanisms', items: ['PoW', 'PoS', 'DPoS', 'PoA', 'PoB', 'PoC', 'Hybrid (PoW + PoS)'] },
+      { label: 'NFT Marketplaces', items: ['Buying/Selling NFTs', 'OnChain/OffChain Concept'] },
+    ],
   },
   {
-    category: 'Databases & Cloud',
-    items: ['MongoDB', 'PostgreSQL', 'MySQL', 'Redis', 'AWS (EC2, S3, Lambda)', 'GCP Basics'],
+    category: 'Databases & Optimization',
+    sub: [
+      { label: 'SQL Database', items: ['MySQL', 'PostgreSQL', 'Microsoft SQL Server', 'Oracle DB'] },
+      { label: 'NoSQL Database', items: ['MongoDB', 'Cassandra', 'DynamoDB', 'Redis', 'CouchDB'] },
+      { label: 'Hybrid Database', items: ['FaunaDB', 'CosmosDB'] },
+      { label: 'NewSQL Database', items: ['Google Spanner', 'CockroachDB'] },
+      { label: 'In-Memory Database', items: ['RedisDB'] },
+      { label: 'Distributed Database', items: ['CockroachDB', 'Google Spanner'] },
+      { label: 'Graph Database', items: ['Neo4j', 'TigerGraph'] },
+      { label: 'Time-Series Database', items: ['InfluxDB', 'TimescaleDB'] },
+      { label: 'Multi-Tenant Database', items: ['PostgreSQL', 'AWS RDS'] },
+      { label: 'Optimizations', items: ['Indexing', 'Query', 'Normalization/Denormalization', 'Partitioning/Sharding', 'Connection Pooling/Caching', 'Concurrency Control/Locking', 'R/W', 'Storage/Compression', 'Backup/Recovery', 'Monitoring/Performance'] },
+    ],
   },
   {
-    category: 'AI & Architecture',
-    items: ['OpenAI API', 'LangChain', 'Prompt Engineering', 'Microservices', 'REST API', 'GraphQL', 'Clean Architecture'],
+    category: 'Cloud & DevOps',
+    sub: [
+      { label: 'Cloud Platforms', items: ['Microsoft Azure', 'AWS', 'Google Cloud Platform (GCP)', 'DigitalOcean'] },
+      { label: 'Serverless Computing', items: ['AWS Lambda', 'Azure Functions', 'Firebase Cloud Functions'] },
+      { label: 'CI/CD Pipelines', items: ['GitHub Actions', 'GitLab CI/CD', 'Azure DevOps'] },
+      { label: 'Containerization & Orchestration', items: ['Docker', 'Kubernetes'] },
+      { label: 'Monitoring & Logging', items: ['Grafana', 'Kibana'] },
+    ],
   },
   {
-    category: 'DevOps & Security',
-    items: ['Docker', 'CI/CD Pipelines', 'Git / GitHub', 'JWT', 'OAuth', 'SSL', 'Jira', 'Agile / Scrum'],
+    category: 'Security & Compliance',
+    sub: [
+      { label: 'Web Security Standards', items: ['OWASP Top 10', 'Secure Coding Practices'] },
+    ],
   },
   {
-    category: 'Design & Creative',
-    items: ['Figma', 'Adobe Suite', 'Digital Illustration', 'Creative Direction', 'Infographic Design', 'Brand Building'],
+    category: 'Artificial Intelligence',
+    sub: [
+      { label: 'AI Frameworks', items: ['OpenAI API', 'Claude'] },
+      { label: 'AI-powered Development', items: ['GitHub Copilot', 'Claude Code'] },
+    ],
+  },
+  {
+    category: 'Architecture Frameworks',
+    sub: [
+      { label: 'Frameworks', items: ['Clean', 'Open Group Architecture', 'Microservices', 'MVC/MVVM', 'Event-Driven', 'Layered', 'Serverless'] },
+    ],
+  },
+  {
+    category: 'Version Control & Project Management',
+    sub: [
+      { label: 'Version Control Systems', items: ['Git', 'GitHub', 'GitLab', 'Bitbucket', 'TFS'] },
+      { label: 'Agile Methodologies', items: ['Scrum', 'Kanban', 'Jira', 'Trello', 'ClickUp'] },
+      { label: 'Collaboration Tools', items: ['Slack', 'Discord', 'Telegram', 'Microsoft Teams'] },
+    ],
+  },
+  {
+    category: 'Containerization & Virtualization',
+    sub: [
+      { label: 'Containerization', items: ['Docker', 'Podman'] },
+      { label: 'Orchestration', items: ['Rancher'] },
+      { label: 'Virtualization Platforms', items: ['VirtualBox'] },
+    ],
+  },
+  {
+    category: 'Additional Tech Skills',
+    sub: [
+      { label: 'Message Brokers', items: ['Apache Kafka', 'Redis Pub/Sub'] },
+      { label: 'Search Engines & Indexing', items: ['Elasticsearch'] },
+      { label: 'BI & Analytics', items: ['Power BI'] },
+      { label: 'Game Development', items: ['Unity 3D'] },
+    ],
   },
 ];
 
@@ -100,42 +165,76 @@ const experience = [
   },
 ];
 
-const projects = [
+const projectGroups = [
   {
-    name: 'khizology',
-    desc: 'A monster-powered creative knowledge universe. Artworks, Infographics, Toolbox, and Freebies — all in one creative brand built with Astro, TypeScript, and React.',
-    tags: ['Astro', 'TypeScript', 'Tailwind', 'React', 'Personal Brand'],
-    link: url('/'),
+    group: 'Blockchain & Crypto Exchange Solutions',
+    projects: [
+      { name: 'BlackCard', period: '2020 – 2021', desc: 'Cryptocurrency exchange platform with trading and wallet features.', tags: ['Blockchain', 'Exchange', 'Wallet'] },
+      { name: 'Moonix', period: '2019 – 2021', desc: 'Multi-asset crypto exchange supporting staking and liquidity pools.', tags: ['Crypto', 'Staking', 'Liquidity'] },
+      { name: 'BitFast', period: '2020 – 2021', desc: 'High-performance trading engine for fast crypto transactions.', tags: ['Trading Engine', 'Performance', 'Crypto'] },
+      { name: 'GoStake', period: '2019 – 2020', desc: 'Staking platform enabling rewards across multiple blockchain networks.', tags: ['Staking', 'Blockchain', 'DeFi'] },
+      { name: 'VulcanX', period: 'Continue', desc: 'Exchange infrastructure supporting token trading and liquidity management.', tags: ['Exchange', 'Token Trading', 'Liquidity'] },
+    ],
   },
   {
-    name: 'artooo — 168+ Artworks',
-    desc: 'Original artworks — sketches, illustrations, character designs, and emotional storytelling through lines. Every piece made by hand.',
-    tags: ['Drawing', 'Illustration', 'Character Design', 'Digital Art'],
-    link: url('/artworks'),
+    group: 'Blockchain & NFT Platforms',
+    projects: [
+      { name: 'Vulcan Forged', period: '2019 – Present', desc: 'Blockchain gaming ecosystem with NFTs, marketplace, token utilities.', tags: ['Blockchain', 'NFT', 'Gaming', 'Marketplace'] },
+      { name: 'Private Jet Pyjama Party', period: '2019 – 2021', desc: 'NFT-based membership platform with exclusive digital collectibles.', tags: ['NFT', 'Membership', 'Web3'] },
+      { name: 'Vulcan Marketplace & Games Integrations', period: '2020 – Present', desc: 'NFT marketplace integrated across multiple blockchain-based games.', tags: ['NFT', 'Marketplace', 'Gaming'] },
+      { name: 'Elysium Marketplace | Agora', period: '2022 – Present', desc: 'Decentralized marketplace supporting NFT trading and digital assets.', tags: ['Decentralized', 'NFT', 'dApp'] },
+      { name: 'Boost Lottery', period: '2024 – 2025', desc: 'Blockchain-based lottery system ensuring fairness and transparency.', tags: ['Blockchain', 'Smart Contracts', 'Lottery'] },
+      { name: 'BTC Lending (BTC Loan System)', period: 'Continue', desc: 'Bitcoin-backed lending platform with secure collateral management.', tags: ['Bitcoin', 'Lending', 'DeFi'] },
+      { name: 'OPN Wallet', period: '2025', desc: 'Crypto wallet supporting assets, transactions, and browser extension usage.', tags: ['Wallet', 'Extension', 'Crypto'] },
+    ],
   },
   {
-    name: 'toolooo — 50+ Free Tools',
-    desc: 'Free online calculators and productivity tools. Built with React and deployed as interactive islands. Real utility for real people.',
-    tags: ['React', 'Calculators', 'SEO', 'Tools'],
-    link: url('/toolbox'),
+    group: 'E-commerce & Shopify',
+    projects: [
+      { name: 'Amazon & Shopify Scraper', period: '2017 – 2018', desc: 'Product scraping tool for automated catalog data extraction.', tags: ['Scraping', 'E-commerce', 'Automation'] },
+      { name: 'FBMessenger Shopify APP', period: '2019', desc: 'Messenger automation app for Shopify customer engagement.', tags: ['Shopify', 'Messenger', 'Automation'] },
+      { name: 'Page Berry', period: '2018', desc: 'Landing page builder for Shopify stores conversion optimization.', tags: ['Shopify', 'Landing Pages', 'CRO'] },
+      { name: 'BlackBird Shopify APP & Browser Extension', period: '2017 – 2018', desc: 'Shopify automation extension for product research and analysis.', tags: ['Shopify', 'Extension', 'Research'] },
+      { name: 'Intelly Plan', period: '2025 – Present', desc: 'Business planning tool for forecasting and operational workflows.', tags: ['SaaS', 'Planning', 'Analytics'] },
+    ],
   },
   {
-    name: 'Enterprise SaaS Products',
-    desc: 'Multiple enterprise-grade web platforms delivered at VAIVAL — covering fintech, HR tech, e-commerce, and operations management.',
-    tags: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
-    link: null,
+    group: 'Fintech & Payment Solutions',
+    projects: [
+      { name: 'MPGE | Mobile Payment Gateway Eugene', period: '2021', desc: 'Mobile payment gateway supporting secure digital transactions.', tags: ['Fintech', 'Payments', 'Mobile'] },
+    ],
   },
   {
-    name: 'Blockchain / Web3 dApps',
-    desc: 'Smart contract development and Web3 frontend integrations for NFT marketplaces and DeFi applications.',
-    tags: ['Solidity', 'Ethereum', 'Web3.js', 'Smart Contracts'],
-    link: null,
+    group: 'Business & Data Analytics',
+    projects: [
+      { name: 'Restaurant Analytics Hub', period: '2019 – 2021', desc: 'Analytics dashboard providing insights into restaurant performance metrics.', tags: ['Analytics', 'Dashboard', 'Restaurants'] },
+      { name: 'Landing Page Launchpad', period: '2017', desc: 'Tool for quickly building and deploying marketing landing pages.', tags: ['Marketing', 'Landing Pages', 'Automation'] },
+      { name: 'IntellyPlan', period: 'Continue', desc: 'Strategic planning platform with forecasting and operational insights.', tags: ['SaaS', 'Forecasting', 'Strategy'] },
+      { name: 'IntellyStore', period: 'Continue', desc: 'Retail management system with inventory and analytics features.', tags: ['Retail', 'Inventory', 'Analytics'] },
+      { name: 'IntellySight', period: 'Continue', desc: 'Business intelligence dashboards for data-driven decision making.', tags: ['BI', 'Dashboards', 'Data'] },
+    ],
   },
   {
-    name: 'AI-Powered Applications',
-    desc: 'Integrated OpenAI and LangChain into production applications, including AI content assistants, data extractors, and chat interfaces.',
-    tags: ['OpenAI', 'LangChain', 'Python', 'Node.js'],
-    link: null,
+    group: 'Healthcare & Queue',
+    projects: [
+      { name: 'MyHealthCare Center', period: '2017', desc: 'Clinic management system with appointments and patient tracking.', tags: ['Healthcare', 'Clinic', 'Appointments'] },
+      { name: 'MyScan', period: '2025', desc: 'Document scanning system with secure cloud organization.', tags: ['Scanning', 'Cloud', 'Documents'] },
+      { name: 'PryvateNow', period: 'Continue', desc: 'Healthcare ecosystem connecting patients, nurses, doctors, and coordinators.', tags: ['Healthcare', 'Platform', 'Telemedicine'] },
+    ],
+  },
+  {
+    group: 'Enterprise Solutions',
+    projects: [
+      { name: 'FOS – Maple Leaf', period: '2016 – 2017', desc: 'Field operations system for enterprise workforce management.', tags: ['Enterprise', 'Workforce', 'Operations'] },
+      { name: 'Vulcan Forged Gaming', period: '2019 – Present', desc: 'Blockchain gaming infrastructure supporting NFTs and token economies.', tags: ['Blockchain', 'Gaming', 'NFT'] },
+      { name: 'ClaimToolkit', period: 'Continue', desc: 'Claims management platform automating processing and reducing errors.', tags: ['Enterprise', 'Claims', 'Automation'] },
+    ],
+  },
+  {
+    group: 'Personal & Open-Source',
+    projects: [
+      { name: 'khizology', period: '2024 – Present', desc: 'A monster-powered creative knowledge universe. Artworks, Infographics, Toolbox, and Freebies — all in one creative brand built with Astro, TypeScript, and React.', tags: ['Astro', 'TypeScript', 'React', 'Personal Brand'], link: url('/') },
+    ],
   },
 ];
 
@@ -210,6 +309,18 @@ const hobbies = ['Drawing & Illustration', 'Digital Art', 'Travel', 'Photography
     </div>
   </section>
 
+  <!-- CAREER OBJECTIVES -->
+  <section class="k-section pf-objective-section">
+    <div class="k-container">
+      <h2 class="pf-section-title">Career Objectives</h2>
+      <div class="pf-objective-card">
+        <p class="pf-objective-text">
+          To leverage my experience in architecture, leadership, and modern technologies to build scalable digital products and drive technical innovation. I aim to contribute to organizations by delivering high-impact solutions, improving engineering processes, and leading teams to create reliable and future-ready systems.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- CORE STRENGTHS -->
   <section class="k-section pf-strengths-section">
     <div class="k-container">
@@ -228,11 +339,18 @@ const hobbies = ['Drawing & Illustration', 'Digital Art', 'Travel', 'Photography
       <h2 class="pf-section-title">Technical Skills</h2>
       <div class="skills-groups">
         {skillGroups.map(group => (
-          <div class="skill-group">
-            <h3 class="skill-group-label">{group.category}</h3>
-            <div class="skill-tags">
-              {group.items.map(skill => (
-                <span class="skill-tag">{skill}</span>
+          <div class="skill-group-block">
+            <h3 class="skill-group-heading">{group.category}</h3>
+            <div class="skill-sub-list">
+              {group.sub.map(sub => (
+                <div class="skill-sub">
+                  <span class="skill-sub-label">{sub.label}</span>
+                  <div class="skill-tags">
+                    {sub.items.map(skill => (
+                      <span class="skill-tag">{skill}</span>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -279,19 +397,29 @@ const hobbies = ['Drawing & Illustration', 'Digital Art', 'Travel', 'Photography
   <section class="k-section pf-projects-section">
     <div class="k-container">
       <h2 class="pf-section-title">Projects &amp; Contributions</h2>
-      <div class="projects-grid">
-        {projects.map(p => (
-          <div class="project-card">
-            <div class="project-card-inner">
-              <h3 class="pc-name">{p.name}</h3>
-              <p class="pc-desc">{p.desc}</p>
-              <div class="pc-tags">
-                {p.tags.map(tag => <span class="pc-tag">{tag}</span>)}
-              </div>
+      <div class="project-groups">
+        {projectGroups.map(pg => (
+          <div class="project-group">
+            <h3 class="project-group-heading">{pg.group}</h3>
+            <div class="projects-grid">
+              {pg.projects.map(p => (
+                <div class="project-card">
+                  <div class="project-card-inner">
+                    <div class="pc-header">
+                      <h4 class="pc-name">{p.name}</h4>
+                      <span class="pc-period">{p.period}</span>
+                    </div>
+                    <p class="pc-desc">{p.desc}</p>
+                    <div class="pc-tags">
+                      {p.tags.map(tag => <span class="pc-tag">{tag}</span>)}
+                    </div>
+                  </div>
+                  {'link' in p && p.link && (
+                    <a href={p.link} class="pc-link">View →</a>
+                  )}
+                </div>
+              ))}
             </div>
-            {p.link && (
-              <a href={p.link} class="pc-link">View →</a>
-            )}
           </div>
         ))}
       </div>
@@ -446,20 +574,41 @@ const hobbies = ['Drawing & Illustration', 'Digital Art', 'Travel', 'Photography
   }
   .strength-chip:hover { background: var(--k-accent); color: #fff; }
 
+  /* CAREER OBJECTIVES */
+  .pf-objective-section { background: var(--k-bg); }
+  .pf-objective-card {
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-left: 4px solid var(--k-accent);
+    border-radius: 0 1rem 1rem 0; padding: 2rem;
+  }
+  .pf-objective-text {
+    font-size: 1rem; color: var(--k-text-muted); line-height: 1.8; margin: 0;
+  }
+
   /* SKILLS */
   .pf-skills-section { background: var(--k-bg-card); }
-  .skills-groups { display: flex; flex-direction: column; gap: 1.75rem; }
-  .skill-group { display: flex; flex-direction: column; gap: 0.625rem; }
-  .skill-group-label {
-    font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--k-accent);
-    margin: 0;
-  }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .skill-tag {
-    display: inline-flex; padding: 0.3rem 0.75rem;
+  .skills-groups { display: flex; flex-direction: column; gap: 2rem; }
+  .skill-group-block {
     background: var(--k-bg); border: 1px solid var(--k-border);
-    border-radius: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--k-text);
+    border-radius: 1rem; padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 1.125rem;
+  }
+  .skill-group-heading {
+    font-family: 'Poppins', sans-serif; font-size: 0.875rem; font-weight: 800;
+    color: var(--k-accent); margin: 0;
+    padding-bottom: 0.75rem; border-bottom: 1px solid var(--k-border);
+  }
+  .skill-sub-list { display: flex; flex-direction: column; gap: 0.875rem; }
+  .skill-sub { display: flex; flex-direction: column; gap: 0.375rem; }
+  .skill-sub-label {
+    font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--k-text-muted);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+  .skill-tag {
+    display: inline-flex; padding: 0.25rem 0.7rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-radius: 0.5rem; font-size: 0.78rem; font-weight: 600; color: var(--k-text);
   }
 
   /* EXPERIENCE */
@@ -509,29 +658,42 @@ const hobbies = ['Drawing & Illustration', 'Digital Art', 'Travel', 'Photography
 
   /* PROJECTS */
   .pf-projects-section { background: var(--k-bg-card); }
+  .project-groups { display: flex; flex-direction: column; gap: 2.5rem; }
+  .project-group-heading {
+    font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--k-accent); margin: 0 0 1rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--k-border);
+  }
   .projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;
   }
   .project-card {
     background: var(--k-bg); border: 1px solid var(--k-border); border-radius: 1rem;
-    padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;
+    padding: 1.25rem; display: flex; flex-direction: column; gap: 0.875rem;
     transition: border-color 0.2s, transform 0.2s;
   }
   .project-card:hover { border-color: var(--k-accent); transform: translateY(-2px); }
-  .project-card-inner { flex: 1; display: flex; flex-direction: column; gap: 0.625rem; }
-  .pc-name { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--k-text); margin: 0; }
+  .project-card-inner { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+  .pc-header { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+  .pc-name { font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .pc-period {
+    font-size: 0.68rem; font-weight: 600; color: var(--k-accent);
+    background: color-mix(in srgb, var(--k-accent) 10%, transparent);
+    padding: 0.1rem 0.5rem; border-radius: 999px;
+    font-family: 'Poppins', sans-serif; white-space: nowrap;
+  }
   .pc-desc { font-size: 0.8rem; color: var(--k-text-muted); line-height: 1.6; margin: 0; flex: 1; }
   .pc-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
   .pc-tag {
     display: inline-flex; padding: 0.2rem 0.6rem;
     background: var(--k-bg-card); border: 1px solid var(--k-border);
-    border-radius: 999px; font-size: 0.7rem; font-weight: 600; color: var(--k-text-muted);
+    border-radius: 999px; font-size: 0.68rem; font-weight: 600; color: var(--k-text-muted);
   }
   .pc-link {
     display: inline-flex; align-items: center;
     font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700;
     color: var(--k-accent); text-decoration: none;
-    transition: gap 0.2s;
   }
   .pc-link:hover { text-decoration: underline; }
 
