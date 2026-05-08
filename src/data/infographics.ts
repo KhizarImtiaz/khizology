@@ -7,6 +7,24 @@ export interface InfoCategory {
   postCount: number;
 }
 
+export interface InfoType {
+  slug: string;
+  title: string;
+  desc: string;
+  icon: string;
+}
+
+export const infographicTypes: InfoType[] = [
+  { slug: 'market-trend',   title: 'Market Trends',    desc: 'Visual breakdowns of industry trends and market movements.',       icon: '📈' },
+  { slug: 'cost-breakdown', title: 'Cost Breakdowns',  desc: 'Where money goes — pricing, fees, and expense charts.',             icon: '💸' },
+  { slug: 'decision-trees', title: 'Decision Trees',   desc: 'Flowcharts and logic paths for better decisions.',                  icon: '🌿' },
+  { slug: 'comparison',     title: 'Comparisons',      desc: 'Head-to-head breakdowns of tools, ideas, and choices.',             icon: '⚖️' },
+  { slug: 'cheat-sheet',    title: 'Cheat Sheets',     desc: 'Quick reference cards and frameworks you can actually use.',        icon: '📋' },
+  { slug: 'data-stats',     title: 'Data & Stats',     desc: 'Numbers, research, and facts made visually digestible.',            icon: '📊' },
+  { slug: 'step-by-step',   title: 'Step-by-Step',     desc: 'Process guides and how-to formats in visual form.',                 icon: '📌' },
+  { slug: 'mistakes-fixes', title: 'Mistakes & Fixes', desc: 'Common errors and their solutions — learn faster.',                 icon: '🔧' },
+];
+
 export const infoCategories: InfoCategory[] = [
   {
     slug: 'self-improvements',
