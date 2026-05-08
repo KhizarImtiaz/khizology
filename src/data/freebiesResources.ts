@@ -3,7 +3,6 @@ export interface FreebieResource {
   url: string;
   favicon: string;
   tags: string[];
-  description?: string;
 }
 
 export type FreebiesResourceMap = Record<string, FreebieResource[]>;
@@ -18,8 +17,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
         "HDRIs",
         "Textures",
         "Models"
-      ],
-      "description": "Our assets are all licensed as CC0, which is effectively Public Domain."
+      ]
     },
     {
       "name": "Itchio",
@@ -27,8 +25,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://itch.io/game-assets/free&sz=128",
       "tags": [
         "Store"
-      ],
-      "description": "Itchio is a marketplace for indie game developers. Each asset has its own license."
+      ]
     },
     {
       "name": "Kenney",
@@ -44,8 +41,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
         "HDRIs",
         "Textures",
         "Models"
-      ],
-      "description": "All ambientCG assets are provided under the Creative Commons CC0 1.0 Universal License."
+      ]
     },
     {
       "name": "3D model collection",
@@ -65,8 +61,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
         "Atlases",
         "Textures",
         "Models"
-      ],
-      "description": "All of our content is copyright-free [CC0]. It means you can use them anywhere you want which includes commercial projects too."
+      ]
     },
     {
       "name": "BlenderKit",
@@ -77,8 +72,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
         "Models",
         "HDRIs",
         "Brushes"
-      ],
-      "description": "BlenderKit only has 2 available licenses. Everything you download is available for commercial use. Both allow you to sell higher-level-derivative works, but royalty free license doesn't allow to re-sell 3D models even if modified."
+      ]
     },
     {
       "name": "Sketchfab",
@@ -94,8 +88,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.cgbookcase.com&sz=128",
       "tags": [
         "Textures"
-      ],
-      "description": "The textures are published under the CC0 1.0 license, which means means you can use them for free without giving credit."
+      ]
     },
     {
       "name": "ArtStation Marketplace",
@@ -187,8 +180,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
         "Sprites",
         "Tileset",
         "GUI"
-      ],
-      "description": "For the game assets in Freebies section, it's under Creative Common Zero (CC0) a.k.a Public Domain license."
+      ]
     },
     {
       "name": "textures.com",
@@ -308,8 +300,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Pattern Generator",
       "url": "https://doodad.dev/pattern-generator/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://doodad.dev/pattern-generator/&sz=128",
-      "tags": [],
-      "description": "You can use the patterns in any project, commercial or personal without attribution or any costs"
+      "tags": []
     },
     {
       "name": "pattern.css",
@@ -335,15 +326,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Haikei",
       "url": "https://haikei.app/generators/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://haikei.app/generators/&sz=128",
-      "tags": [],
-      "description": "Basic Plan, Pro Plan"
+      "tags": []
     },
     {
       "name": "Hero Patterns",
       "url": "https://www.heropatterns.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.heropatterns.com&sz=128",
-      "tags": [],
-      "description": "Free with attribution"
+      "tags": []
     },
     {
       "name": "Cool Backgrounds",
@@ -361,8 +350,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "PatternPad",
       "url": "https://patternpad.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://patternpad.com&sz=128",
-      "tags": [],
-      "description": "Free with attribution"
+      "tags": []
     },
     {
       "name": "Basic Pattern Repository",
@@ -376,8 +364,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Visiwig",
       "url": "https://www.visiwig.com/patterns/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.visiwig.com/patterns/&sz=128",
-      "tags": [],
-      "description": "You can use the patterns in any project, commercial or personal without attribution or any costs, but you can’t replicate Vector Pattern Generator, redistribute the patterns in packs, or create integrations for these patterns."
+      "tags": []
     },
     {
       "name": "Tartanify",
@@ -1370,8 +1357,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
         "Tailwind",
         "HTML",
         "Copy&Paste"
-      ],
-      "description": "This project is licensed under the Creative Commons Attribution 4.0 International License. You are free to share and adapt the material for any purpose, even commercially, as long as you provide appropriate credit, a link to the license, and indicate if changes were made."
+      ]
     },
     {
       "name": "ui.ibelick",
@@ -1507,8 +1493,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://tw-elements.com&sz=128",
       "tags": [
         "Tailwind"
-      ],
-      "description": "You can use it for free as long as you open source the entirety of your project. AGPL is \"sticky\" which means you have to apply the same license to any project you build with TWE & open the project to the public."
+      ]sticky\" which means you have to apply the same license to any project you build with TWE & open the project to the public."
     },
     {
       "name": "CSS checkboxes",
@@ -1726,8 +1711,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Reshot",
       "url": "https://www.reshot.com/free-svg-icons/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.reshot.com/free-svg-icons/&sz=128",
-      "tags": [],
-      "description": "Items under the Reshot Free License can be used in your commercial and non-commercial projects, for free."
+      "tags": []
     },
     {
       "name": "Radix Icons",
@@ -1829,8 +1813,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://useanimations.com&sz=128",
       "tags": [
         "Animated"
-      ],
-      "description": "All the free files available in useAnimations are distributed under Creative Commons (CC) Attribution (BY) unless stated otherwise."
+      ]
     },
     {
       "name": "MingCute Design",
@@ -1860,8 +1843,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://animatedicons.co/icons&sz=128",
       "tags": [
         "Animated"
-      ],
-      "description": "You're free to use AnimatedIcons in any project, be it for commercial or personal use, without the need for attribution or any costs"
+      ]
     },
     {
       "name": "CSS Icons",
@@ -1881,15 +1863,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "ManyPixels",
       "url": "https://www.manypixels.co/gallery",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.manypixels.co/gallery&sz=128",
-      "tags": [],
-      "description": "You can use the illustrations in any project, commercial or personal without attribution or any costs."
+      "tags": []
     },
     {
       "name": "Zondicons",
       "url": "http://www.zondicons.com/",
       "favicon": "https://www.google.com/s2/favicons?domain=http://www.zondicons.com/&sz=128",
-      "tags": [],
-      "description": "All the free files available in zondicons are distributed under Creative Commons (CC) Attribution (BY) unless stated otherwise."
+      "tags": []
     },
     {
       "name": "Pixelarticons",
@@ -1898,8 +1878,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "tags": [
         "Pixelart",
         "Package"
-      ],
-      "description": "486 icons free"
+      ]
     },
     {
       "name": "Streamline Icons",
@@ -1950,8 +1929,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Iconmonstr",
       "url": "https://iconmonstr.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://iconmonstr.com&sz=128",
-      "tags": [],
-      "description": "License may use the Work in non-commercial and commercial projects, services or products without attribution."
+      "tags": []
     },
     {
       "name": "Drawkit",
@@ -1959,8 +1937,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.drawkit.com/illustration-types/icons&sz=128",
       "tags": [
         "3D"
-      ],
-      "description": "Free for Personal and Commercial. No attribution required."
+      ]
     },
     {
       "name": "Basicons",
@@ -1999,8 +1976,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://unicornicons.com&sz=128",
       "tags": [
         "Animated"
-      ],
-      "description": "Free with attribution"
+      ]
     },
     {
       "name": "Boxicons",
@@ -2060,8 +2036,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://maryamato88.gumroad.com/l/pbmkt&sz=128",
       "tags": [
         "Scribble"
-      ],
-      "description": "Use on unlimited personal and commercial projects"
+      ]
     },
     {
       "name": "Icons for AI",
@@ -2075,8 +2050,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://flagpack.xyz&sz=128",
       "tags": [
         "Flags"
-      ],
-      "description": "you can Flagpack for any project; commercial or personal. Flagpack is open source and can be used, changed and shared"
+      ]
     },
     {
       "name": "Grumpyicons",
@@ -2084,8 +2058,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.petrbilek.com/products/grumpyicons&sz=128",
       "tags": [
         "Scribble"
-      ],
-      "description": "Free for personal and commercial projects. No attribution required."
+      ]
     },
     {
       "name": "Icon Freebies Glimsy",
@@ -2097,15 +2070,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Line Icon Pack",
       "url": "https://www.petrbilek.com/products/line-icon-pack",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.petrbilek.com/products/line-icon-pack&sz=128",
-      "tags": [],
-      "description": "Free for personal and commercial projects. No attribution required."
+      "tags": []
     },
     {
       "name": "Tilda Icons",
       "url": "https://tilda.cc/free-icons/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://tilda.cc/free-icons/&sz=128",
-      "tags": [],
-      "description": "The Licensee can use the Icons for free for personal or commercial projects as long as the Licensee mentions the owner of the Icons."
+      "tags": []
     },
     {
       "name": "SVG Flag Icons",
@@ -2142,8 +2113,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Noun Project",
       "url": "https://thenounproject.com/icons/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://thenounproject.com/icons/&sz=128",
-      "tags": [],
-      "description": "Free with attribution"
+      "tags": []
     },
     {
       "name": "Octicons",
@@ -2169,15 +2139,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Icon Icons",
       "url": "https://icon-icons.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://icon-icons.com&sz=128",
-      "tags": [],
-      "description": "Free for personal or commercial use as long as the owner of the icons is mentioned."
+      "tags": []
     },
     {
       "name": "FlatIcon",
       "url": "https://www.flaticon.com/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.flaticon.com/&sz=128",
-      "tags": [],
-      "description": "Free for personal or commercial use as long as the owner of the icons is mentioned."
+      "tags": []
     },
     {
       "name": "Iconscout",
@@ -2217,15 +2185,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Reshot",
       "url": "https://www.reshot.com/free-vector-illustrations/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.reshot.com/free-vector-illustrations/&sz=128",
-      "tags": [],
-      "description": "Items under the Reshot Free License can be used in your commercial and non-commercial projects, for free."
+      "tags": []
     },
     {
       "name": "IllustrationKit",
       "url": "https://illustrationkit.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://illustrationkit.com&sz=128",
-      "tags": [],
-      "description": "You can use all the illustrations on 'illustration kit' in your personal projects and projects for your clients. No attribution is required although it's appreciated."
+      "tags": []
     },
     {
       "name": "Humaaans",
@@ -2243,8 +2209,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "DrawKit",
       "url": "https://www.drawkit.com/?pricing-type=Free",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.drawkit.com/?pricing-type=Free&sz=128",
-      "tags": [],
-      "description": "Free for Personal and Commercial. No attribution required."
+      "tags": []
     },
     {
       "name": "Iradesign",
@@ -2307,15 +2272,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Pixabay",
       "url": "https://pixabay.com/illustrations/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://pixabay.com/illustrations/&sz=128",
-      "tags": [],
-      "description": "Free for commercial and noncommercial use. Attribution is not required"
+      "tags": []
     },
     {
       "name": "ManyPixels",
       "url": "https://www.manypixels.co/gallery",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.manypixels.co/gallery&sz=128",
-      "tags": [],
-      "description": "You can use the illustrations in any project, commercial or personal without attribution or any costs."
+      "tags": []
     },
     {
       "name": "Shapefest",
@@ -2346,15 +2309,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://doodleipsum.com&sz=128",
       "tags": [
         "Doodles"
-      ],
-      "description": "You can use Illustrations for commercial and non-commercial purposes."
+      ]
     },
     {
       "name": "Flexiple illustrations",
       "url": "https://flexiple.com/illustrations/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://flexiple.com/illustrations/&sz=128",
-      "tags": [],
-      "description": "Put simply, use it in any project. No attribution needed.\\nCommercial, academic or your pet project, doesn't matter, use Scale's illustrations without attribution."
+      "tags": []
     },
     {
       "name": "Shapes",
@@ -2384,15 +2345,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "unDraw",
       "url": "https://undraw.co/illustrations",
       "favicon": "https://www.google.com/s2/favicons?domain=https://undraw.co/illustrations&sz=128",
-      "tags": [],
-      "description": "You can use the illustrations in any project, commercial or personal without attribution or any costs"
+      "tags": []
     },
     {
       "name": "Theme Isle",
       "url": "https://themeisle.com/illustrations/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://themeisle.com/illustrations/&sz=128",
-      "tags": [],
-      "description": "All images and vectors published on Themeisle can be used for free. You can use them for noncommercial and commercial purposes."
+      "tags": []
     },
     {
       "name": "Surface Pack",
@@ -2404,8 +2363,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Ultima",
       "url": "https://ultima.storytale.io",
       "favicon": "https://www.google.com/s2/favicons?domain=https://ultima.storytale.io&sz=128",
-      "tags": [],
-      "description": "All illustrations are available for use in any commercial and personal projects."
+      "tags": []
     },
     {
       "name": "Heritage Library",
@@ -2413,8 +2371,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.heritagetype.com/pages/free-vintage-illustrations&sz=128",
       "tags": [
         "Vintage"
-      ],
-      "description": "The graphic elements may be used to create physical end products for sale with a maximum of 10.000 units. You can use the graphic elements for multiple projects and multiple clients as far as the maximum of units for sale remains under 10.000."
+      ]
     },
     {
       "name": "Svg Doodle",
@@ -2422,15 +2379,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://svgicon.net&sz=128",
       "tags": [
         "Doodles"
-      ],
-      "description": "You can use all icons in your commercial works without attribution.You can find svg brush icon, svg arrow icon, svg circles icon, svg abstract icon, lines svg icons on the site. It just doesn’t allow it to be resold"
+      ]
     },
     {
       "name": "Open Stickers",
       "url": "https://openstickers.craftwork.design/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://openstickers.craftwork.design/&sz=128",
-      "tags": [],
-      "description": "Free for commercial and personal use under Craftwork License"
+      "tags": []
     },
     {
       "name": "Highlights",
@@ -2474,8 +2429,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Illustrations vol.1",
       "url": "https://petrbilek.gumroad.com/l/illustrations-vol-1",
       "favicon": "https://www.google.com/s2/favicons?domain=https://petrbilek.gumroad.com/l/illustrations-vol-1&sz=128",
-      "tags": [],
-      "description": "Use freebie resources for any personal and commercial projects... No attribution or link to this site is required but any credit will be highly appreciated."
+      "tags": []
     },
     {
       "name": "Halftone Illustrations",
@@ -2588,8 +2542,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Streamline Illustrations",
       "url": "https://www.streamlinehq.com/illustrations",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.streamlinehq.com/illustrations&sz=128",
-      "tags": [],
-      "description": "Free for commercial and personal use WITH ATTRIBUTION"
+      "tags": []
     },
     {
       "name": "Cartoon Hands",
@@ -3156,8 +3109,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://editorjs.io&sz=128",
       "tags": [
         "Infinite canvas"
-      ],
-      "description": "\"This license does not permit commercial use. If you wish to use tldraw in a commercial product or enterprise, you will need to purchase a commercial license.\""
+      ]This license does not permit commercial use. If you wish to use tldraw in a commercial product or enterprise, you will need to purchase a commercial license.\""
     },
     {
       "name": "react-spring",
@@ -3345,22 +3297,19 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Pexels",
       "url": "https://www.pexels.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.pexels.com&sz=128",
-      "tags": [],
-      "description": "All photos and videos on Pexels can be downloaded and used for free."
+      "tags": []
     },
     {
       "name": "PixaBay",
       "url": "https://pixabay.com/photos/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://pixabay.com/photos/&sz=128",
-      "tags": [],
-      "description": "Free for commercial and noncommercial use. Attribution is not required."
+      "tags": []
     },
     {
       "name": "Unsplash",
       "url": "https://unsplash.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://unsplash.com&sz=128",
-      "tags": [],
-      "description": "Free for Commercial and non-commercial purposes. No attribution required."
+      "tags": []
     },
     {
       "name": "Picography",
@@ -3394,8 +3343,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "BURST",
       "url": "https://www.shopify.com/stock-photos",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.shopify.com/stock-photos&sz=128",
-      "tags": [],
-      "description": "All our photos are free for commercial use with no attribution required"
+      "tags": []
     },
     {
       "name": "ISO Republic",
@@ -3486,15 +3434,13 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Noun Project",
       "url": "https://thenounproject.com/photos/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://thenounproject.com/photos/&sz=128",
-      "tags": [],
-      "description": "Free with attribution"
+      "tags": []
     },
     {
       "name": "Freepik",
       "url": "https://www.freepik.com/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.freepik.com/&sz=128",
-      "tags": [],
-      "description": "Free with attribution"
+      "tags": []
     }
   ],
   "tools": [
@@ -3927,22 +3873,19 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Pixabay",
       "url": "https://pixabay.com/videos/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://pixabay.com/videos/&sz=128",
-      "tags": [],
-      "description": "Free for commercial and noncommercial use. Attribution is not required."
+      "tags": []
     },
     {
       "name": "Pexels",
       "url": "https://www.pexels.com/videos/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.pexels.com/videos/&sz=128",
-      "tags": [],
-      "description": "All photos and videos on Pexels can be downloaded and used for free."
+      "tags": []
     },
     {
       "name": "Coverr",
       "url": "https://coverr.co",
       "favicon": "https://www.google.com/s2/favicons?domain=https://coverr.co&sz=128",
-      "tags": [],
-      "description": "All Videos published on Coverr.co can be used free for commercial and non-commercial purposes. You do not need to ask permission from or provide credit to the videographer or Coverr.co, although it is appreciated when possible."
+      "tags": []
     },
     {
       "name": "ISO Republic",
@@ -3960,22 +3903,19 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "name": "Videezy",
       "url": "https://www.videezy.com",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.videezy.com&sz=128",
-      "tags": [],
-      "description": "Standard, Pro, Creative Commons and Editorial Use Only"
+      "tags": []
     },
     {
       "name": "Mixkit",
       "url": "https://mixkit.co/free-stock-video/",
       "favicon": "https://www.google.com/s2/favicons?domain=https://mixkit.co/free-stock-video/&sz=128",
-      "tags": [],
-      "description": "Items under the Mixkit Stock Video Free License can be used in your commercial and non-commercial projects, for free."
+      "tags": []
     },
     {
       "name": "Freepik",
       "url": "https://www.freepik.com/videos",
       "favicon": "https://www.google.com/s2/favicons?domain=https://www.freepik.com/videos&sz=128",
-      "tags": [],
-      "description": "Free with attribution"
+      "tags": []
     },
     {
       "name": "Vidsplay",
