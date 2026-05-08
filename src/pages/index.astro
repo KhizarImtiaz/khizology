@@ -4,7 +4,7 @@ import MonsterCard from '../components/ui/MonsterCard.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
 import { monsters } from '../data/monsters';
 import { featuredArtworks } from '../data/artworks';
-import { infoCategories } from '../data/infographics';
+import { infographicTypes } from '../data/infographics';
 import { url, img } from '../utils/url';
 
 const featuredFreebieCategories = [
@@ -172,24 +172,17 @@ const featuredFreebieCategories = [
         accentColor="#5CCFAF"
         cta={{ label: 'Explore Infographics', href: url('/infographics') }}
       />
-      <div class="info-categories-grid">
-        {infoCategories.slice(0, 4).map(cat => (
-          <a href={url('/infographics/' + cat.slug)} class="info-cat-card" style={`--cat-color: ${cat.color}`}>
-            <span class="info-cat-icon-wrap">
-              <span class="info-cat-icon">{cat.icon}</span>
+      <div class="info-types-grid">
+        {infographicTypes.map(t => (
+          <a href={url('/infographics')} class="info-type-card">
+            <span class="info-type-icon-wrap">
+              <span class="info-type-icon">{t.icon}</span>
             </span>
-            <div class="info-cat-body">
-              <h3>{cat.title}</h3>
-              <p>{cat.description}</p>
+            <div class="info-type-body">
+              <h3>{t.title}</h3>
+              <p>{t.desc}</p>
             </div>
-            <span class="info-cat-arrow">→</span>
-          </a>
-        ))}
-      </div>
-      <div class="info-more-categories">
-        {infoCategories.slice(4).map(cat => (
-          <a href={url('/infographics/' + cat.slug)} class="info-more-chip" style={`--cat-color: ${cat.color}`}>
-            {cat.title}
+            <span class="info-type-arrow">→</span>
           </a>
         ))}
       </div>
@@ -550,45 +543,34 @@ const featuredFreebieCategories = [
   .tb-cat-card:hover .tb-cat-arrow { transform: translateX(4px); color: #F7933C; }
 
   /* INFOGRAPHICS */
-  .infographics-section { background: var(--k-bg); }
-  .info-categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
-  .info-cat-card {
-    display: flex; align-items: center; gap: 1rem;
+  .infographics-section { background: var(--k-bg-card); }
+  .info-types-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  }
+  .info-type-card {
+    display: flex; flex-direction: column; gap: 0.625rem;
     padding: 1.25rem;
-    background: var(--k-bg-elevated, var(--k-bg)); border: 1px solid var(--k-border);
-    border-left: 4px solid #5CCFAF;
-    border-radius: 0 0.875rem 0.875rem 0;
+    background: var(--k-bg); border: 1px solid var(--k-border);
+    border-top: 3px solid #5CCFAF;
+    border-radius: 0 0 0.875rem 0.875rem;
     text-decoration: none; color: inherit;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .info-cat-card:hover { transform: translateX(4px); box-shadow: 0 4px 16px var(--k-shadow); }
-  .info-cat-icon-wrap {
-    width: 3rem; height: 3rem; flex-shrink: 0;
+  .info-type-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(92,207,175,.12); }
+  .info-type-icon-wrap {
+    width: 2.5rem; height: 2.5rem; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(92,207,175,0.12);
-    border-radius: 0.75rem;
+    background: rgba(92,207,175,0.12); border-radius: 0.625rem;
     transition: background 0.2s;
   }
-  .info-cat-card:hover .info-cat-icon-wrap {
-    background: rgba(92,207,175,0.22);
-  }
-  .info-cat-icon { font-size: 1.5rem; flex-shrink: 0; }
-  .info-cat-body { flex: 1; }
-  .info-cat-body h3 { font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--k-text); margin: 0 0 0.25rem; transition: color 0.2s; }
-  .info-cat-card:hover .info-cat-body h3 { color: #5CCFAF; }
-  .info-cat-body p { font-size: 0.8rem; color: var(--k-text-muted); margin: 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  .info-cat-arrow { color: var(--k-text-muted); transition: transform 0.2s, color 0.2s; }
-  .info-cat-card:hover .info-cat-arrow { transform: translateX(4px); color: #5CCFAF; }
-  .info-more-categories { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
-  .info-more-chip {
-    display: inline-flex; align-items: center; gap: 0.25rem;
-    padding: 0.375rem 0.875rem;
-    background: var(--k-bg); border: 1px solid #5CCFAF;
-    border-radius: 999px;
-    font-size: 0.8rem; font-weight: 600; color: var(--k-text); text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-  .info-more-chip:hover { background: #5CCFAF; color: var(--k-dark); }
+  .info-type-card:hover .info-type-icon-wrap { background: rgba(92,207,175,0.22); }
+  .info-type-icon { font-size: 1.25rem; }
+  .info-type-body { flex: 1; }
+  .info-type-body h3 { font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--k-text); margin: 0 0 0.2rem; transition: color 0.2s; }
+  .info-type-card:hover .info-type-body h3 { color: #5CCFAF; }
+  .info-type-body p { font-size: 0.75rem; color: var(--k-text-muted); margin: 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .info-type-arrow { color: #5CCFAF; font-size: 0.875rem; font-weight: 700; align-self: flex-end; opacity: 0; transition: opacity 0.2s; }
+  .info-type-card:hover .info-type-arrow { opacity: 1; }
 
   /* FREEBIES */
   .freebies-section { background: var(--k-bg-card); }
@@ -678,7 +660,7 @@ const featuredFreebieCategories = [
     .hero-inner { grid-template-columns: 1fr; }
     .hero-visual { display: none; }
     .artworks-masonry { grid-template-columns: repeat(2, 1fr); }
-    .info-categories-grid { grid-template-columns: 1fr; }
+    .info-types-grid { grid-template-columns: repeat(2, 1fr); }
     .btv-inner { grid-template-columns: 1fr; }
     .btv-visual { order: -1; }
     .freebies-cta-banner { flex-direction: column; text-align: center; }
