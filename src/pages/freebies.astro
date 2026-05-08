@@ -31,7 +31,7 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
             <span class="fr-hero-accent">For Creators.</span>
           </h1>
           <p class="fr-hero-lead">
-            The best free icons, illustrations, photos, fonts, tools, and more —
+            The best free icons, illustrations, photos, fonts, tools, and more
             hand-curated across {freebiesCategories.length} categories. No paywalls. No BS.
           </p>
           <div class="fr-hero-stats">
@@ -51,8 +51,8 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
         </div>
         <div class="fr-hero-visual">
           <div class="fr-cat-chips">
-            {freebiesCategories.slice(0, 8).map((c, i) => (
-              <a href={url(`/freebies/${c.slug}`)} class="fr-chip" style={`--fc: ${c.color}; --idx: ${i}`}>
+            {freebiesCategories.map((c, i) => (
+              <a href={url(`/freebies/${c.slug}`)} class="fr-chip" style={`--idx: ${i}`}>
                 <span>{c.icon}</span>
                 <span>{c.title}</span>
                 <span class="fr-chip-count">{c.resourceCount}</span>
@@ -75,7 +75,7 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
 
       <div class="fr-cats-grid">
         {freebiesCategories.map(cat => (
-          <a href={url(`/freebies/${cat.slug}`)} class="fr-cat-card" style={`--fc: ${cat.color}`}>
+          <a href={url(`/freebies/${cat.slug}`)} class="fr-cat-card">
             <div class="fr-cat-glow"></div>
             <div class="fr-cat-top">
               <div class="fr-cat-icon-wrap">
@@ -114,11 +114,11 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
           </ul>
         </div>
         <div class="fr-why-cta">
-          <div class="fr-cta-card" style={`--fc: ${ACCENT}`}>
+          <div class="fr-cta-card">
             <img src={`${base}/images/Monsters/freeooo.png`} alt="freeooo" width="80" height="80" />
             <h3>Know a great resource?</h3>
             <p>Drop a vibe and suggest a resource to add to the library.</p>
-            <a href={url('/drop-a-vibe')} class="fr-cta-btn" style={`background: ${ACCENT}`}>Suggest a Resource →</a>
+            <a href={url('/drop-a-vibe')} class="fr-cta-btn">Suggest a Resource →</a>
           </div>
         </div>
       </div>
@@ -151,7 +151,7 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
   }
   .fr-hero-inner {
     display: grid; grid-template-columns: 1fr; gap: 3rem;
-    align-items: center; margin-top: 1rem;
+    align-items: start; margin-top: 1rem;
   }
   @media (min-width: 900px) { .fr-hero-inner { grid-template-columns: 1fr 1fr; } }
   .fr-hero-badge { display: flex; align-items: center; gap: .625rem; margin-bottom: .5rem; }
@@ -177,22 +177,28 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
     letter-spacing: .08em; color: var(--k-text-muted);
   }
 
-  /* Chips */
-  .fr-cat-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+  /* Hero chips — all categories */
+  .fr-cat-chips {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+  }
   .fr-chip {
     display: inline-flex; align-items: center; gap: .5rem;
-    background: var(--k-bg-card); border: 1.5px solid color-mix(in srgb, var(--fc) 40%, transparent);
-    border-radius: 999px; padding: .45rem .875rem;
+    background: var(--k-bg-card);
+    border: 1.5px solid color-mix(in srgb, #6CA6FF 30%, transparent);
+    border-radius: 999px; padding: .4rem .875rem;
     font-size: .8rem; font-weight: 600; color: var(--k-text);
     text-decoration: none; font-family: 'Poppins', sans-serif;
     transition: border-color .2s, background .2s;
     animation: fadeIn .3s ease both;
-    animation-delay: calc(var(--idx) * .05s);
+    animation-delay: calc(var(--idx) * .04s);
   }
-  .fr-chip:hover { border-color: var(--fc); background: color-mix(in srgb, var(--fc) 8%, transparent); }
+  .fr-chip:hover {
+    border-color: #6CA6FF;
+    background: color-mix(in srgb, #6CA6FF 8%, transparent);
+  }
   .fr-chip-count {
-    font-size: .68rem; color: var(--fc); font-weight: 700;
-    background: color-mix(in srgb, var(--fc) 12%, transparent);
+    font-size: .68rem; color: #6CA6FF; font-weight: 700;
+    background: color-mix(in srgb, #6CA6FF 12%, transparent);
     padding: .1rem .4rem; border-radius: 999px;
   }
 
@@ -211,35 +217,40 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
     display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;
   }
   .fr-cat-card {
-    position: relative; background: var(--k-bg); border: 1.5px solid var(--k-border);
-    border-radius: 1.25rem; padding: 1.5rem; overflow: hidden;
+    position: relative; background: var(--k-bg);
+    border: 1px solid var(--k-border);
+    border-left: 3px solid #6CA6FF;
+    border-radius: 0 1.25rem 1.25rem 0;
+    padding: 1.5rem; overflow: hidden;
     display: flex; flex-direction: column; gap: .625rem;
-    text-decoration: none; transition: border-color .2s, transform .2s;
+    text-decoration: none; transition: box-shadow .2s, border-color .2s;
   }
-  .fr-cat-card:hover { border-color: var(--fc); transform: translateY(-3px); }
+  .fr-cat-card:hover { border-color: #6CA6FF; box-shadow: 0 4px 20px rgba(108,166,255,.1); }
   .fr-cat-glow {
     position: absolute; top: -20px; right: -20px;
     width: 80px; height: 80px; border-radius: 50%;
-    background: var(--fc); opacity: .07; filter: blur(20px);
+    background: #6CA6FF; opacity: .06; filter: blur(20px);
     pointer-events: none; transition: opacity .3s;
   }
-  .fr-cat-card:hover .fr-cat-glow { opacity: .18; }
+  .fr-cat-card:hover .fr-cat-glow { opacity: .15; }
   .fr-cat-top { display: flex; align-items: center; justify-content: space-between; }
   .fr-cat-icon-wrap {
     width: 48px; height: 48px; border-radius: .75rem;
-    background: color-mix(in srgb, var(--fc) 15%, transparent);
+    background: color-mix(in srgb, #6CA6FF 12%, transparent);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.5rem; font-family: initial;
   }
   .fr-cat-count-badge {
-    font-size: .7rem; font-weight: 700; color: var(--fc);
-    background: color-mix(in srgb, var(--fc) 10%, transparent);
+    font-size: .7rem; font-weight: 700; color: #6CA6FF;
+    background: color-mix(in srgb, #6CA6FF 10%, transparent);
     padding: .2rem .6rem; border-radius: 999px; font-family: 'Poppins', sans-serif;
   }
   .fr-cat-title {
     font-family: 'Poppins', sans-serif; font-size: 1rem;
     font-weight: 800; color: var(--k-text); margin: 0;
+    transition: color .2s;
   }
+  .fr-cat-card:hover .fr-cat-title { color: #6CA6FF; }
   .fr-cat-desc { font-size: .8rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
   .fr-cat-tags { display: flex; gap: .375rem; flex-wrap: wrap; }
   .fr-tag {
@@ -248,7 +259,7 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
     padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif;
   }
   .fr-cat-cta {
-    font-size: .8rem; font-weight: 700; color: var(--fc);
+    font-size: .8rem; font-weight: 700; color: #6CA6FF;
     font-family: 'Poppins', sans-serif; margin-top: .25rem;
   }
 
@@ -267,7 +278,8 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
   .fr-why-list li { font-size: .875rem; color: var(--k-text-muted); }
 
   .fr-cta-card {
-    background: var(--k-bg-card); border: 1.5px solid var(--fc);
+    background: var(--k-bg-card);
+    border: 1.5px solid #6CA6FF;
     border-radius: 1.5rem; padding: 2rem; text-align: center;
     display: flex; flex-direction: column; align-items: center; gap: .875rem;
   }
@@ -279,8 +291,9 @@ const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCou
   .fr-cta-card p { font-size: .875rem; color: var(--k-text-muted); margin: 0; }
   .fr-cta-btn {
     display: inline-flex; align-items: center; padding: .65rem 1.5rem;
-    color: #2A3439; border-radius: .625rem; font-family: 'Poppins', sans-serif;
-    font-weight: 700; font-size: .875rem; text-decoration: none; transition: opacity .2s;
+    background: #6CA6FF; color: #2A3439; border-radius: .625rem;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: .875rem;
+    text-decoration: none; transition: opacity .2s;
   }
   .fr-cta-btn:hover { opacity: .85; }
 
