@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../../components/layout/BaseLayout.astro';
 import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
-import { calculatorCategories, calculatorItemsMap } from '../../../data/calculators';
+import { calculatorCategories } from '../../../data/calculators';
 import { monsters } from '../../../data/monsters';
 import { url } from '../../../utils/url';
 import ProfitMarginCalc from '../../../components/calculators/ProfitMarginCalc';
@@ -17,24 +17,24 @@ const CATEGORY_SLUG_MAP: Record<string, string> = {
   'biology-calculator':          'physics',
   'chemistry-calculator':        'physics',
   'physics-calculator':          'physics',
-  'developer-tools':             'developer-tools',
-  'color-tools':                 'color',
   'health-calculator':           'health',
   'construction-calculator':     'construction',
   'unit-conversion-calculator':  'unit-conversion',
   'food-calculator':             'food',
   'sports-calculator':           'sports',
-  'text-calculator':             'text',
-  'fun-calculator':              'everyday-life',
   'time-date-calculator':        'time-date',
   'photography-calculator':      'photography',
-  'crafting-calculator':         'construction',
   'automotive-calculator':       'automotive',
   'travel-calculator':           'travel',
 };
 
-// Functional MVP calculators
-const MVP_CALC_SLUGS = ['profit-margin-calculator', 'website-cost-calculator', 'percentage-calculator', 'age-calculator'];
+// Functional MVP calculators (hardcoded)
+const MVP_CALCS = [
+  { slug: 'profit-margin-calculator', name: 'Profit Margin Calculator', icon: '💰', description: 'Calculate gross, net, and operating profit margins instantly.', category: 'finance' },
+  { slug: 'website-cost-calculator',  name: 'Website Cost Calculator',  icon: '🌐', description: 'Estimate how much a website will cost to design and build.', category: 'everyday-life' },
+  { slug: 'percentage-calculator',    name: 'Percentage Calculator',    icon: '📊', description: 'Calculate percentages, increases, decreases, and differences.', category: 'math' },
+  { slug: 'age-calculator',           name: 'Age Calculator',           icon: '🎂', description: 'Calculate exact age in years, months, days, hours, and minutes.', category: 'everyday-life' },
+];
 
 export async function getStaticPaths() {
   const CATEGORY_SLUG_MAP: Record<string, string> = {
@@ -44,33 +44,32 @@ export async function getStaticPaths() {
     'biology-calculator':          'physics',
     'chemistry-calculator':        'physics',
     'physics-calculator':          'physics',
-    'developer-tools':             'developer-tools',
-    'color-tools':                 'color',
     'health-calculator':           'health',
     'construction-calculator':     'construction',
     'unit-conversion-calculator':  'unit-conversion',
     'food-calculator':             'food',
     'sports-calculator':           'sports',
-    'text-calculator':             'text',
-    'fun-calculator':              'everyday-life',
     'time-date-calculator':        'time-date',
     'photography-calculator':      'photography',
-    'crafting-calculator':         'construction',
     'automotive-calculator':       'automotive',
     'travel-calculator':           'travel',
   };
 
-  // Category listing routes
+  const MVP_CALCS = [
+    { slug: 'profit-margin-calculator', name: 'Profit Margin Calculator', icon: '💰', description: 'Calculate gross, net, and operating profit margins instantly.', category: 'finance' },
+    { slug: 'website-cost-calculator',  name: 'Website Cost Calculator',  icon: '🌐', description: 'Estimate how much a website will cost to design and build.', category: 'everyday-life' },
+    { slug: 'percentage-calculator',    name: 'Percentage Calculator',    icon: '📊', description: 'Calculate percentages, increases, decreases, and differences.', category: 'math' },
+    { slug: 'age-calculator',           name: 'Age Calculator',           icon: '🎂', description: 'Calculate exact age in years, months, days, hours, and minutes.', category: 'everyday-life' },
+  ];
+
   const categoryRoutes = Object.entries(CATEGORY_SLUG_MAP).map(([routeSlug, categorySlug]) => ({
     params: { slug: routeSlug },
     props: { type: 'category' as const, routeSlug, categorySlug, calc: null },
   }));
 
-  // Individual calculator routes (from all items in the map)
-  const allItems = Object.values(calculatorItemsMap).flat();
-  const calcRoutes = allItems.map(item => ({
-    params: { slug: item.slug },
-    props: { type: 'calculator' as const, routeSlug: item.slug, categorySlug: item.category, calc: item },
+  const calcRoutes = MVP_CALCS.map(calc => ({
+    params: { slug: calc.slug },
+    props: { type: 'calculator' as const, routeSlug: calc.slug, categorySlug: calc.category, calc },
   }));
 
   return [...categoryRoutes, ...calcRoutes];
@@ -82,40 +81,34 @@ const ACCENT = '#F7933C';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const category = calculatorCategories.find(c => c.slug === categorySlug)!;
-const items = calculatorItemsMap[categorySlug] ?? [];
 const relatedCats = calculatorCategories.filter(c => c.slug !== categorySlug).slice(0, 8);
 
-// For individual calc pages: related calcs from same category
-const relatedCalcs = type === 'calculator'
-  ? (calculatorItemsMap[categorySlug] ?? []).filter(c => c.slug !== (calc?.slug ?? '')).slice(0, 4)
-  : [];
-
-const isMVP = type === 'calculator' && MVP_CALC_SLUGS.includes(calc?.slug ?? '');
+const isMVP = type === 'calculator';
 
 // FAQ data per calc
 const calcFaqs: Record<string, {q:string;a:string}[]> = {
   'profit-margin-calculator': [
-    { q: 'What is profit margin?', a: 'Profit margin is the percentage of revenue that becomes profit after all costs are deducted. It measures how efficiently a business converts sales into profit.' },
-    { q: 'What is a good profit margin?', a: 'It varies by industry. Retail averages 2-5%, SaaS can be 60-80%, service businesses 15-40%. Generally, above 20% is considered healthy for most businesses.' },
-    { q: 'What is markup vs margin?', a: 'Markup is calculated on cost (profit ÷ cost × 100), while margin is calculated on revenue (profit ÷ revenue × 100). They measure different things but are related.' },
+    { q: 'What is profit margin?', a: 'Profit margin is the percentage of revenue that becomes profit after all costs are deducted.' },
+    { q: 'What is a good profit margin?', a: 'It varies by industry. Retail averages 2-5%, SaaS can be 60-80%, service businesses 15-40%.' },
+    { q: 'What is markup vs margin?', a: 'Markup is calculated on cost, while margin is calculated on revenue. They measure different things.' },
     { q: 'Is this calculator free?', a: 'Yes — 100% free with no signup required.' },
   ],
   'website-cost-calculator': [
-    { q: 'How accurate are these estimates?', a: 'These are indicative ranges based on industry averages. Actual costs vary by location, agency experience, and specific requirements. Use as a starting benchmark.' },
-    { q: 'Does the estimate include hosting?', a: 'The estimate focuses on build costs. Hosting typically adds $5-100/month depending on your platform, not included in the one-time build estimate.' },
-    { q: 'Should I hire a freelancer or agency?', a: 'Freelancers are often 30-50% cheaper than agencies. Agencies offer more oversight and team support. For complex projects, agencies reduce risk.' },
-    { q: 'How do I reduce website costs?', a: 'Use templates over custom design, start with fewer pages, choose CMS platforms like WordPress or Webflow, and phase features over time.' },
+    { q: 'How accurate are these estimates?', a: 'These are indicative ranges based on industry averages. Actual costs vary by location and requirements.' },
+    { q: 'Does the estimate include hosting?', a: 'The estimate focuses on build costs. Hosting typically adds $5-100/month depending on your platform.' },
+    { q: 'Should I hire a freelancer or agency?', a: 'Freelancers are often 30-50% cheaper than agencies. Agencies offer more oversight and team support.' },
+    { q: 'How do I reduce website costs?', a: 'Use templates over custom design, start with fewer pages, choose CMS platforms like WordPress or Webflow.' },
   ],
   'percentage-calculator': [
-    { q: 'How do you calculate percentage?', a: 'Divide the part by the whole and multiply by 100. For example, 30 out of 200 = (30/200) × 100 = 15%.' },
-    { q: 'What is a percentage increase formula?', a: 'Percentage increase = ((new value - old value) / old value) × 100. If sales went from 100 to 120, that\'s a 20% increase.' },
-    { q: 'How do I find what percent one number is of another?', a: 'Divide the first number by the second and multiply by 100. E.g., 25 is what % of 80? (25/80) × 100 = 31.25%.' },
-    { q: 'Can I use this for discounts?', a: 'Yes! Use "What is X% of Y?" to find discount amounts, or "Decrease by X%" to find final prices after discounts.' },
+    { q: 'How do you calculate percentage?', a: 'Divide the part by the whole and multiply by 100. E.g., 30 out of 200 = (30/200) × 100 = 15%.' },
+    { q: 'What is a percentage increase formula?', a: 'Percentage increase = ((new value - old value) / old value) × 100.' },
+    { q: 'How do I find what percent one number is of another?', a: 'Divide the first number by the second and multiply by 100.' },
+    { q: 'Can I use this for discounts?', a: 'Yes! Use "What is X% of Y?" to find discount amounts, or "Decrease by X%" to find final prices.' },
   ],
   'age-calculator': [
-    { q: 'How accurate is the age calculation?', a: 'Very accurate — it accounts for leap years and varying month lengths for precise years, months, and days.' },
-    { q: 'Can I calculate age at a specific date?', a: 'Yes! The optional "Target Date" field lets you calculate age at any past or future date, not just today.' },
-    { q: 'How are total days calculated?', a: 'We count the actual number of days between your birth date and the target date, accounting for all calendar variations.' },
+    { q: 'How accurate is the age calculation?', a: 'Very accurate — it accounts for leap years and varying month lengths.' },
+    { q: 'Can I calculate age at a specific date?', a: 'Yes! The optional "Target Date" field lets you calculate age at any past or future date.' },
+    { q: 'How are total days calculated?', a: 'We count the actual number of days between your birth date and the target date.' },
     { q: 'Is my date of birth stored anywhere?', a: 'No. All calculations are done locally in your browser. Nothing is stored or transmitted.' },
   ],
 };
@@ -143,11 +136,11 @@ const genericFaqs = [
     <section class="cc-hero">
       <div class="k-container">
         <Breadcrumb
-          crumbs={[{ label: 'Toolbox', href: '/toolbox' }, { label: 'Calculators', href: '/toolbox/calculators' }, { label: category.title }]}
+          crumbs={[{ label: 'Toolbox', href: url('/toolbox') }, { label: 'Calculators', href: url('/toolbox') }, { label: category.title }]}
           accentColor={ACCENT}
         />
         <div class="cc-hero-inner">
-          <div class="cc-hero-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent)`}>
+          <div class="cc-hero-icon" style="background: color-mix(in srgb, #F7933C 15%, transparent)">
             <span>{category.icon}</span>
           </div>
           <div class="cc-hero-text">
@@ -155,7 +148,7 @@ const genericFaqs = [
             <h1 class="cc-hero-title">{category.title} Calculators</h1>
             <p class="cc-hero-desc">{category.description}</p>
             <div class="cc-hero-meta">
-              <span class="cc-meta-chip" style={`color: ${category.color}`}>{category.count}+ calculators</span>
+              <span class="cc-meta-chip" style={`color: ${ACCENT}`}>{category.count}+ calculators</span>
               <span class="cc-meta-sep">·</span>
               <span class="cc-meta-chip">Free</span>
               <span class="cc-meta-sep">·</span>
@@ -170,54 +163,17 @@ const genericFaqs = [
       <div class="k-container">
         <div class="cc-section-header">
           <span class="k-section-label" style={`color: ${ACCENT}`}>Available Calculators</span>
-          <h2 class="cc-section-title">{items.length > 0 ? `${items.length} ${category.title} Calculators` : `${category.title} Calculators`}</h2>
+          <h2 class="cc-section-title">{category.count} {category.title} Calculators — Coming Soon</h2>
         </div>
 
-        {items.length > 0 ? (
-          <div class="cc-cards-grid">
-            {items.map((c, i) => (
-              <a href={url(`/toolbox/calculators/${c.slug}`)} class={`cc-calc-card${c.isMVP ? ' mvp' : ''}`} style={`--cc: ${category.color}; --delay: ${i * 0.05}s`}>
-                <div class="cc-calc-top">
-                  <div class="cc-calc-icon-wrap"><span>{c.icon}</span></div>
-                  <div class="cc-calc-badges">
-                    {c.isMVP && <span class="cc-badge mvp">MVP</span>}
-                    {c.isPopular && <span class="cc-badge popular">Popular</span>}
-                    {c.isNew && <span class="cc-badge new">New</span>}
-                    {!c.isMVP && <span class="cc-badge soon">Soon</span>}
-                  </div>
-                </div>
-                <h3 class="cc-calc-name">{c.name}</h3>
-                <p class="cc-calc-desc">{c.description}</p>
-                <span class="cc-calc-btn">{MVP_CALC_SLUGS.includes(c.slug) ? 'Open Calculator →' : 'Coming Soon'}</span>
-              </a>
-            ))}
-          </div>
-        ) : (
-          <div class="cc-empty-state">
-            <div class="cc-empty-icon" style={`background: color-mix(in srgb, ${category.color} 15%, transparent); color: ${category.color}`}>{category.icon}</div>
-            <h3 class="cc-empty-title">{category.title} Calculators Coming Soon</h3>
-            <p class="cc-empty-desc">Building {category.count} calculators for this category. Check back soon.</p>
-            <div class="cc-skeleton-grid">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div class="cc-skeleton-card" style={`--delay: ${i * 0.07}s`}>
-                  <div class="cc-sk-icon skeleton"></div>
-                  <div class="cc-sk-body">
-                    <div class="cc-sk-title skeleton"></div>
-                    <div class="cc-sk-desc skeleton"></div>
-                  </div>
-                </div>
-              ))}
+        <div class="cc-chip-grid">
+          {category.items.map(item => (
+            <div class="cc-item-chip">
+              <span class="cc-chip-icon">{category.icon}</span>
+              <span class="cc-chip-name">{item}</span>
+              <span class="cc-chip-soon">Soon</span>
             </div>
-          </div>
-        )}
-      </div>
-    </section>
-
-    <section class="cc-seo-section">
-      <div class="k-container">
-        <div class="cc-seo-inner">
-          <h2 class="cc-seo-title">About {category.title} Calculators</h2>
-          <p class="cc-seo-text">The toolooo {category.title.toLowerCase()} calculator collection includes {category.count}+ free tools designed for fast, accurate answers with no ads or logins.</p>
+          ))}
         </div>
       </div>
     </section>
@@ -227,7 +183,7 @@ const genericFaqs = [
         <h2 class="cc-related-title">Other Calculator Categories</h2>
         <div class="cc-related-grid">
           {relatedCats.map(rc => (
-            <a href={url(`/toolbox/calculators/${rc.slug}-calculator`)} class="cc-related-card" style={`--rc: ${rc.color}`}>
+            <a href={url(`/toolbox/calculators/${rc.slug}-calculator`)} class="cc-related-card">
               <span class="cc-related-icon">{rc.icon}</span>
               <span class="cc-related-name">{rc.title}</span>
               <span class="cc-related-count">{rc.count}+</span>
@@ -240,13 +196,13 @@ const genericFaqs = [
 ) : type === 'calculator' && calc ? (
   <>
     <!-- INDIVIDUAL CALCULATOR DETAIL PAGE -->
-    <section class="cd-hero" style={`--cc: ${category?.color ?? ACCENT}`}>
+    <section class="cd-hero">
       <div class="k-container">
         <Breadcrumb
           crumbs={[
-            { label: 'Toolbox', href: '/toolbox' },
-            { label: 'Calculators', href: '/toolbox/calculators' },
-            { label: category?.title ?? 'Calculator', href: `/toolbox/calculators/${categorySlug}-calculator` },
+            { label: 'Toolbox', href: url('/toolbox') },
+            { label: 'Calculators', href: url('/toolbox') },
+            { label: category?.title ?? 'Calculator', href: url(`/toolbox/calculators/${categorySlug}-calculator`) },
             { label: calc.name },
           ]}
           accentColor={ACCENT}
@@ -257,11 +213,7 @@ const genericFaqs = [
           </div>
           <div class="cd-hero-text">
             <div class="cd-hero-badges">
-              {calc.isMVP && <span class="cd-badge mvp">MVP</span>}
-              {calc.isNew && <span class="cd-badge new">New</span>}
-              {calc.isPopular && <span class="cd-badge popular">Popular</span>}
-              {!isMVP && <span class="cd-badge soon">Coming Soon</span>}
-              {isMVP && <span class="cd-badge live">Live</span>}
+              <span class="cd-badge live">Live</span>
               <span class="cd-badge free">Free</span>
             </div>
             <h1 class="cd-hero-title">{calc.name}</h1>
@@ -281,51 +233,20 @@ const genericFaqs = [
     <section class="cd-calc-section k-section">
       <div class="k-container">
         <div class="cd-layout">
-          <!-- Main -->
           <div class="cd-main">
+            <div class="cd-calc-wrap">
+              {calc.slug === 'profit-margin-calculator' && <ProfitMarginCalc client:load />}
+              {calc.slug === 'website-cost-calculator' && <WebsiteCostCalc client:load />}
+              {calc.slug === 'percentage-calculator' && <PercentageCalc client:load />}
+              {calc.slug === 'age-calculator' && <AgeCalc client:load />}
+            </div>
 
-            {isMVP ? (
-              <div class="cd-calc-wrap">
-                {calc.slug === 'profit-margin-calculator' && <ProfitMarginCalc client:load />}
-                {calc.slug === 'website-cost-calculator' && <WebsiteCostCalc client:load />}
-                {calc.slug === 'percentage-calculator' && <PercentageCalc client:load />}
-                {calc.slug === 'age-calculator' && <AgeCalc client:load />}
-              </div>
-            ) : (
-              <div class="cd-coming-soon">
-                <div class="cd-cs-wrap">
-                  <div class="cd-cs-ring" style={`border-color: color-mix(in srgb, ${ACCENT} 40%, transparent)`}>
-                    <span class="cd-cs-icon">{calc.icon}</span>
-                  </div>
-                  <span class="cd-cs-badge">🔨 Under Construction</span>
-                  <h2 class="cd-cs-title">Calculator Coming Soon</h2>
-                  <p class="cd-cs-desc">
-                    We're building the {calc.name}. When it launches, you'll get instant results, formula explanations, and shareable result cards — all free.
-                  </p>
-                  <div class="cd-cs-features">
-                    <div class="cd-cs-feat">✦ Instant calculation</div>
-                    <div class="cd-cs-feat">✦ Formula breakdown</div>
-                    <div class="cd-cs-feat">✦ Copy & share results</div>
-                    <div class="cd-cs-feat">✦ No account needed</div>
-                  </div>
-                  <div class="cd-cs-actions">
-                    <a href={url(`/toolbox/calculators/${categorySlug}-calculator`)} class="cd-cs-btn-primary">← Back to {category?.title}</a>
-                    <a href={url("/toolbox/calculators")} class="cd-cs-btn-secondary">All Calculators</a>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <!-- About section -->
             <div class="cd-about">
               <h2 class="cd-section-h2">About {calc.name}</h2>
               <p class="cd-about-text">{calc.description} This calculator provides instant, accurate results right in your browser — no downloads, no accounts, no ads.</p>
-              {isMVP && (
-                <p class="cd-about-text">Simply fill in the required fields above and click calculate. You can copy your results or use the shareable result card to save your work.</p>
-              )}
+              <p class="cd-about-text">Simply fill in the required fields above and click calculate. You can copy your results or use the shareable result card to save your work.</p>
             </div>
 
-            <!-- FAQ -->
             <div class="cd-faq">
               <h2 class="cd-section-h2">Frequently Asked Questions</h2>
               <div class="cd-faq-list">
@@ -339,7 +260,6 @@ const genericFaqs = [
             </div>
           </div>
 
-          <!-- Sidebar -->
           <aside class="cd-sidebar">
             <div class="cd-sidebar-card">
               <h3 class="cd-sidebar-h3">Calculator Info</h3>
@@ -348,27 +268,9 @@ const genericFaqs = [
                 <div class="cd-info-row"><span class="cd-info-label">Type</span><span class="cd-info-val">Calculator</span></div>
                 <div class="cd-info-row"><span class="cd-info-label">Price</span><span class="cd-info-val" style="color:#22c55e;font-weight:700">Free</span></div>
                 <div class="cd-info-row"><span class="cd-info-label">Login</span><span class="cd-info-val">Not required</span></div>
-                <div class="cd-info-row"><span class="cd-info-label">Status</span>
-                  <span class="cd-info-val" style={`color: ${isMVP ? '#22c55e' : ACCENT}; font-weight:700`}>
-                    {isMVP ? 'Live ✓' : 'Coming Soon'}
-                  </span>
-                </div>
+                <div class="cd-info-row"><span class="cd-info-label">Status</span><span class="cd-info-val" style="color:#22c55e;font-weight:700">Live ✓</span></div>
               </div>
             </div>
-
-            {relatedCalcs.length > 0 && (
-              <div class="cd-sidebar-card">
-                <h3 class="cd-sidebar-h3">Related Calculators</h3>
-                <div class="cd-related-calcs">
-                  {relatedCalcs.map(rc => (
-                    <a href={url(`/toolbox/calculators/${rc.slug}`)} class="cd-rel-item">
-                      <span class="cd-rel-icon">{rc.icon}</span>
-                      <span class="cd-rel-name">{rc.name}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
 
             <div class="cd-sidebar-card">
               <h3 class="cd-sidebar-h3">More khizology</h3>
@@ -406,43 +308,35 @@ const genericFaqs = [
   .cc-section-header { margin-bottom: 1.75rem; }
   .cc-section-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.125rem, 2.5vw, 1.5rem); font-weight: 800; color: var(--k-text); margin: .25rem 0 0; }
 
-  .cc-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-  .cc-calc-card { background: var(--k-bg-card); border: 1.5px solid var(--k-border); border-radius: 1.125rem; padding: 1.25rem; display: flex; flex-direction: column; gap: .5rem; text-decoration: none; color: inherit; transition: border-color .2s, transform .2s; }
-  .cc-calc-card:hover, .cc-calc-card.mvp { border-color: var(--cc); }
-  .cc-calc-card:hover { transform: translateY(-2px); }
-  .cc-calc-top { display: flex; align-items: center; justify-content: space-between; }
-  .cc-calc-icon-wrap { width: 40px; height: 40px; border-radius: .75rem; background: color-mix(in srgb, var(--cc) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
-  .cc-calc-badges { display: flex; gap: .3rem; flex-wrap: wrap; justify-content: flex-end; }
-  .cc-badge { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .12rem .45rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
-  .cc-badge.mvp { background: color-mix(in srgb, #F7933C 15%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 30%, transparent); }
-  .cc-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
-  .cc-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
-  .cc-badge.soon { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); }
-  .cc-calc-name { font-family: 'Poppins', sans-serif; font-size: .875rem; font-weight: 800; color: var(--k-text); margin: 0; }
-  .cc-calc-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
-  .cc-calc-btn { align-self: flex-start; font-size: .75rem; font-weight: 700; color: #F7933C; font-family: 'Poppins', sans-serif; margin-top: .25rem; }
+  .cc-chip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: .75rem;
+  }
+  .cc-item-chip {
+    display: flex; align-items: center; gap: .625rem;
+    background: var(--k-bg-card); border: 1px solid var(--k-border);
+    border-left: 3px solid #F7933C;
+    border-radius: 0 .75rem .75rem 0;
+    padding: .75rem 1rem;
+    font-size: .825rem; color: var(--k-text); font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+  .cc-chip-icon { font-size: 1rem; flex-shrink: 0; }
+  .cc-chip-name { flex: 1; }
+  .cc-chip-soon {
+    font-size: .6rem; font-weight: 700; text-transform: uppercase;
+    padding: .1rem .4rem; border-radius: 999px;
+    background: color-mix(in srgb, #F7933C 10%, transparent);
+    color: #F7933C; border: 1px solid color-mix(in srgb, #F7933C 25%, transparent);
+    white-space: nowrap;
+  }
 
-  .cc-empty-state { text-align: center; padding: 2rem 0; }
-  .cc-empty-icon { width: 64px; height: 64px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.875rem; margin: 0 auto 1rem; }
-  .cc-empty-title { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--k-text); margin: 0 0 .5rem; }
-  .cc-empty-desc { font-size: .875rem; color: var(--k-text-muted); margin: 0 auto 1.5rem; max-width: 480px; }
-  .cc-skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .875rem; margin-bottom: 1.5rem; }
-  .cc-skeleton-card { display: flex; gap: .75rem; align-items: center; background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: .875rem; padding: .875rem; }
-  .cc-sk-icon { width: 40px; height: 40px; border-radius: .625rem; flex-shrink: 0; }
-  .cc-sk-body { flex: 1; display: flex; flex-direction: column; gap: .375rem; }
-  .cc-sk-title { height: 14px; border-radius: .25rem; width: 70%; }
-  .cc-sk-desc { height: 10px; border-radius: .25rem; width: 90%; }
-
-  .cc-seo-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
-  .cc-seo-inner { max-width: 720px; }
-  .cc-seo-title { font-family: 'Poppins', sans-serif; font-size: 1.0625rem; font-weight: 800; color: var(--k-text); margin: 0 0 .75rem; }
-  .cc-seo-text { font-size: .875rem; color: var(--k-text-muted); line-height: 1.75; margin: 0 0 .625rem; }
-
-  .cc-related-section { padding: 2rem 0; background: var(--k-bg); border-top: 1px solid var(--k-border); }
+  .cc-related-section { padding: 2rem 0; background: var(--k-bg-card); border-top: 1px solid var(--k-border); }
   .cc-related-title { font-family: 'Poppins', sans-serif; font-size: 1.0625rem; font-weight: 800; color: var(--k-text); margin: 0 0 1.25rem; }
   .cc-related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .75rem; }
-  .cc-related-card { display: flex; flex-direction: column; gap: .25rem; padding: .875rem 1rem; background: var(--k-bg-card); border: 1.5px solid var(--k-border); border-radius: .875rem; text-decoration: none; color: var(--k-text-muted); transition: border-color .2s, color .2s; }
-  .cc-related-card:hover { border-color: var(--rc); color: var(--rc); }
+  .cc-related-card { display: flex; flex-direction: column; gap: .25rem; padding: .875rem 1rem; background: var(--k-bg); border: 1.5px solid var(--k-border); border-radius: .875rem; text-decoration: none; color: var(--k-text-muted); transition: border-color .2s, color .2s; }
+  .cc-related-card:hover { border-color: #F7933C; color: #F7933C; }
   .cc-related-icon { font-size: 1.375rem; }
   .cc-related-name { font-weight: 700; font-family: 'Poppins', sans-serif; color: var(--k-text); font-size: .8rem; }
   .cc-related-count { font-size: .7rem; font-weight: 600; }
@@ -450,15 +344,11 @@ const genericFaqs = [
   /* ── INDIVIDUAL CALC DETAIL PAGE STYLES ── */
   .cd-hero { background: var(--k-bg); padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--k-border); }
   .cd-hero-inner { display: flex; gap: 1.25rem; align-items: flex-start; margin-top: 1rem; flex-wrap: wrap; }
-  .cd-hero-icon-wrap { width: 64px; height: 64px; border-radius: 1rem; background: color-mix(in srgb, var(--cc) 15%, transparent); border: 2px solid color-mix(in srgb, var(--cc) 30%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.875rem; flex-shrink: 0; }
+  .cd-hero-icon-wrap { width: 64px; height: 64px; border-radius: 1rem; background: color-mix(in srgb, #F7933C 15%, transparent); border: 2px solid color-mix(in srgb, #F7933C 30%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.875rem; flex-shrink: 0; }
   .cd-hero-icon { line-height: 1; }
   .cd-hero-text { flex: 1; min-width: 260px; }
   .cd-hero-badges { display: flex; gap: .375rem; flex-wrap: wrap; margin-bottom: .625rem; }
   .cd-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
-  .cd-badge.mvp { background: color-mix(in srgb, #F7933C 15%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 30%, transparent); }
-  .cd-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
-  .cd-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
-  .cd-badge.soon { background: var(--k-bg-elevated); color: var(--k-text-muted); border: 1px solid var(--k-border); }
   .cd-badge.live { background: color-mix(in srgb, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in srgb, #22c55e 30%, transparent); }
   .cd-badge.free { background: color-mix(in srgb, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in srgb, #22c55e 30%, transparent); }
   .cd-hero-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 900; color: var(--k-text); margin: .375rem 0 .75rem; line-height: 1.1; }
@@ -470,19 +360,6 @@ const genericFaqs = [
   @media (min-width: 900px) { .cd-layout { grid-template-columns: 1fr 280px; } }
 
   .cd-calc-wrap { margin-bottom: 2rem; }
-  .cd-coming-soon { background: var(--k-bg-card); border: 2px dashed var(--k-border); border-radius: 1.25rem; padding: 3rem 1.5rem; margin-bottom: 2rem; }
-  .cd-cs-wrap { text-align: center; max-width: 460px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: .75rem; }
-  .cd-cs-ring { width: 88px; height: 88px; border-radius: 50%; border: 3px solid; display: flex; align-items: center; justify-content: center; }
-  .cd-cs-icon { font-size: 2.5rem; }
-  .cd-cs-badge { font-size: .72rem; font-weight: 700; padding: .25rem .875rem; border-radius: 999px; background: var(--k-bg-elevated); border: 1px solid var(--k-border); color: var(--k-text-muted); font-family: 'Poppins', sans-serif; }
-  .cd-cs-title { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 800; color: var(--k-text); margin: 0; }
-  .cd-cs-desc { font-size: .875rem; color: var(--k-text-muted); line-height: 1.7; max-width: 380px; margin: 0; }
-  .cd-cs-features { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; background: var(--k-bg); border: 1px solid var(--k-border); border-radius: .875rem; padding: .875rem 1rem; width: 100%; }
-  .cd-cs-feat { font-size: .82rem; color: var(--k-text); }
-  .cd-cs-actions { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
-  .cd-cs-btn-primary { background: #F7933C; color: #fff; padding: .6rem 1.25rem; border-radius: .625rem; font-weight: 700; font-size: .875rem; font-family: 'Poppins', sans-serif; text-decoration: none; }
-  .cd-cs-btn-secondary { background: var(--k-bg); color: var(--k-text-muted); padding: .6rem 1.25rem; border-radius: .625rem; font-weight: 700; font-size: .875rem; font-family: 'Poppins', sans-serif; text-decoration: none; border: 1px solid var(--k-border); }
-
   .cd-about { background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; }
   .cd-faq { background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.25rem; }
   .cd-section-h2 { font-family: 'Poppins', sans-serif; font-size: 1.0625rem; font-weight: 800; color: var(--k-text); margin: 0 0 .875rem; }
@@ -502,11 +379,6 @@ const genericFaqs = [
   .cd-info-row:last-child { border-bottom: none; }
   .cd-info-label { color: var(--k-text-muted); font-weight: 600; }
   .cd-info-val { color: var(--k-text); font-weight: 600; font-family: 'Poppins', sans-serif; }
-  .cd-related-calcs { display: flex; flex-direction: column; gap: .5rem; }
-  .cd-rel-item { display: flex; gap: .625rem; align-items: center; padding: .5rem; border-radius: .5rem; text-decoration: none; color: var(--k-text); font-size: .825rem; transition: background .2s; }
-  .cd-rel-item:hover { background: var(--k-bg); }
-  .cd-rel-icon { font-size: 1.125rem; flex-shrink: 0; }
-  .cd-rel-name { font-weight: 600; font-family: 'Poppins', sans-serif; font-size: .8rem; }
   .cd-monsters { display: flex; flex-direction: column; gap: .375rem; }
   .cd-monster-link { display: flex; align-items: center; gap: .5rem; padding: .5rem .625rem; border-radius: .625rem; border: 1px solid var(--k-border); text-decoration: none; color: var(--k-text-muted); font-size: .8rem; font-weight: 600; transition: border-color .2s, color .2s; }
   .cd-monster-link:hover { border-color: var(--mc); color: var(--mc); }
