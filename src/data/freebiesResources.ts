@@ -1493,7 +1493,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://tw-elements.com&sz=128",
       "tags": [
         "Tailwind"
-      ]sticky\" which means you have to apply the same license to any project you build with TWE & open the project to the public."
+      ]
     },
     {
       "name": "CSS checkboxes",
@@ -3109,7 +3109,7 @@ export const freebiesResourceMap: FreebiesResourceMap = {
       "favicon": "https://www.google.com/s2/favicons?domain=https://editorjs.io&sz=128",
       "tags": [
         "Infinite canvas"
-      ]This license does not permit commercial use. If you wish to use tldraw in a commercial product or enterprise, you will need to purchase a commercial license.\""
+      ]
     },
     {
       "name": "react-spring",
