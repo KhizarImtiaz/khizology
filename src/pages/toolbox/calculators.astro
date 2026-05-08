@@ -1,14 +1,13 @@
 ---
 import BaseLayout from '../../components/layout/BaseLayout.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
-import { calculatorCategories, mvpCalculators } from '../../data/calculators';
+import { calculatorCategories } from '../../data/calculators';
 import { monsters } from '../../data/monsters';
 import { url } from '../../utils/url';
 
 const ACCENT = '#F7933C';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const totalCalcs = calculatorCategories.reduce((n, c) => n + c.count, 0);
-const featuredCats = calculatorCategories.filter(c => c.featured);
 ---
 
 <BaseLayout
@@ -44,8 +43,8 @@ const featuredCats = calculatorCategories.filter(c => c.featured);
         </div>
         <div class="tc-hero-visual">
           <div class="tc-featured-chips">
-            {featuredCats.map((c, i) => (
-              <a href={url(`/toolbox/calculators/${c.slug}-calculator`)} class="tc-feat-chip" style={`--cc: ${c.color}; --idx: ${i}`}>
+            {calculatorCategories.slice(0, 4).map((c, i) => (
+              <a href={url(`/toolbox/calculators/${c.slug}-calculator`)} class="tc-feat-chip" style={`--idx: ${i}`}>
                 <span>{c.icon}</span>
                 <span>{c.title}</span>
                 <span class="tc-feat-count">{c.count}</span>
@@ -53,32 +52,6 @@ const featuredCats = calculatorCategories.filter(c => c.featured);
             ))}
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MVP Calculators -->
-  <section class="k-section tc-mvp-section">
-    <div class="k-container">
-      <span class="k-section-label" style={`color: ${ACCENT}`}>Launching First</span>
-      <h2 class="tc-section-title">4 MVP Calculators</h2>
-      <p class="tc-section-sub">These are being built as the first fully functional calculators.</p>
-      <div class="tc-mvp-grid">
-        {mvpCalculators.filter(c => ['profit-margin-calculator','percentage-calculator','age-calculator','website-cost-calculator'].includes(c.slug)).map(calc => (
-          <div class="tc-mvp-card">
-            <div class="tc-mvp-top">
-              <div class="tc-mvp-icon">{calc.icon}</div>
-              <div class="tc-mvp-badges">
-                {calc.isPopular && <span class="tc-badge popular">Popular</span>}
-                {calc.isNew && <span class="tc-badge new">New</span>}
-                <span class="tc-badge building">Building</span>
-              </div>
-            </div>
-            <h3 class="tc-mvp-name">{calc.name}</h3>
-            <p class="tc-mvp-desc">{calc.description}</p>
-            <div class="tc-mvp-cat">{calc.category.replace(/-/g, ' ')}</div>
-          </div>
-        ))}
       </div>
     </div>
   </section>
@@ -91,19 +64,14 @@ const featuredCats = calculatorCategories.filter(c => c.featured);
       <p class="tc-section-sub">Click a category to see all calculators inside it.</p>
       <div class="tc-cats-grid">
         {calculatorCategories.map(cat => {
-          const href = url(`/toolbox/calculators/${cat.slug === 'developer-tools' ? 'developer-tools' : cat.slug === 'color' ? 'color-tools' : cat.slug + '-calculator'}`);
+          const href = url(`/toolbox/calculators/${cat.slug}-calculator`);
           return (
-            <a href={href} class={`tc-cat-card${cat.featured ? ' featured' : ''}`} style={`--cc: ${cat.color}`}>
-              <div class="tc-cat-glow"></div>
+            <a href={href} class="tc-cat-card">
               <div class="tc-cat-top">
                 <div class="tc-cat-icon-wrap">
                   <span>{cat.icon}</span>
                 </div>
-                <div class="tc-cat-meta">
-                  {cat.featured && <span class="tc-badge featured">Featured</span>}
-                  {!cat.live && <span class="tc-badge soon">Soon</span>}
-                  {cat.live && <span class="tc-badge live">Live</span>}
-                </div>
+                <span class="tc-badge-soon">Soon</span>
               </div>
               <h3 class="tc-cat-name">{cat.title}</h3>
               <p class="tc-cat-desc">{cat.description}</p>
@@ -111,29 +79,6 @@ const featuredCats = calculatorCategories.filter(c => c.featured);
             </a>
           );
         })}
-      </div>
-    </div>
-  </section>
-
-  <!-- Switch nav -->
-  <section class="tc-switch-section">
-    <div class="k-container">
-      <div class="tc-switch-inner">
-        <div class="tc-switch-card active">
-          <span>🧮</span>
-          <strong>Calculators</strong>
-          <span class="tc-switch-you">← You are here</span>
-        </div>
-        <a href={url("/toolbox/tools")} class="tc-switch-card link">
-          <span>🔧</span>
-          <strong>Web Tools</strong>
-          <span class="tc-switch-arrow">Explore tools →</span>
-        </a>
-        <a href={url("/toolbox")} class="tc-switch-card link">
-          <span>🏠</span>
-          <strong>All Toolbox</strong>
-          <span class="tc-switch-arrow">Back to hub →</span>
-        </a>
       </div>
     </div>
   </section>
@@ -173,78 +118,43 @@ const featuredCats = calculatorCategories.filter(c => c.featured);
   .tc-featured-chips { display: flex; flex-direction: column; gap: .625rem; }
   .tc-feat-chip {
     display: flex; align-items: center; gap: .75rem;
-    background: color-mix(in srgb, var(--cc) 10%, var(--k-bg-card));
-    border: 1.5px solid color-mix(in srgb, var(--cc) 30%, transparent);
+    background: color-mix(in srgb, #F7933C 8%, var(--k-bg-card));
+    border: 1.5px solid color-mix(in srgb, #F7933C 25%, transparent);
     border-radius: .875rem; padding: .875rem 1.125rem;
     text-decoration: none; color: var(--k-text); font-family: 'Poppins', sans-serif; font-weight: 600; font-size: .875rem;
     animation: fadeIn .3s ease both; animation-delay: calc(var(--idx) * .08s);
     transition: transform .2s;
   }
   .tc-feat-chip:hover { transform: translateX(4px); }
-  .tc-feat-count { margin-left: auto; font-size: .7rem; font-weight: 700; color: var(--cc); background: color-mix(in srgb, var(--cc) 12%, transparent); padding: .15rem .45rem; border-radius: 999px; }
+  .tc-feat-count { margin-left: auto; font-size: .7rem; font-weight: 700; color: #F7933C; background: color-mix(in srgb, #F7933C 12%, transparent); padding: .15rem .45rem; border-radius: 999px; }
 
   .tc-section-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--k-text); margin: .25rem 0 .5rem; }
   .tc-section-sub { font-size: .9rem; color: var(--k-text-muted); margin: 0 0 2rem; }
 
-  /* MVP */
-  .tc-mvp-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); }
-  .tc-mvp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
-  .tc-mvp-card {
-    background: var(--k-bg); border: 1.5px solid var(--k-border);
-    border-radius: 1.125rem; padding: 1.375rem;
-    display: flex; flex-direction: column; gap: .625rem;
-    transition: border-color .2s, transform .2s;
-  }
-  .tc-mvp-card:hover { border-color: #F7933C; transform: translateY(-3px); }
-  .tc-mvp-top { display: flex; align-items: center; justify-content: space-between; }
-  .tc-mvp-icon {
-    width: 44px; height: 44px; border-radius: .75rem;
-    background: color-mix(in srgb, #F7933C 15%, transparent);
-    display: flex; align-items: center; justify-content: center; font-size: 1.375rem;
-  }
-  .tc-mvp-badges { display: flex; gap: .375rem; flex-wrap: wrap; }
-  .tc-mvp-name { font-family: 'Poppins', sans-serif; font-size: .9rem; font-weight: 800; color: var(--k-text); margin: 0; }
-  .tc-mvp-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
-  .tc-mvp-cat { font-size: .7rem; font-weight: 600; text-transform: capitalize; color: var(--k-text-muted); }
-
-  /* Badges */
-  .tc-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
-  .tc-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
-  .tc-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
-  .tc-badge.building { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); }
-  .tc-badge.featured { background: color-mix(in srgb, #F7933C 12%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 25%, transparent); }
-  .tc-badge.soon { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); }
-  .tc-badge.live { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
-
   /* All cats */
-  .tc-cats-section { background: var(--k-bg); border-top: 1px solid var(--k-border); }
+  .tc-cats-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); }
   .tc-cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
   .tc-cat-card {
-    position: relative; background: var(--k-bg-card); border: 1.5px solid var(--k-border);
-    border-radius: 1.125rem; padding: 1.25rem; overflow: hidden;
+    background: var(--k-bg); border: 1px solid var(--k-border);
+    border-left: 3px solid #F7933C;
+    border-radius: 0 1rem 1rem 0; padding: 1.25rem;
     text-decoration: none; display: flex; flex-direction: column; gap: .5rem;
-    transition: border-color .2s, transform .2s;
+    transition: box-shadow .2s, border-color .2s;
   }
-  .tc-cat-card:hover, .tc-cat-card.featured { border-color: var(--cc); }
-  .tc-cat-card:hover { transform: translateY(-2px); }
-  .tc-cat-glow { position: absolute; top: -15px; right: -15px; width: 60px; height: 60px; border-radius: 50%; background: var(--cc); opacity: .07; filter: blur(15px); pointer-events: none; }
+  .tc-cat-card:hover { box-shadow: 0 4px 16px rgba(247,147,60,.1); border-color: #F7933C; }
   .tc-cat-top { display: flex; align-items: center; justify-content: space-between; }
-  .tc-cat-icon-wrap { width: 40px; height: 40px; border-radius: .625rem; background: color-mix(in srgb, var(--cc) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
-  .tc-cat-meta { display: flex; gap: .25rem; flex-wrap: wrap; justify-content: flex-end; }
-  .tc-cat-name { font-family: 'Poppins', sans-serif; font-size: .9rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .tc-cat-icon-wrap { width: 40px; height: 40px; border-radius: .625rem; background: color-mix(in srgb, #F7933C 12%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+  .tc-cat-name { font-family: 'Poppins', sans-serif; font-size: .9rem; font-weight: 800; color: var(--k-text); margin: 0; transition: color .2s; }
+  .tc-cat-card:hover .tc-cat-name { color: #F7933C; }
   .tc-cat-desc { font-size: .76rem; color: var(--k-text-muted); line-height: 1.4; margin: 0; flex: 1; }
-  .tc-cat-count { font-size: .7rem; font-weight: 700; color: var(--cc); font-family: 'Poppins', sans-serif; }
-
-  /* Switch */
-  .tc-switch-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
-  .tc-switch-inner { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .tc-switch-card { flex: 1; min-width: 180px; background: var(--k-bg); border: 1.5px solid var(--k-border); border-radius: 1rem; padding: 1.25rem; display: flex; flex-direction: column; gap: .25rem; font-size: .875rem; color: var(--k-text); font-family: 'Poppins', sans-serif; }
-  .tc-switch-card strong { font-size: 1rem; font-weight: 800; }
-  .tc-switch-card.active { border-color: #F7933C; }
-  .tc-switch-card.link { text-decoration: none; transition: border-color .2s, transform .2s; cursor: pointer; }
-  .tc-switch-card.link:hover { border-color: #F7933C; transform: translateY(-2px); }
-  .tc-switch-you { font-size: .72rem; color: #F7933C; font-weight: 700; }
-  .tc-switch-arrow { font-size: .78rem; color: var(--k-text-muted); }
+  .tc-cat-count { font-size: .7rem; font-weight: 700; color: #F7933C; font-family: 'Poppins', sans-serif; }
+  .tc-badge-soon {
+    font-size: .62rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; padding: .12rem .45rem; border-radius: 999px;
+    background: var(--k-bg-card); color: var(--k-text-muted);
+    border: 1px solid var(--k-border); font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+  }
 
   /* Other */
   .tc-other-section { background: var(--k-bg); border-top: 1px solid var(--k-border); padding: 2rem 0; }
