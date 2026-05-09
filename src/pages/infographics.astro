@@ -41,10 +41,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="inf-hero-visual">
           <div class="inf-preview-cards">
             {infographicTypes.slice(0, 4).map(t => (
-              <div class="inf-preview-card">
+              <a href={url(`/infographics/${t.slug}`)} class="inf-preview-card" style={`--tc: ${t.color}`}>
                 <span class="inf-preview-icon">{t.icon}</span>
                 <span class="inf-preview-title">{t.title}</span>
-              </div>
+                <span class="inf-preview-arrow" style={`color: ${t.color}`}>→</span>
+              </a>
             ))}
           </div>
         </div>
@@ -61,15 +62,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div class="inf-types-grid">
         {infographicTypes.map(t => (
-          <div class="inf-type-card">
-            <span class="inf-type-icon-wrap">
+          <a href={url(`/infographics/${t.slug}`)} class="inf-type-card" style={`--tc: ${t.color}`}>
+            <span class="inf-type-icon-wrap" style={`background: color-mix(in srgb, ${t.color} 12%, transparent)`}>
               <span class="inf-type-icon">{t.icon}</span>
             </span>
             <div>
               <h3 class="inf-type-title">{t.title}</h3>
               <p class="inf-type-desc">{t.desc}</p>
+              <span class="inf-type-cta">Browse 20 topics →</span>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
@@ -172,17 +174,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem;
   }
   .inf-preview-card {
-    background: var(--k-bg-card); border: 1.5px solid #5CCFAF;
+    background: var(--k-bg-card); border: 1.5px solid color-mix(in srgb, var(--tc, #5CCFAF) 35%, transparent);
     border-radius: 1rem; padding: 1.25rem;
     display: flex; flex-direction: column; gap: .5rem;
-    transition: transform .2s;
+    text-decoration: none;
+    transition: transform .2s, border-color .2s;
   }
-  .inf-preview-card:hover { transform: translateY(-3px); }
+  .inf-preview-card:hover { transform: translateY(-3px); border-color: var(--tc, #5CCFAF); }
   .inf-preview-icon { font-size: 1.5rem; }
   .inf-preview-title {
     font-family: 'Poppins', sans-serif; font-size: .875rem;
-    font-weight: 700; color: var(--k-text);
+    font-weight: 700; color: var(--k-text); flex: 1;
   }
+  .inf-preview-arrow { font-size: .8rem; font-weight: 700; font-family: 'Poppins', sans-serif; }
 
   /* Section headers */
   .inf-section-title {
@@ -201,16 +205,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
   .inf-type-card {
     background: var(--k-bg); border: 1px solid var(--k-border);
-    border-left: 3px solid #5CCFAF;
+    border-left: 3px solid var(--tc, #5CCFAF);
     border-radius: 0 1rem 1rem 0; padding: 1.25rem;
     display: flex; gap: .875rem; align-items: flex-start;
+    text-decoration: none;
     transition: border-color .2s, box-shadow .2s;
   }
-  .inf-type-card:hover { border-color: #5CCFAF; box-shadow: 0 4px 16px rgba(92,207,175,.1); }
+  .inf-type-card:hover { border-color: var(--tc, #5CCFAF); box-shadow: 0 4px 16px color-mix(in srgb, var(--tc, #5CCFAF) 10%, transparent); }
   .inf-type-icon-wrap {
     width: 2.5rem; height: 2.5rem; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(92,207,175,.12); border-radius: .625rem;
+    border-radius: .625rem;
   }
   .inf-type-icon { font-size: 1.25rem; }
   .inf-type-title {
@@ -218,8 +223,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-weight: 800; color: var(--k-text); margin: 0 0 .25rem;
     transition: color .2s;
   }
-  .inf-type-card:hover .inf-type-title { color: #5CCFAF; }
-  .inf-type-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; }
+  .inf-type-card:hover .inf-type-title { color: var(--tc, #5CCFAF); }
+  .inf-type-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0 0 .375rem; }
+  .inf-type-cta {
+    font-size: .72rem; font-weight: 700; color: var(--tc, #5CCFAF);
+    font-family: 'Poppins', sans-serif;
+  }
 
   /* Why */
   .inf-why-section { background: var(--k-bg); padding: 5rem 0; border-top: 1px solid var(--k-border); }

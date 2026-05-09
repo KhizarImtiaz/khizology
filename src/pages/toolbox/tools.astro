@@ -1,25 +1,26 @@
 ---
 import BaseLayout from '../../components/layout/BaseLayout.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
-import { toolGroups, mvpWebTools } from '../../data/toolsData';
+import { webToolCategories } from '../../data/webtools';
 import { monsters } from '../../data/monsters';
 import { url } from '../../utils/url';
 
 const ACCENT = '#F7933C';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
+
+const totalTools = webToolCategories.reduce((n, c) => n + c.tools.length, 0);
 ---
 
 <BaseLayout
-  title="Free Online Tools — toolooo by khizooo"
-  description={`${totalTools}+ free web tools for creators, businesses, and developers. Instagram bio scorer, caption generators, SEO tools, and more.`}
+  title="Free Web Tools — toolooo by khizooo"
+  description={`${totalTools}+ free web tools across ${webToolCategories.length} categories — developer utilities, AI prompt generators, SEO tools, design tools, and more. Always free.`}
   accentColor={ACCENT}
 >
   <!-- Hero -->
   <section class="tl-hero">
     <div class="k-container">
       <Breadcrumb
-        crumbs={[{ label: 'Toolbox', href: url('/toolbox') }, { label: 'Tools' }]}
+        crumbs={[{ label: 'toolooo', href: url('/toolbox') }, { label: 'Web Tools' }]}
         accentColor={ACCENT}
       />
       <div class="tl-hero-inner">
@@ -29,26 +30,26 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
             <span class="k-section-label" style={`color: ${ACCENT}`}>toolooo · Web Tools</span>
           </div>
           <h1 class="tl-hero-title">
-            Free Tools for<br />
-            <span class="tl-hero-accent">Creators & Builders.</span>
+            800+ Free Tools.<br />
+            <span class="tl-hero-accent">Coming Soon.</span>
           </h1>
           <p class="tl-hero-lead">
-            Social media tools, business copy generators, SEO helpers, and developer utilities.
-            All free. No signup required.
+            Developer utilities, AI prompt generators, SEO helpers, design tools, productivity apps,
+            and more — all free. Browse all categories below.
           </p>
           <div class="tl-hero-stats">
-            <div class="tl-stat"><span class="tl-stat-num">{totalTools}</span><span class="tl-stat-label">Tools</span></div>
-            <div class="tl-stat"><span class="tl-stat-num">{toolGroups.length}</span><span class="tl-stat-label">Categories</span></div>
+            <div class="tl-stat"><span class="tl-stat-num">{totalTools}+</span><span class="tl-stat-label">Web Tools</span></div>
+            <div class="tl-stat"><span class="tl-stat-num">{webToolCategories.length}</span><span class="tl-stat-label">Categories</span></div>
             <div class="tl-stat"><span class="tl-stat-num">Free</span><span class="tl-stat-label">Always</span></div>
           </div>
         </div>
         <div class="tl-hero-visual">
-          <div class="tl-mvp-preview">
-            {mvpWebTools.map((t, i) => (
-              <div class="tl-mvp-chip" style={`--idx: ${i}`}>
-                <span>{t.icon}</span>
-                <span>{t.name}</span>
-                <span class="tl-mvp-label">MVP</span>
+          <div class="tl-cat-chips">
+            {webToolCategories.slice(0, 8).map((cat, i) => (
+              <div class="tl-cat-chip" style={`--idx: ${i}`}>
+                <span>{cat.icon}</span>
+                <span>{cat.title}</span>
+                <span class="tl-chip-count">{cat.tools.length}</span>
               </div>
             ))}
           </div>
@@ -57,49 +58,42 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
     </div>
   </section>
 
-  <!-- Tool groups -->
-  {toolGroups.map(group => (
-    <section class="k-section tl-group-section" id={group.slug}>
-      <div class="k-container">
-        <div class="tl-group-header">
-          <div class="tl-group-icon-wrap" style={`background: color-mix(in srgb, ${group.color} 15%, transparent)`}>
-            <span>{group.icon}</span>
-          </div>
-          <div>
-            <span class="k-section-label" style={`color: ${ACCENT}`}>{group.tools.length} tools</span>
-            <h2 class="tl-group-title">{group.title}</h2>
-            <p class="tl-group-desc">{group.description}</p>
-          </div>
-        </div>
-        <div class="tl-tools-grid">
-          {group.tools.map(tool => (
-            <div class={`tl-tool-card${tool.isMVP ? ' mvp' : ''}`} style={`--tc: ${group.color}`}>
-              <div class="tl-tool-top">
-                <div class="tl-tool-icon-wrap">
-                  <span class="tl-tool-icon">{tool.icon}</span>
-                </div>
-                <div class="tl-tool-badges">
-                  {tool.isMVP && <span class="tl-badge mvp">MVP</span>}
-                  {tool.isNew && <span class="tl-badge new">New</span>}
-                  {tool.isPopular && <span class="tl-badge popular">Popular</span>}
-                  {!tool.isMVP && <span class="tl-badge soon">Soon</span>}
-                </div>
+  <!-- All Categories -->
+  <section class="k-section tl-cats-section">
+    <div class="k-container">
+      <div class="tl-section-header">
+        <span class="k-section-label" style={`color: ${ACCENT}`}>All Categories</span>
+        <h2 class="tl-section-title">{webToolCategories.length} Tool Categories</h2>
+        <p class="tl-section-sub">Every tool is coming soon — browse categories and see what's planned.</p>
+      </div>
+
+      <div class="tl-cats-grid">
+        {webToolCategories.map(cat => (
+          <div class="tl-cat-card">
+            <div class="tl-cat-top">
+              <div class="tl-cat-icon-wrap">
+                <span class="tl-cat-icon">{cat.icon}</span>
               </div>
-              <h3 class="tl-tool-name">{tool.name}</h3>
-              <p class="tl-tool-desc">{tool.description}</p>
-              {tool.live ? (
-                <a href={url(`/toolbox/tools/${tool.slug}`)} class="tl-tool-btn live">Open Tool →</a>
-              ) : (
-                <button class="tl-tool-btn disabled" disabled>Coming Soon</button>
+              <span class="tl-badge-soon">Soon</span>
+            </div>
+            <h3 class="tl-cat-name">{cat.title}</h3>
+            <p class="tl-cat-desc">{cat.description}</p>
+            <div class="tl-cat-count">{cat.tools.length} tools</div>
+            <div class="tl-chip-list">
+              {cat.tools.slice(0, 8).map(tool => (
+                <span class="tl-chip">{tool}</span>
+              ))}
+              {cat.tools.length > 8 && (
+                <span class="tl-chip tl-chip-more">+{cat.tools.length - 8} more</span>
               )}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </section>
-  ))}
+    </div>
+  </section>
 
-  <!-- Nav between tools/calculators -->
+  <!-- Switch nav -->
   <section class="tl-switch-section">
     <div class="k-container">
       <div class="tl-switch-inner">
@@ -143,7 +137,7 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
 <style>
   /* Hero */
   .tl-hero { background: var(--k-bg); padding: 3rem 0 2rem; border-bottom: 1px solid var(--k-border); }
-  .tl-hero-inner { display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: center; margin-top: 1rem; }
+  .tl-hero-inner { display: grid; grid-template-columns: 1fr; gap: 2.5rem; align-items: start; margin-top: 1rem; }
   @media (min-width: 900px) { .tl-hero-inner { grid-template-columns: 1fr 1fr; } }
   .tl-hero-badge { display: flex; align-items: center; gap: .625rem; margin-bottom: .5rem; }
   .tl-hero-badge img { border-radius: .5rem; }
@@ -155,66 +149,85 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
   .tl-stat-num { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 900; color: #F7933C; line-height: 1; }
   .tl-stat-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--k-text-muted); }
 
-  .tl-mvp-preview { display: flex; flex-direction: column; gap: .625rem; }
-  .tl-mvp-chip {
+  /* Hero cat chips */
+  .tl-cat-chips { display: flex; flex-direction: column; gap: .5rem; }
+  .tl-cat-chip {
     display: flex; align-items: center; gap: .75rem;
     background: var(--k-bg-card); border: 1px solid var(--k-border);
-    border-radius: .875rem; padding: .75rem 1rem;
-    font-size: .875rem; color: var(--k-text); font-family: 'Poppins', sans-serif; font-weight: 600;
-    animation: slideIn .3s ease both; animation-delay: calc(var(--idx) * .07s);
+    border-left: 3px solid #F7933C;
+    border-radius: 0 .875rem .875rem 0;
+    padding: .625rem 1rem;
+    font-size: .8rem; color: var(--k-text); font-family: 'Poppins', sans-serif; font-weight: 600;
+    animation: slideIn .3s ease both; animation-delay: calc(var(--idx) * .06s);
   }
-  .tl-mvp-label {
-    margin-left: auto; font-size: .65rem; font-weight: 700; text-transform: uppercase;
+  .tl-chip-count {
+    margin-left: auto; font-size: .65rem; font-weight: 700;
     color: #F7933C; background: color-mix(in srgb, #F7933C 12%, transparent);
     padding: .15rem .5rem; border-radius: 999px;
   }
   @keyframes slideIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
 
-  /* Group sections */
-  .tl-group-section { background: var(--k-bg); border-top: 1px solid var(--k-border); }
-  .tl-group-section:nth-child(even) { background: var(--k-bg-card); }
-  .tl-group-header { display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; }
-  .tl-group-icon-wrap { width: 56px; height: 56px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; flex-shrink: 0; }
-  .tl-group-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 800; color: var(--k-text); margin: .125rem 0 .375rem; }
-  .tl-group-desc { font-size: .875rem; color: var(--k-text-muted); margin: 0; }
+  /* Section */
+  .tl-cats-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); }
+  .tl-section-header { margin-bottom: 2rem; }
+  .tl-section-title { font-family: 'Poppins', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem); font-weight: 800; color: var(--k-text); margin: .25rem 0 .375rem; }
+  .tl-section-sub { font-size: .875rem; color: var(--k-text-muted); margin: 0; }
 
-  .tl-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.125rem; }
-  .tl-tool-card {
-    background: var(--k-bg-card); border: 1.5px solid var(--k-border);
-    border-radius: 1.125rem; padding: 1.375rem;
+  /* Category cards */
+  .tl-cats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.125rem;
+  }
+  .tl-cat-card {
+    background: var(--k-bg);
+    border: 1px solid var(--k-border);
+    border-left: 3px solid #F7933C;
+    border-radius: 0 1.125rem 1.125rem 0;
+    padding: 1.375rem;
     display: flex; flex-direction: column; gap: .625rem;
-    transition: border-color .2s, transform .2s;
+    transition: box-shadow .2s, border-color .2s;
   }
-  .tl-group-section:nth-child(even) .tl-tool-card { background: var(--k-bg); }
-  .tl-tool-card:hover, .tl-tool-card.mvp { border-color: var(--tc); }
-  .tl-tool-card:hover { transform: translateY(-2px); }
-  .tl-tool-top { display: flex; align-items: center; justify-content: space-between; }
-  .tl-tool-icon-wrap { width: 44px; height: 44px; border-radius: .75rem; background: color-mix(in srgb, var(--tc) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.375rem; }
-  .tl-tool-badges { display: flex; gap: .375rem; flex-wrap: wrap; justify-content: flex-end; }
-
-  /* Badges */
-  .tl-badge { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif; }
-  .tl-badge.mvp { background: color-mix(in srgb, #F7933C 15%, transparent); color: #c45e10; border: 1px solid color-mix(in srgb, #F7933C 30%, transparent); }
-  .tl-badge.new { background: color-mix(in srgb, #5CCFAF 15%, transparent); color: #2a9175; border: 1px solid color-mix(in srgb, #5CCFAF 30%, transparent); }
-  .tl-badge.popular { background: color-mix(in srgb, #F5CF5C 15%, transparent); color: #b08a00; border: 1px solid color-mix(in srgb, #F5CF5C 30%, transparent); }
-  .tl-badge.soon { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); }
-
-  .tl-tool-name { font-family: 'Poppins', sans-serif; font-size: .9rem; font-weight: 800; color: var(--k-text); margin: 0; }
-  .tl-tool-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
-  .tl-tool-btn {
-    align-self: flex-start; padding: .4rem .875rem; border-radius: .5rem;
-    font-weight: 700; font-size: .78rem; font-family: 'Poppins', sans-serif;
-    text-decoration: none; transition: opacity .2s;
+  .tl-cat-card:hover {
+    border-color: #F7933C;
+    box-shadow: 0 4px 20px rgba(247,147,60,.1);
   }
-  .tl-tool-btn.live { background: #F7933C; color: #fff; border: none; cursor: pointer; }
-  .tl-tool-btn.live:hover { opacity: .85; }
-  .tl-tool-btn.disabled { background: var(--k-bg); color: var(--k-text-muted); border: 1px solid var(--k-border); cursor: not-allowed; opacity: .6; }
+  .tl-cat-top { display: flex; align-items: center; justify-content: space-between; }
+  .tl-cat-icon-wrap {
+    width: 44px; height: 44px; border-radius: .75rem;
+    background: color-mix(in srgb, #F7933C 12%, transparent);
+    display: flex; align-items: center; justify-content: center; font-size: 1.375rem;
+  }
+  .tl-cat-name { font-family: 'Poppins', sans-serif; font-size: .9rem; font-weight: 800; color: var(--k-text); margin: 0; }
+  .tl-cat-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
+  .tl-cat-count { font-size: .7rem; font-weight: 700; color: #F7933C; }
+
+  /* Soon badge */
+  .tl-badge-soon {
+    font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif;
+    background: var(--k-bg-card); color: var(--k-text-muted); border: 1px solid var(--k-border);
+  }
+
+  /* Tool chips */
+  .tl-chip-list { display: flex; gap: .3rem; flex-wrap: wrap; }
+  .tl-chip {
+    font-size: .65rem; font-weight: 600; padding: .15rem .5rem;
+    border-radius: 999px; background: var(--k-bg-card);
+    border: 1px solid var(--k-border); color: var(--k-text-muted);
+    font-family: 'Poppins', sans-serif;
+  }
+  .tl-chip-more {
+    background: color-mix(in srgb, #F7933C 10%, transparent);
+    border-color: color-mix(in srgb, #F7933C 25%, transparent);
+    color: #F7933C;
+  }
 
   /* Switch nav */
-  .tl-switch-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
+  .tl-switch-section { background: var(--k-bg); border-top: 1px solid var(--k-border); padding: 2rem 0; }
   .tl-switch-inner { display: flex; gap: 1rem; flex-wrap: wrap; }
   .tl-switch-card {
-    flex: 1; min-width: 180px; background: var(--k-bg); border: 1.5px solid var(--k-border);
+    flex: 1; min-width: 180px; background: var(--k-bg-card); border: 1.5px solid var(--k-border);
     border-radius: 1rem; padding: 1.25rem;
     display: flex; flex-direction: column; gap: .25rem;
     font-size: .875rem; color: var(--k-text); font-family: 'Poppins', sans-serif;
@@ -226,14 +239,14 @@ const totalTools = toolGroups.reduce((n, g) => n + g.tools.length, 0);
   .tl-switch-you { font-size: .72rem; color: #F7933C; font-weight: 700; }
   .tl-switch-arrow { font-size: .78rem; color: var(--k-text-muted); }
 
-  /* Other */
-  .tl-other-section { background: var(--k-bg); border-top: 1px solid var(--k-border); padding: 2rem 0; }
+  /* Other monsters */
+  .tl-other-section { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 2rem 0; }
   .tl-other-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: space-between; }
   .tl-other-label { font-size: .8rem; font-weight: 700; color: var(--k-text-muted); }
   .tl-other-links { display: flex; gap: .625rem; flex-wrap: wrap; }
   .tl-other-link {
     display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .625rem;
-    background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: .75rem;
+    background: var(--k-bg); border: 1px solid var(--k-border); border-radius: .75rem;
     text-decoration: none; color: var(--k-text-muted); font-size: .7rem; font-weight: 600; min-width: 64px;
     transition: border-color .2s, color .2s;
   }

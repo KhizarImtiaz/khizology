@@ -21,7 +21,8 @@ const relatedSections = allInfographicSections
   .filter(s => s.slug !== section.slug)
   .slice(0, 6);
 
-const hasPosts = section.posts.length > 0;
+const hasTopics = section.kind === 'type' && (section.topics?.length ?? 0) > 0;
+const hasPosts = !hasTopics && section.posts.length > 0;
 
 // Sample "coming soon" card data to fill empty listing
 const sampleTitles: Record<string, string[]> = {
@@ -37,9 +38,9 @@ const sampleTitles: Record<string, string[]> = {
   'cost-breakdown': ['How Much a Website Really Costs', 'The True Cost of a Coffee Shop', 'Breaking Down SaaS Pricing Models', 'What You Actually Pay for a Smartphone', 'Hidden Costs of Running a Business'],
   'decision-trees': ['Should You Freelance or Get a Job?', 'Choosing the Right Tech Stack', 'Career Change Decision Framework', 'When to Quit Your Job', 'Should You Start a Business?'],
   'comparison': ['React vs Vue vs Angular in 2025', 'iOS vs Android: The Complete Comparison', 'Traditional Learning vs Online Learning', 'Freelance vs Agency: What\'s Right for You?', 'Coffee vs Tea: Health Benefits Compared'],
-  'cheat-sheet-framework': ['The Complete CSS Flexbox Cheat Sheet', 'Git Commands Every Developer Needs', 'Python for Beginners Cheat Sheet', 'The AARRR Pirate Metrics Framework', 'The Ultimate Productivity System'],
+  'cheat-sheet': ['The Complete CSS Flexbox Cheat Sheet', 'Git Commands Every Developer Needs', 'Python for Beginners Cheat Sheet', 'The AARRR Pirate Metrics Framework', 'The Ultimate Productivity System'],
   'data-stats': ['Internet Usage Statistics 2025', 'The World\'s Top Programming Languages', 'Social Media User Stats by Platform', 'Global Mental Health Statistics', 'The State of AI Adoption'],
-  'step-by-step-process': ['How to Start a Side Hustle in 5 Steps', 'The Design Thinking Process Visualized', 'How to Write a Blog Post Step by Step', 'Building a Personal Brand From Zero', 'The MVP Development Process'],
+  'step-by-step': ['How to Start a Side Hustle in 5 Steps', 'The Design Thinking Process Visualized', 'How to Write a Blog Post Step by Step', 'Building a Personal Brand From Zero', 'The MVP Development Process'],
   'mistakes-fixes': ['10 Common CSS Mistakes and Fixes', 'Resume Mistakes That Cost You Interviews', 'Business Launch Mistakes to Avoid', 'Common Investment Mistakes Beginners Make', 'Social Media Mistakes That Kill Engagement'],
 };
 
@@ -106,14 +107,48 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
             </a>
           ))}
         </div>
+      ) : hasTopics ? (
+        <!-- Type page: show 20 numbered topic cards -->
+        <div class="ig-coming-section">
+          <div class="ig-coming-header">
+            <span class="k-section-label" style={`color: ${section.color}`}>{section.topics.length} topics</span>
+            <h2 class="ig-coming-title">Upcoming {section.title} Infographics</h2>
+            <p class="ig-coming-sub">All infographics below are in production. Each one will be published as a full visual — clean, clear, and shareable.</p>
+          </div>
+          <div class="ig-topics-grid">
+            {section.topics.map((topic, i) => (
+              <div class="ig-topic-card" style={`--ic: ${section.color}; --delay: ${i * 0.03}s`}>
+                <div class="ig-topic-card-top">
+                  <span class="ig-topic-num">#{String(i + 1).padStart(2, '0')}</span>
+                  <span class="ig-topic-soon">Coming Soon</span>
+                </div>
+                <div class="ig-topic-icon-wrap">
+                  <span>{section.icon}</span>
+                </div>
+                <h3 class="ig-topic-title">{topic}</h3>
+                <div class="ig-topic-footer">
+                  <span class="ig-topic-type-label">{section.title}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="ig-coming-cta">
+            <div class="ig-cta-card">
+              <span class="ig-cta-icon">{section.icon}</span>
+              <h3>Be first when {section.title} drops</h3>
+              <p>Follow khizology and get notified when new infographics go live.</p>
+              <a href={url("/drop-a-vibe")} class="ig-cta-btn" style={`background: ${section.color}`}>Stay in the Loop →</a>
+            </div>
+          </div>
+        </div>
       ) : (
+        <!-- Topic category page: generic coming soon -->
         <div class="ig-coming-section">
           <div class="ig-coming-header">
             <span class="k-section-label" style={`color: ${ACCENT}`}>Preview</span>
             <h2 class="ig-coming-title">What's Coming to {section.title}</h2>
             <p class="ig-coming-sub">These infographics are being created. Each one will be fully visual, shareable, and packed with value.</p>
           </div>
-          <!-- Skeleton previews -->
           <div class="ig-preview-grid">
             {fallbackTitles.map((title, i) => (
               <div class="ig-preview-card" style={`--ic: ${section.color}; --delay: ${i * 0.08}s`}>
@@ -129,8 +164,6 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
               </div>
             ))}
           </div>
-
-          <!-- CTA -->
           <div class="ig-coming-cta">
             <div class="ig-cta-card">
               <span class="ig-cta-icon">{section.icon}</span>
@@ -236,6 +269,88 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     color: var(--k-text-muted); background: var(--k-bg);
     padding: .15rem .5rem; border-radius: 999px; font-family: 'Poppins', sans-serif;
     border: 1px solid var(--k-border);
+  }
+
+  /* Topics grid (type pages with 20 topics) */
+  .ig-topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .ig-topic-card {
+    background: var(--k-bg-card);
+    border: 1.5px solid var(--k-border);
+    border-left: 3px solid var(--ic);
+    border-radius: 0 1rem 1rem 0;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    animation: fadeIn .35s ease both;
+    animation-delay: var(--delay, 0s);
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .ig-topic-card:hover {
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--ic) 12%, transparent);
+    border-color: var(--ic);
+  }
+  .ig-topic-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ig-topic-num {
+    font-family: 'Poppins', sans-serif;
+    font-size: .68rem;
+    font-weight: 800;
+    color: var(--ic);
+    opacity: .7;
+    letter-spacing: .05em;
+  }
+  .ig-topic-soon {
+    font-size: .6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: .12rem .45rem;
+    border-radius: 999px;
+    background: var(--k-bg);
+    color: var(--k-text-muted);
+    border: 1px solid var(--k-border);
+    font-family: 'Poppins', sans-serif;
+  }
+  .ig-topic-icon-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: .625rem;
+    background: color-mix(in srgb, var(--ic) 12%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+  }
+  .ig-topic-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: .875rem;
+    font-weight: 800;
+    color: var(--k-text);
+    margin: 0;
+    flex: 1;
+    line-height: 1.4;
+  }
+  .ig-topic-footer {
+    margin-top: auto;
+    padding-top: .5rem;
+    border-top: 1px solid var(--k-border);
+  }
+  .ig-topic-type-label {
+    font-size: .65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--ic);
+    font-family: 'Poppins', sans-serif;
   }
 
   /* Coming soon */
