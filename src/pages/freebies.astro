@@ -9,12 +9,23 @@ const ACCENT = '#6CA6FF';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const totalResources = freebiesCategories.reduce((sum, c) => sum + c.resourceCount, 0);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'freeooo — Free Design & Dev Resources',
+  url: 'https://khizarooo.github.io/khizology/freebies',
+  description: `${totalResources}+ curated free resources across ${freebiesCategories.length} categories — icons, illustrations, photos, tools, fonts, and more.`,
+  author: { '@type': 'Person', name: 'Khizar Imtiaz' },
+  numberOfItems: totalResources,
+};
 ---
 
 <BaseLayout
   title="freeooo — Free Design & Dev Resources by khizooo"
   description={`${totalResources}+ curated free resources across ${freebiesCategories.length} categories — icons, illustrations, photos, tools, fonts, and more. Always free.`}
   accentColor={ACCENT}
+  jsonLd={jsonLd}
 >
   <!-- Hero -->
   <section class="fr-hero">

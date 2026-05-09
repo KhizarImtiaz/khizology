@@ -36,7 +36,15 @@
       "Bash(git commit -m 'fix: use infooo base color \\(#5CCFAF\\) for all infographics section accents *)",
       "Bash(git cherry-pick *)",
       "Bash(git commit -m 'fix: replace devooo color #B699FF with var\\(--k-accent\\) on Future Monsters footer link *)",
-      "Bash(git commit -m 'fix: replace all #B699FF \\(devooo purple\\) with var\\(--k-accent\\) on future-monsters page *)"
+      "Bash(git commit -m 'fix: replace all #B699FF \\(devooo purple\\) with var\\(--k-accent\\) on future-monsters page *)",
+      "Bash(git commit -m 'feat: replace knowledge categories with infographic types, single infooo color *)",
+      "WebFetch(domain:calculatorbit.com)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "PowerShell($env:GITHUB_TOKEN = \\(git -C \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\" config --get user.token 2>$null\\); if \\(-not $env:GITHUB_TOKEN\\) { \"NO_GIT_TOKEN\" } else { \"TOKEN_FOUND\" })",
+      "Bash(git -C \"D:\\\\khizooo\\\\khizology\\\\claude-web\\\\khizology\" credential fill)",
+      "Bash(curl -s -X POST -H 'Authorization: token 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' -H 'Accept: application/vnd.github.v3+json' -H 'Content-Type: application/json' https://api.github.com/repos/KhizarImtiaz/khizology/pulls -d '{ *)",
+      "Bash(\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" -e \"let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const j=JSON.parse\\(d\\);console.log\\(j.html_url||JSON.stringify\\(j\\).slice\\(0,300\\)\\);}\\)\")",
+      "Bash(\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" -e \"let d='';process.stdin.on\\('data',c=>d+=c\\);process.stdin.on\\('end',\\(\\)=>{const j=JSON.parse\\(d\\);console.log\\(j.html_url||JSON.stringify\\(j\\).slice\\(0,400\\)\\);}\\)\")"
     ]
   }
 }

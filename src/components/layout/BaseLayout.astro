@@ -13,6 +13,7 @@ interface Props {
   noindex?: boolean;
   accentColor?: string;
   accentColorLight?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   noindex,
   accentColor,
   accentColorLight,
+  jsonLd,
 } = Astro.props;
 ---
 
@@ -55,6 +57,9 @@ const {
           --m-accent-light: var(--accentColorLight);
         }
       </style>
+    )}
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(Array.isArray(jsonLd) ? jsonLd : [jsonLd])} />
     )}
   </head>
   <body>

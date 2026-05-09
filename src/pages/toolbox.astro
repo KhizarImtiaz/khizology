@@ -8,12 +8,24 @@ import { url } from '../utils/url';
 
 const ACCENT = '#F7933C';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'toolooo — Toolbox by khizooo',
+  url: 'https://khizarooo.github.io/khizology/toolbox',
+  description: 'Free online tools and calculators for creators, builders, and professionals. 800+ web tools and 200+ calculators across 40 categories.',
+  applicationCategory: 'UtilityApplication',
+  isAccessibleForFree: true,
+  author: { '@type': 'Person', name: 'Khizar Imtiaz' },
+};
 ---
 
 <BaseLayout
-  title="toolooo — Toolbox by khizooo"
-  description="Free online tools and calculators for creators, builders, and professionals. Web tools, calculators, and utilities — always free."
+  title="toolooo — Free Online Tools & Calculators by khizooo"
+  description="Free online tools and calculators for creators, builders, and professionals. 800+ web tools and 200+ calculators across 40 categories — always free."
   accentColor={ACCENT}
+  jsonLd={jsonLd}
 >
   <!-- Hero -->
   <section class="tb-hero">

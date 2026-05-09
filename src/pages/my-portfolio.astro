@@ -240,12 +240,29 @@ const projectGroups = [
 
 const softSkills = ['Leadership', 'Communication', 'Problem-Solving', 'Creativity', 'Empathy', 'Attention to Detail', 'Adaptability', 'Continuous Learning', 'Mentoring'];
 const hobbies = ['Drawing & Illustration', 'Digital Art', 'Travel', 'Photography', 'Reading', 'Exploring New Tech', 'Playing with AI Tools'];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Khizar Imtiaz',
+  alternateName: 'khizooo',
+  url: 'https://khizarooo.github.io/khizology/my-portfolio',
+  jobTitle: 'Technical Delivery Manager',
+  worksFor: { '@type': 'Organization', name: 'VAIVAL Technologies' },
+  knowsAbout: ['Full-Stack Development', 'React', 'Node.js', 'TypeScript', 'AWS', 'Team Leadership', 'Digital Art'],
+  sameAs: [
+    'https://github.com/KhizaroOo',
+    'https://www.linkedin.com/in/khizar-imtiaz',
+    'https://www.instagram.com/khizooo_art',
+  ],
+};
 ---
 
 <BaseLayout
-  title="My Portfolio — Khizar Imtiaz"
+  title="My Portfolio — Khizar Imtiaz | Technical Delivery Manager & Developer"
   description="Khizar Imtiaz (khizooo) — Technical Delivery Manager, full-stack developer, and artist. 8+ years at VAIVAL. Creator of khizology."
   accentColor="var(--k-accent)"
+  jsonLd={jsonLd}
 >
   <div class="k-container" style="padding-top: 2rem;">
     <Breadcrumb crumbs={[{ label: 'My Portfolio' }]} accentColor="var(--k-accent)" />

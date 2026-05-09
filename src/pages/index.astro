@@ -13,11 +13,35 @@ const featuredFreebieCategories = [
   { slug: 'backgrounds', title: 'Backgrounds', desc: 'Beautiful background assets' },
   { slug: 'typography', title: 'Typography', desc: 'Fonts and type resources' },
 ];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'khizology',
+  url: 'https://khizarooo.github.io/khizology/',
+  description: 'A monster-powered creative universe by khizooo — artworks, infographics, free design resources, and web tools.',
+  author: {
+    '@type': 'Person',
+    name: 'Khizar Imtiaz',
+    url: 'https://khizarooo.github.io/khizology/my-portfolio',
+    sameAs: [
+      'https://github.com/KhizaroOo',
+      'https://www.linkedin.com/in/khizar-imtiaz',
+      'https://www.instagram.com/khizooo_art',
+    ],
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://khizarooo.github.io/khizology/toolbox',
+    'query-input': 'required name=search_term_string',
+  },
+};
 ---
 
 <BaseLayout
   title="khizology — A Monster-Powered Creative Universe"
   description="khizology is a creative knowledge universe by khizooo. Explore Artworks, Infographics, Toolbox calculators, and free design resources — all powered by monsters."
+  jsonLd={jsonLd}
 >
 
   <!-- HERO -->
