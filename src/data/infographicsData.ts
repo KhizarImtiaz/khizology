@@ -2,6 +2,16 @@
 //  Infographic types and learning category pages
 // ─────────────────────────────────────────────
 
+export interface InfographicFaq {
+  q: string;
+  a: string;
+}
+
+export interface InfographicSocialPost {
+  platform: 'instagram' | 'facebook' | 'x' | 'tiktok' | 'pinterest' | 'threads' | 'linkedin';
+  url: string;
+}
+
 export interface InfographicPost {
   slug: string;
   title: string;
@@ -10,7 +20,12 @@ export interface InfographicPost {
   tags: string[];
   readingTime: string;
   live: boolean;
+  publishedAt?: string;        // ISO 8601 date e.g. '2026-05-10'
+  updatedAt?: string;          // ISO 8601 date e.g. '2026-05-10'
   keyPoints?: string[];
+  coverText?: string;          // rich "What This Infographic Covers" paragraph(s)
+  faq?: InfographicFaq[];      // per-post custom FAQ entries
+  socialPosts?: InfographicSocialPost[]; // links to the actual published posts on each platform
 }
 
 export interface InfographicSection {
@@ -60,6 +75,59 @@ export const infographicTypes: InfographicSection[] = [
       'The Future of Work: Humans + AI Teams',
     ],
     posts: [
+      {
+        slug: 'ai-agents-replacing-office-work',
+        title: 'AI Agents Are Replacing Repetitive Office Work',
+        summary: 'How AI agents are transforming office work by automating data entry, email triage, scheduling, reporting, customer support, and research reducing routine work and allowing teams to focus on strategy, creativity, and decision-making.',
+        category: 'market-trend',
+        tags: ['AI Agents', 'Automation', 'Future of Work', 'Enterprise AI'],
+        readingTime: '4 min',
+        live: true,
+        publishedAt: '2026-05-10',
+        updatedAt: '2026-05-10',
+        keyPoints: [
+          'AI agents now automate 12 major office task types — from data entry (72%) to workflow routing (29%)',
+          'Workers save 3 to 8 hours per week by delegating routine tasks to AI systems',
+          'The AI agent market is valued at $47B in 2025 and growing at 44% CAGR',
+          '12 major platforms including Microsoft, Google, OpenAI, Anthropic, Salesforce, and Notion now embed agentic AI',
+          '78% of companies adopting AI agents are upskilling workers, not cutting headcount',
+          'Operations, Sales, Finance, HR, Support, Marketing, Legal, and IT teams all benefit directly',
+          'By 2027, 60%+ of routine office work is projected to run through AI-assisted workflows',
+          'The real competitive edge goes to teams that learn to work with AI, not just use it',
+        ],
+        coverText: 'This infographic maps how AI agents are reshaping modern office work across 12 task categories, 10 value areas, and 12 major platforms. It covers the full adoption arc from 2022 to 2027 with 5 key developments per year, shows the practical before-and-after shift for individual workers, managers, and cross-functional teams, and explains why this is about workflow augmentation rather than workforce replacement.',
+        faq: [
+          {
+            q: 'Is the infographic already available to view?',
+            a: 'Yes. The full infographic is live on this page. It covers tasks, value areas, the adoption timeline, platforms, and team-level impact all in one visual.',
+          },
+          {
+            q: 'Can I share or download this infographic?',
+            a: 'Yes. Use the Download Infographic button to save a high-quality PNG. You can also copy the page link to share it directly.',
+          },
+          {
+            q: 'Are there more market trends infographics?',
+            a: 'Yes. The Market Trends category covers AI adoption, business automation, digital transformation, and more. New infographics are added regularly.',
+          },
+          {
+            q: 'How often are these infographic insights updated?',
+            a: 'Each infographic is reviewed and updated as the market evolves. The adoption timeline and platform data in this infographic reflect 2026 developments.',
+          },
+          {
+            q: 'Is this infographic based on real market developments?',
+            a: 'Yes. The stats, timeline events, and platform details are grounded in real enterprise AI adoption patterns, published research, and product releases from 2022 through 2026.',
+          },
+        ],
+        socialPosts: [
+          { platform: 'instagram', url: 'https://www.instagram.com/khizooo' },
+          { platform: 'facebook',  url: 'https://www.facebook.com/khizooo' },
+          { platform: 'x',         url: 'https://x.com/khizooo' },
+          { platform: 'tiktok',    url: 'https://www.tiktok.com/@khizooo' },
+          { platform: 'pinterest', url: 'https://www.pinterest.com/khizooo' },
+          { platform: 'threads',   url: 'https://www.threads.net/@khizooo' },
+          { platform: 'linkedin',  url: 'https://www.linkedin.com/in/khizooo' }
+        ],
+      },
       {
         slug: 'ai-tools-market-growth-2024',
         title: 'AI Tools Market Growth 2024 — $200B and Counting',

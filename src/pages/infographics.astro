@@ -2,11 +2,13 @@
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import { infographicTypes } from '../data/infographics';
+import { getAllInfographicPosts } from '../data/infographicsData';
 import { monsters } from '../data/monsters';
 import { url } from '../utils/url';
 
 const ACCENT = '#5CCFAF';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const livePosts = getAllInfographicPosts().filter(({ post }) => post.live);
 
 ---
 
@@ -41,10 +43,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="inf-hero-visual">
           <div class="inf-preview-cards">
             {infographicTypes.slice(0, 4).map(t => (
-              <a href={url(`/infographics/${t.slug}`)} class="inf-preview-card" style={`--tc: ${t.color}`}>
+              <a href={url(`/infographics/${t.slug}`)} class="inf-preview-card">
                 <span class="inf-preview-icon">{t.icon}</span>
                 <span class="inf-preview-title">{t.title}</span>
-                <span class="inf-preview-arrow" style={`color: ${t.color}`}>→</span>
+                <span class="inf-preview-arrow">→</span>
               </a>
             ))}
           </div>
@@ -52,6 +54,40 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
     </div>
   </section>
+
+  <!-- Live Posts Strip -->
+  {livePosts.length > 0 && (
+    <section class="inf-live-section">
+      <div class="k-container">
+        <div class="inf-live-header">
+          <span class="inf-live-pill">
+            <span class="inf-live-dot"></span>
+            Live Now
+          </span>
+          <span class="inf-live-sub">{livePosts.length} infographic{livePosts.length > 1 ? 's' : ''} published and ready to explore</span>
+        </div>
+        <div class="inf-live-grid">
+          {livePosts.map(({ section, post }) => (
+            <a href={url(`/infographics/${section.slug}/${post.slug}`)} class="inf-live-card">
+              <div class="inf-live-card-top">
+                <span class="inf-live-icon">{section.icon}</span>
+                <div class="inf-live-badges">
+                  <span class="inf-live-type">{section.title}</span>
+                  <span class="inf-live-read">{post.readingTime}</span>
+                </div>
+              </div>
+              <h3 class="inf-live-title">{post.title}</h3>
+              <p class="inf-live-summary">{post.summary.slice(0, 110)}…</p>
+              <div class="inf-live-tags">
+                {post.tags.slice(0, 3).map(t => <span class="inf-live-tag">{t}</span>)}
+              </div>
+              <span class="inf-live-cta">View Infographic →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- Infographic Types -->
   <section class="k-section inf-types-section">
@@ -62,8 +98,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div class="inf-types-grid">
         {infographicTypes.map(t => (
-          <a href={url(`/infographics/${t.slug}`)} class="inf-type-card" style={`--tc: ${t.color}`}>
-            <span class="inf-type-icon-wrap" style={`background: color-mix(in srgb, ${t.color} 12%, transparent)`}>
+          <a href={url(`/infographics/${t.slug}`)} class="inf-type-card">
+            <span class="inf-type-icon-wrap">
               <span class="inf-type-icon">{t.icon}</span>
             </span>
             <div>
@@ -174,19 +210,81 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem;
   }
   .inf-preview-card {
-    background: var(--k-bg-card); border: 1.5px solid color-mix(in srgb, var(--tc, #5CCFAF) 35%, transparent);
+    background: var(--k-bg-card); border: 1.5px solid color-mix(in srgb, #5CCFAF 35%, transparent);
     border-radius: 1rem; padding: 1.25rem;
     display: flex; flex-direction: column; gap: .5rem;
     text-decoration: none;
     transition: transform .2s, border-color .2s;
   }
-  .inf-preview-card:hover { transform: translateY(-3px); border-color: var(--tc, #5CCFAF); }
+  .inf-preview-card:hover { transform: translateY(-3px); border-color: #5CCFAF; }
   .inf-preview-icon { font-size: 1.5rem; }
   .inf-preview-title {
     font-family: 'Poppins', sans-serif; font-size: .875rem;
     font-weight: 700; color: var(--k-text); flex: 1;
   }
   .inf-preview-arrow { font-size: .8rem; font-weight: 700; font-family: 'Poppins', sans-serif; }
+
+  /* Live posts strip */
+  .inf-live-section {
+    background: var(--k-bg); padding: 2rem 0;
+    border-bottom: 1px solid var(--k-border);
+  }
+  .inf-live-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+  }
+  .inf-live-pill {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .3rem .875rem; border-radius: 999px;
+    background: color-mix(in srgb, #5CCFAF 12%, transparent);
+    border: 1px solid color-mix(in srgb, #5CCFAF 35%, transparent);
+    font-size: .72rem; font-weight: 800; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .inf-live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #5CCFAF;
+    animation: pulse 2s infinite;
+  }
+  .inf-live-sub { font-size: .8rem; color: var(--k-text-muted); }
+  .inf-live-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+  .inf-live-card {
+    background: var(--k-bg-card);
+    border: 1.5px solid color-mix(in srgb, #5CCFAF 30%, transparent);
+    border-radius: 1.25rem; padding: 1.5rem;
+    display: flex; flex-direction: column; gap: .625rem;
+    text-decoration: none; color: inherit;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .inf-live-card:hover {
+    border-color: #5CCFAF; transform: translateY(-3px);
+    box-shadow: 0 8px 24px color-mix(in srgb, #5CCFAF 12%, transparent);
+  }
+  .inf-live-card-top { display: flex; align-items: center; gap: .75rem; }
+  .inf-live-icon { font-size: 1.75rem; }
+  .inf-live-badges { display: flex; flex-direction: column; gap: .125rem; }
+  .inf-live-type {
+    font-size: .68rem; font-weight: 700; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .inf-live-read { font-size: .68rem; color: var(--k-text-muted); }
+  .inf-live-title {
+    font-family: 'Poppins', sans-serif; font-size: 1rem;
+    font-weight: 800; color: var(--k-text); margin: 0; line-height: 1.3;
+  }
+  .inf-live-summary { font-size: .8rem; color: var(--k-text-muted); line-height: 1.6; margin: 0; flex: 1; }
+  .inf-live-tags { display: flex; gap: .375rem; flex-wrap: wrap; }
+  .inf-live-tag {
+    font-size: .65rem; font-weight: 600; color: var(--k-text-muted);
+    background: var(--k-bg); border: 1px solid var(--k-border);
+    padding: .12rem .45rem; border-radius: 999px;
+  }
+  .inf-live-cta {
+    font-size: .78rem; font-weight: 800; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif; margin-top: .25rem;
+  }
 
   /* Section headers */
   .inf-section-title {
@@ -205,13 +303,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
   .inf-type-card {
     background: var(--k-bg); border: 1px solid var(--k-border);
-    border-left: 3px solid var(--tc, #5CCFAF);
+    border-left: 3px solid #5CCFAF;
     border-radius: 0 1rem 1rem 0; padding: 1.25rem;
     display: flex; gap: .875rem; align-items: flex-start;
     text-decoration: none;
     transition: border-color .2s, box-shadow .2s;
   }
-  .inf-type-card:hover { border-color: var(--tc, #5CCFAF); box-shadow: 0 4px 16px color-mix(in srgb, var(--tc, #5CCFAF) 10%, transparent); }
+  .inf-type-card:hover { border-color: #5CCFAF; box-shadow: 0 4px 16px color-mix(in srgb, #5CCFAF 10%, transparent); }
   .inf-type-icon-wrap {
     width: 2.5rem; height: 2.5rem; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
@@ -223,10 +321,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-weight: 800; color: var(--k-text); margin: 0 0 .25rem;
     transition: color .2s;
   }
-  .inf-type-card:hover .inf-type-title { color: var(--tc, #5CCFAF); }
+  .inf-type-card:hover .inf-type-title { color: #5CCFAF; }
   .inf-type-desc { font-size: .78rem; color: var(--k-text-muted); line-height: 1.5; margin: 0 0 .375rem; }
   .inf-type-cta {
-    font-size: .72rem; font-weight: 700; color: var(--tc, #5CCFAF);
+    font-size: .72rem; font-weight: 700; color: #5CCFAF;
     font-family: 'Poppins', sans-serif;
   }
 

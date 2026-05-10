@@ -9,8 +9,13 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogType?: string;
   canonical?: string;
   noindex?: boolean;
+  keywords?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  articleTags?: string[];
   accentColor?: string;
   accentColorLight?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
@@ -20,8 +25,13 @@ const {
   title,
   description,
   ogImage,
+  ogType,
   canonical,
   noindex,
+  keywords,
+  publishedAt,
+  updatedAt,
+  articleTags,
   accentColor,
   accentColorLight,
   jsonLd,
@@ -35,8 +45,13 @@ const {
       title={title}
       description={description}
       ogImage={ogImage}
+      ogType={ogType}
       canonical={canonical}
       noindex={noindex}
+      keywords={keywords}
+      publishedAt={publishedAt}
+      updatedAt={updatedAt}
+      articleTags={articleTags}
     />
     <!-- Theme persistence script (runs before paint to prevent flash) -->
     <script is:inline>

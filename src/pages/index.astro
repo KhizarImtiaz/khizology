@@ -5,6 +5,8 @@ import SectionHeader from '../components/ui/SectionHeader.astro';
 import { monsters } from '../data/monsters';
 import { featuredArtworks } from '../data/artworks';
 import { infographicTypes } from '../data/infographics';
+import { infographicTypes as infoSections, getAllInfographicPosts } from '../data/infographicsData';
+const featuredPost = getAllInfographicPosts().find(({ post }) => post.live);
 import { url, img } from '../utils/url';
 
 const featuredFreebieCategories = [
@@ -177,8 +179,8 @@ const jsonLd = {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           </div>
           <div class="tb-cat-body">
-            <h3>Tools</h3>
-            <p>Free social media, SEO and content tools</p>
+            <h3>Web Tools</h3>
+            <p>Free tools for helping daily tasks</p>
           </div>
           <span class="tb-cat-arrow">→</span>
         </a>
@@ -196,15 +198,28 @@ const jsonLd = {
         accentColor="#5CCFAF"
         cta={{ label: 'Explore Infographics', href: url('/infographics') }}
       />
+      <!-- Featured live post -->
+      {featuredPost && (
+        <a href={url(`/infographics/${featuredPost.section.slug}/${featuredPost.post.slug}`)} class="info-featured-post">
+          <span class="info-fp-live">
+            <span class="info-fp-dot"></span>Live Now
+          </span>
+          <span class="info-fp-title">{featuredPost.post.title}</span>
+          <span class="info-fp-tags">
+            {featuredPost.post.tags.slice(0, 3).map(t => <span class="info-fp-tag">{t}</span>)}
+          </span>
+          <span class="info-fp-cta">View Infographic →</span>
+        </a>
+      )}
       <div class="info-types-grid">
-        {infographicTypes.map(t => (
-          <a href={url('/infographics')} class="info-type-card">
+        {infoSections.slice(0, 8).map(t => (
+          <a href={url(`/infographics/${t.slug}`)} class="info-type-card">
             <span class="info-type-icon-wrap">
               <span class="info-type-icon">{t.icon}</span>
             </span>
             <div class="info-type-body">
               <h3>{t.title}</h3>
-              <p>{t.desc}</p>
+              <p>{t.description.slice(0, 72)}…</p>
             </div>
             <span class="info-type-arrow">→</span>
           </a>
@@ -595,6 +610,49 @@ const jsonLd = {
   .info-type-body p { font-size: 0.75rem; color: var(--k-text-muted); margin: 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
   .info-type-arrow { color: #5CCFAF; font-size: 0.875rem; font-weight: 700; align-self: flex-end; opacity: 0; transition: opacity 0.2s; }
   .info-type-card:hover .info-type-arrow { opacity: 1; }
+
+  /* Featured live infographic post */
+  .info-featured-post {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    padding: .875rem 1.25rem; margin-bottom: 1.25rem;
+    background: color-mix(in srgb, #5CCFAF 8%, transparent);
+    border: 1.5px solid color-mix(in srgb, #5CCFAF 35%, transparent);
+    border-radius: 1rem; text-decoration: none;
+    transition: border-color .2s, background .2s;
+  }
+  .info-featured-post:hover {
+    border-color: #5CCFAF;
+    background: color-mix(in srgb, #5CCFAF 12%, transparent);
+  }
+  .info-fp-live {
+    display: inline-flex; align-items: center; gap: .375rem;
+    font-size: .68rem; font-weight: 800; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif; text-transform: uppercase;
+    letter-spacing: .06em; flex-shrink: 0;
+  }
+  .info-fp-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #5CCFAF;
+    animation: fp-pulse 2s infinite;
+  }
+  @keyframes fp-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(1.4); }
+  }
+  .info-fp-title {
+    font-family: 'Poppins', sans-serif; font-size: .875rem;
+    font-weight: 700; color: var(--k-text); flex: 1; min-width: 180px;
+  }
+  .info-fp-tags { display: flex; gap: .3rem; }
+  .info-fp-tag {
+    font-size: .65rem; font-weight: 600; color: var(--k-text-muted);
+    background: var(--k-bg); border: 1px solid var(--k-border);
+    padding: .1rem .45rem; border-radius: 999px;
+  }
+  .info-fp-cta {
+    font-size: .78rem; font-weight: 800; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif; flex-shrink: 0;
+    white-space: nowrap;
+  }
 
   /* FREEBIES */
   .freebies-section { background: var(--k-bg-card); }

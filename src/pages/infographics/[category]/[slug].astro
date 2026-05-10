@@ -3,7 +3,26 @@ import BaseLayout from '../../../components/layout/BaseLayout.astro';
 import { url } from '../../../utils/url';
 import Breadcrumb from '../../../components/ui/Breadcrumb.astro';
 import { allInfographicSections, getAllInfographicPosts } from '../../../data/infographicsData';
+import type { InfographicSocialPost } from '../../../data/infographicsData';
 import { monsters } from '../../../data/monsters';
+
+// ── Social platform meta ──────────────────────────────────────────────────
+const PLATFORM_META: Record<InfographicSocialPost['platform'], { label: string; color: string; shareUrl?: string }> = {
+  instagram:  { label: 'Instagram',   color: '#E1306C' },
+  facebook:   { label: 'Facebook',    color: '#1877F2', shareUrl: 'https://www.facebook.com/sharer/sharer.php?u={url}' },
+  x:          { label: '𝕏 (Twitter)', color: '#000000', shareUrl: 'https://twitter.com/intent/tweet?text={title}&url={url}' },
+  tiktok:     { label: 'TikTok',      color: '#FF0050' },
+  pinterest:  { label: 'Pinterest',   color: '#E60023', shareUrl: 'https://pinterest.com/pin/create/button/?url={url}&description={title}' },
+  threads:    { label: 'Threads',     color: '#101010', shareUrl: 'https://www.threads.net/intent/post?text={title}%20{url}' },
+  linkedin:   { label: 'LinkedIn',    color: '#0A66C2', shareUrl: 'https://www.linkedin.com/sharing/share-offsite/?url={url}' },
+};
+
+// All share platforms in display order
+const SHARE_PLATFORMS: InfographicSocialPost['platform'][] = [
+  'x', 'facebook', 'linkedin', 'pinterest', 'threads',
+  'instagram', 'tiktok'
+];
+import AIAgentsOfficeWork from '../../../components/infographics/AIAgentsOfficeWork.astro';
 
 export async function getStaticPaths() {
   const allPosts = getAllInfographicPosts();
@@ -14,7 +33,7 @@ export async function getStaticPaths() {
 }
 
 const { section, post } = Astro.props;
-const ACCENT = section.color;
+const ACCENT = '#5CCFAF';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Related posts from the same section (excluding current)
@@ -24,32 +43,76 @@ const crossSections = allInfographicSections
   .filter(s => s.slug !== section.slug && s.kind === section.kind)
   .slice(0, 4);
 
-const jsonLd = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: post.title,
-  description: post.summary,
-  author: { '@type': 'Person', name: 'khizooo' },
-  publisher: { '@type': 'Organization', name: 'khizology' },
-  articleSection: section.title,
-  keywords: post.tags.join(', '),
-});
+const SITE_URL = 'https://khizarooo.github.io/khizology';
+const postUrl  = `${SITE_URL}/infographics/${section.slug}/${post.slug}`;
+
+// ── JSON-LD: Article + BreadcrumbList ──────────────────────────────────────
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.summary,
+    url: postUrl,
+    datePublished: post.publishedAt ?? '2026-05-10',
+    dateModified: post.updatedAt ?? post.publishedAt ?? '2026-05-10',
+    author: {
+      '@type': 'Person',
+      name: 'khizooo',
+      url: `${SITE_URL}/my-portfolio`,
+      sameAs: [
+        'https://github.com/KhizaroOo',
+        'https://www.linkedin.com/in/khizar-imtiaz',
+        'https://www.instagram.com/khizooo_art',
+      ],
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'khizology',
+      url: SITE_URL,
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/images/Monsters/khizooo.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+    articleSection: section.title,
+    keywords: post.tags.join(', '),
+    image: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/images/site/khizooo.png`,
+      width: 1200,
+      height: 630,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home',         item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Infographics', item: `${SITE_URL}/infographics` },
+      { '@type': 'ListItem', position: 3, name: section.title,  item: `${SITE_URL}/infographics/${section.slug}` },
+      { '@type': 'ListItem', position: 4, name: post.title,     item: postUrl },
+    ],
+  },
+];
 ---
 
 <BaseLayout
   title={`${post.title} — infooo by khizooo`}
   description={post.summary}
+  ogType="article"
+  keywords={[...post.tags, section.title, 'infographic', 'khizooo', 'infooo'].join(', ')}
+  publishedAt={post.publishedAt}
+  updatedAt={post.updatedAt}
+  articleTags={post.tags}
+  jsonLd={jsonLd}
   accentColor={ACCENT}
 >
-  <script type="application/ld+json" set:html={jsonLd} />
-
   <!-- Hero -->
   <section class="id-hero" style={`--ic: ${ACCENT}`}>
     <div class="k-container">
       <Breadcrumb
         crumbs={[
-          { label: 'infooo', href: '/infographics' },
-          { label: section.title, href: `/infographics/${section.slug}` },
+          { label: 'infooo', href: url('/infographics') },
+          { label: section.title, href: url(`/infographics/${section.slug}`) },
           { label: post.title },
         ]}
         accentColor={ACCENT}
@@ -79,12 +142,11 @@ const jsonLd = JSON.stringify({
         <!-- Left: Main -->
         <div class="id-main">
 
-          <!-- Visual area: coming soon -->
+          <!-- Visual area -->
           <div class="id-visual-area" style={`--ic: ${ACCENT}`}>
             {post.live ? (
-              <div class="id-image-placeholder">
-                <span class="id-cs-icon">{section.icon}</span>
-                <p>Infographic image will appear here</p>
+              <div class="id-live-infographic">
+                {post.slug === 'ai-agents-replacing-office-work' && <AIAgentsOfficeWork />}
               </div>
             ) : (
               <div class="id-coming-soon-visual">
@@ -127,24 +189,76 @@ const jsonLd = JSON.stringify({
               <span class="id-section-num" style={`background: color-mix(in srgb, ${ACCENT} 15%, transparent); color: ${ACCENT}`}>02</span>
               What This Infographic Covers
             </h2>
-            <p class="id-body-text">{post.summary}</p>
-            <p class="id-body-text">
-              This visual guide is part of our <strong>{section.title}</strong> collection — breaking down
-              {section.kind === 'type' ? ' complex information into clear, shareable visuals' : ' important knowledge into digestible visual formats'}.
-              Each infographic is designed to give you the key insight in under 5 minutes.
-            </p>
+            {post.coverText ? (
+              <p class="id-body-text">{post.coverText}</p>
+            ) : (
+              <>
+                <p class="id-body-text">{post.summary}</p>
+                <p class="id-body-text">
+                  This visual guide is part of our <strong>{section.title}</strong> collection — breaking down
+                  {section.kind === 'type' ? ' complex information into clear, shareable visuals' : ' important knowledge into digestible visual formats'}.
+                  Each infographic is designed to give you the key insight in under 5 minutes.
+                </p>
+              </>
+            )}
           </div>
 
-          <!-- Share / Save -->
+          <!-- ── Share bar 1: platform share buttons ── -->
           <div class="id-share-bar">
             <span class="id-share-label">Share this</span>
-            <button class="id-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.textContent='Copied! ✓';setTimeout(()=>{this.textContent='🔗 Copy Link'},2000)})">
-              🔗 Copy Link
-            </button>
-            <button class="id-share-btn" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(window.location.href),'_blank')">
-              𝕏 Share
-            </button>
+            <div class="id-share-btns">
+              <!-- Copy link -->
+              <button class="id-share-btn" id="ig-copy-link-btn" data-action="copy">
+                🔗 Copy Link
+              </button>
+              <!-- Platform share buttons -->
+              {SHARE_PLATFORMS.map(platform => {
+                const meta = PLATFORM_META[platform];
+                const hasShare = !!meta.shareUrl;
+                return (
+                  <button
+                    class="id-share-btn"
+                    data-action={hasShare ? 'share' : 'copy-for'}
+                    data-platform={platform}
+                    data-share-url={meta.shareUrl ?? ''}
+                    data-color={meta.color}
+                    style={`--pc: ${meta.color}`}
+                  >
+                    {meta.label}
+                  </button>
+                );
+              })}
+              <!-- Download (live posts only) -->
+              {post.live && (
+                <button class="id-share-btn id-download-btn" id="ig-download-btn">
+                  ⬇ Download
+                </button>
+              )}
+            </div>
           </div>
+
+          <!-- ── Share bar 2: "Find this post on" ── -->
+          {post.socialPosts && post.socialPosts.length > 0 && (
+            <div class="id-share-bar id-social-posts-bar">
+              <span class="id-share-label">Find this on</span>
+              <div class="id-share-btns">
+                {post.socialPosts.map(sp => {
+                  const meta = PLATFORM_META[sp.platform];
+                  return (
+                    <a
+                      href={sp.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="id-share-btn id-social-post-link"
+                      style={`--pc: ${meta.color}`}
+                    >
+                      {meta.label}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
         </div>
 
@@ -212,7 +326,7 @@ const jsonLd = JSON.stringify({
           <h2 class="id-related-title">Other {section.kind === 'type' ? 'Formats' : 'Topics'}</h2>
           <div class="id-cross-grid">
             {crossSections.map(cs => (
-              <a href={url(`/infographics/${cs.slug}`)} class="id-cross-card" style={`--ic: ${cs.color}`}>
+              <a href={url(`/infographics/${cs.slug}`)} class="id-cross-card">
                 <span class="id-cross-icon">{cs.icon}</span>
                 <span class="id-cross-name">{cs.title}</span>
                 <span class="id-cross-count">{cs.posts.length} posts</span>
@@ -230,22 +344,126 @@ const jsonLd = JSON.stringify({
       <span class="k-section-label" style={`color: ${ACCENT}`}>FAQ</span>
       <h2 class="id-faq-title">Frequently Asked Questions</h2>
       <div class="id-faq-list">
-        <details class="id-faq-item">
-          <summary class="id-faq-q">When will the full infographic be available?</summary>
-          <p class="id-faq-a">We're actively designing visuals for all upcoming infographics. New posts go live weekly — follow @khizooo on Instagram for first access.</p>
-        </details>
-        <details class="id-faq-item">
-          <summary class="id-faq-q">Can I share or download this infographic?</summary>
-          <p class="id-faq-a">Yes! Once published, all infographics are shareable. Download and share for free with credit to @khizooo.</p>
-        </details>
-        <details class="id-faq-item">
-          <summary class="id-faq-q">Are there more {section.title.toLowerCase()} infographics?</summary>
-          <p class="id-faq-a">Yes, we have {section.posts.length} planned in this category. <a href={url(`/infographics/${section.slug}`)} style={`color: ${ACCENT}`}>Browse all {section.title} infographics →</a></p>
-        </details>
+        {post.faq && post.faq.length > 0 ? (
+          post.faq.map(item => (
+            <details class="id-faq-item">
+              <summary class="id-faq-q">{item.q}</summary>
+              <p class="id-faq-a">{item.a}</p>
+            </details>
+          ))
+        ) : (
+          <>
+            <details class="id-faq-item">
+              <summary class="id-faq-q">When will the full infographic be available?</summary>
+              <p class="id-faq-a">We're actively designing visuals for all upcoming infographics. New posts go live weekly — follow @khizooo on Instagram for first access.</p>
+            </details>
+            <details class="id-faq-item">
+              <summary class="id-faq-q">Can I share or download this infographic?</summary>
+              <p class="id-faq-a">Yes! Once published, all infographics are shareable. Download and share for free with credit to @khizooo.</p>
+            </details>
+            <details class="id-faq-item">
+              <summary class="id-faq-q">Are there more {section.title.toLowerCase()} infographics?</summary>
+              <p class="id-faq-a">Yes, we have {section.posts.length} planned in this category. <a href={url(`/infographics/${section.slug}`)} style={`color: ${ACCENT}`}>Browse all {section.title} infographics →</a></p>
+            </details>
+          </>
+        )}
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // ── Share bar + Download logic ────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // Helper: flash button text temporarily
+    function flashBtn(btn: HTMLElement, msg: string, durationMs = 2200) {
+      const orig = btn.textContent ?? '';
+      btn.textContent = msg;
+      setTimeout(() => { btn.textContent = orig; }, durationMs);
+    }
+
+    // ── Copy link button ─────────────────────────────────────────────
+    const copyBtn = document.getElementById('ig-copy-link-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).then(
+          () => flashBtn(copyBtn, 'Copied! ✓'),
+          () => flashBtn(copyBtn, 'Failed ✗', 2000),
+        );
+      });
+    }
+
+    // ── Platform share buttons ────────────────────────────────────────
+    document.querySelectorAll<HTMLButtonElement>('[data-action="share"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tpl = btn.dataset.shareUrl ?? '';
+        const url  = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        const finalUrl = tpl.replace('{url}', url).replace('{title}', title);
+        window.open(finalUrl, '_blank', 'noopener,width=600,height=480');
+      });
+    });
+
+    // ── Copy-for-platform buttons (Instagram, TikTok) ─
+    document.querySelectorAll<HTMLButtonElement>('[data-action="copy-for"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const platform = btn.dataset.platform ?? 'platform';
+        navigator.clipboard.writeText(window.location.href).then(
+          () => flashBtn(btn, `Link copied ✓`, 2200),
+          () => flashBtn(btn, 'Failed ✗', 2000),
+        );
+      });
+    });
+
+    // ── Download infographic as PNG ───────────────────────────────────
+    const dlBtn = document.getElementById('ig-download-btn') as HTMLButtonElement | null;
+    if (!dlBtn) return;
+
+    dlBtn.addEventListener('click', async () => {
+      const target = document.getElementById('ig-infographic-canvas');
+      if (!target) return;
+
+      const original = dlBtn.textContent ?? '⬇ Download';
+      dlBtn.textContent = '⏳ Generating…';
+      dlBtn.classList.add('loading');
+      dlBtn.disabled = true;
+
+      try {
+        if (!(window as any).htmlToImage) {
+          await new Promise<void>((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js';
+            s.onload = () => resolve();
+            s.onerror = () => reject(new Error('CDN load failed'));
+            document.head.appendChild(s);
+          });
+        }
+
+        const dataUrl = await (window as any).htmlToImage.toPng(target, {
+          pixelRatio: 2,
+          cacheBust: true,
+          style: { margin: '0', borderRadius: '1.5rem' },
+        });
+
+        const link = document.createElement('a');
+        link.download = 'ai-agents-replacing-repetitive-office-work.png';
+        link.href = dataUrl;
+        link.click();
+
+        dlBtn.textContent = '✓ Downloaded!';
+        setTimeout(() => { dlBtn.textContent = original; }, 2500);
+      } catch (err) {
+        console.error('Infographic download failed:', err);
+        dlBtn.textContent = '✗ Failed — try again';
+        setTimeout(() => { dlBtn.textContent = original; }, 3000);
+      } finally {
+        dlBtn.classList.remove('loading');
+        dlBtn.disabled = false;
+      }
+    });
+  });
+</script>
 
 <style>
   .id-hero { background: var(--k-bg); padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--k-border); }
@@ -263,6 +481,9 @@ const jsonLd = JSON.stringify({
 
   /* Visual area */
   .id-visual-area {
+    margin-bottom: 2rem;
+  }
+  .id-visual-area:has(.id-coming-soon-visual) {
     background: var(--k-bg-card);
     border: 2px dashed color-mix(in srgb, var(--ic) 40%, transparent);
     border-radius: 1.25rem;
@@ -270,8 +491,8 @@ const jsonLd = JSON.stringify({
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2rem;
   }
+  .id-live-infographic { width: 100%; }
   .id-coming-soon-visual { text-align: center; padding: 2rem; }
   .id-cs-ring { width: 90px; height: 90px; border-radius: 50%; border: 3px solid; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
   .id-cs-icon { font-size: 2.5rem; }
@@ -290,11 +511,47 @@ const jsonLd = JSON.stringify({
   .id-body-text { font-size: .9rem; color: var(--k-text-muted); line-height: 1.75; margin: 0 0 .875rem; }
   .id-body-text strong { color: var(--k-text); }
 
-  /* Share bar */
-  .id-share-bar { display: flex; align-items: center; gap: .75rem; padding: 1rem; background: var(--k-bg-card); border: 1px solid var(--k-border); border-radius: .875rem; flex-wrap: wrap; }
-  .id-share-label { font-size: .78rem; font-weight: 700; color: var(--k-text-muted); font-family: 'Poppins', sans-serif; flex: 1; }
-  .id-share-btn { padding: .4rem .875rem; border-radius: .5rem; border: 1px solid var(--k-border); background: var(--k-bg); color: var(--k-text); font-size: .78rem; font-weight: 700; cursor: pointer; font-family: 'Poppins', sans-serif; transition: border-color .2s; }
-  .id-share-btn:hover { border-color: var(--ic); color: var(--ic); }
+  /* Share bars */
+  .id-share-bar {
+    display: flex; align-items: flex-start; gap: .625rem;
+    padding: .875rem 1rem; background: var(--k-bg-card);
+    border: 1px solid var(--k-border); border-radius: .875rem;
+    flex-wrap: wrap; margin-bottom: .75rem;
+  }
+  .id-share-label {
+    font-size: .72rem; font-weight: 700; color: var(--k-text-muted);
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap; padding-top: .35rem; min-width: 72px;
+  }
+  .id-share-btns { display: flex; flex-wrap: wrap; gap: .4rem; flex: 1; }
+
+  /* Generic share button / link */
+  .id-share-btn {
+    padding: .35rem .75rem; border-radius: .5rem;
+    border: 1px solid var(--k-border); background: var(--k-bg);
+    color: var(--k-text-muted); font-size: .72rem; font-weight: 700;
+    cursor: pointer; font-family: 'Poppins', sans-serif;
+    transition: border-color .18s, color .18s, background .18s;
+    text-decoration: none; display: inline-flex; align-items: center;
+  }
+  /* Platform-colored hover: uses --pc set per button */
+  .id-share-btn:hover {
+    border-color: var(--pc, var(--ic));
+    color: var(--pc, var(--ic));
+    background: color-mix(in srgb, var(--pc, var(--ic)) 8%, transparent);
+  }
+
+  /* Download button — always teal */
+  .id-download-btn {
+    border-color: color-mix(in srgb, #5CCFAF 50%, transparent);
+    color: #5CCFAF; --pc: #5CCFAF;
+  }
+  .id-download-btn.loading { opacity: .6; cursor: wait; }
+
+  /* "Find this on" second bar */
+  .id-social-posts-bar { border-style: dashed; }
+  .id-social-post-link { font-weight: 700; }
+  .id-social-post-link:hover { text-decoration: none; }
 
   /* Sidebar */
   .id-sidebar { display: flex; flex-direction: column; gap: 1rem; }
@@ -326,6 +583,9 @@ const jsonLd = JSON.stringify({
   .id-cross-icon { font-size: 1.5rem; }
   .id-cross-name { font-family: 'Poppins', sans-serif; font-size: .825rem; font-weight: 700; color: var(--k-text); }
   .id-cross-count { font-size: .72rem; color: var(--k-text-muted); }
+
+  /* Download btn loading state */
+  @keyframes id-spin { to { transform: rotate(360deg); } }
 
   /* FAQ */
   .id-faq { background: var(--k-bg-card); border-top: 1px solid var(--k-border); padding: 3rem 0; }

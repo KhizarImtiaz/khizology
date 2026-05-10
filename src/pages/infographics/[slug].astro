@@ -21,8 +21,11 @@ const relatedSections = allInfographicSections
   .filter(s => s.slug !== section.slug)
   .slice(0, 6);
 
-const hasTopics = section.kind === 'type' && (section.topics?.length ?? 0) > 0;
-const hasPosts = !hasTopics && section.posts.length > 0;
+const livePosts   = section.posts.filter(p => p.live);
+const draftPosts  = section.posts.filter(p => !p.live);
+const hasTopics   = section.kind === 'type' && (section.topics?.length ?? 0) > 0;
+// Show the posts grid when there are non-live posts OR when there are no topics
+const hasPosts    = !hasTopics && section.posts.length > 0;
 
 // Sample "coming soon" card data to fill empty listing
 const sampleTitles: Record<string, string[]> = {
@@ -57,17 +60,17 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     <div class="k-container">
       <Breadcrumb
         crumbs={[
-          { label: 'Infographics', href: '/infographics' },
+          { label: 'Infographics', href: url('/infographics') },
           { label: section.title },
         ]}
         accentColor={ACCENT}
       />
       <div class="ig-cat-hero-inner">
-        <div class="ig-cat-icon-wrap" style={`--ic: ${section.color}`}>
+        <div class="ig-cat-icon-wrap">
           <span class="ig-cat-emoji">{section.icon}</span>
         </div>
         <div class="ig-cat-hero-text">
-          <div class="ig-cat-kind-badge" style={`background: color-mix(in srgb, ${section.color} 12%, transparent); color: ${section.color}; border: 1px solid color-mix(in srgb, ${section.color} 30%, transparent)`}>
+          <div class="ig-cat-kind-badge">
             {section.kind === 'topic' ? '📚 Learning Topic' : '📊 Infographic Type'}
           </div>
           <h1 class="ig-cat-title">{section.title}</h1>
@@ -88,15 +91,62 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
   <section class="k-section ig-listing-section">
     <div class="k-container">
 
+      <!-- ── Live posts — always shown when present ── -->
+      {livePosts.length > 0 && (
+        <div class="ig-live-strip">
+          <div class="ig-live-strip-hdr">
+            <span class="ig-live-pill">
+              <span class="ig-live-dot"></span>
+              Live Now
+            </span>
+            <span class="ig-live-strip-sub">{livePosts.length} infographic{livePosts.length > 1 ? 's' : ''} ready to view</span>
+          </div>
+          <div class="ig-posts-grid">
+            {livePosts.map(post => (
+              <a href={url(`/infographics/${section.slug}/${post.slug}`)} class="ig-post-card ig-post-card--live">
+                <div class="ig-post-live-banner">
+                  <span class="ig-post-live-dot"></span>
+                  Live · View Full Infographic →
+                </div>
+                <div class="ig-post-body">
+                  <div class="ig-post-meta">
+                    <span class="ig-post-cat">{post.category}</span>
+                    <div class="ig-post-meta-right">
+                      <span class="ig-post-live-badge">✦ Live</span>
+                      <span class="ig-post-time">{post.readingTime}</span>
+                    </div>
+                  </div>
+                  <h2 class="ig-post-title">{post.title}</h2>
+                  <p class="ig-post-summary">{post.summary}</p>
+                  <div class="ig-post-tags">
+                    {post.tags.slice(0, 3).map(t => <span class="ig-tag">{t}</span>)}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
       {hasPosts ? (
         <div class="ig-posts-grid">
           {section.posts.map(post => (
-            <a href={url(`/infographics/${section.slug}/${post.slug}`)} class="ig-post-card" style={`--ic: ${section.color}`}>
-              <div class="ig-post-img-placeholder skeleton"></div>
+            <a href={url(`/infographics/${section.slug}/${post.slug}`)} class={`ig-post-card${post.live ? ' ig-post-card--live' : ''}`}>
+              {post.live ? (
+                <div class="ig-post-live-banner">
+                  <span class="ig-post-live-dot"></span>
+                  Live · View Full Infographic →
+                </div>
+              ) : (
+                <div class="ig-post-img-placeholder skeleton"></div>
+              )}
               <div class="ig-post-body">
                 <div class="ig-post-meta">
                   <span class="ig-post-cat">{post.category}</span>
-                  <span class="ig-post-time">{post.readingTime}</span>
+                  <div class="ig-post-meta-right">
+                    {post.live && <span class="ig-post-live-badge">✦ Live</span>}
+                    <span class="ig-post-time">{post.readingTime}</span>
+                  </div>
                 </div>
                 <h2 class="ig-post-title">{post.title}</h2>
                 <p class="ig-post-summary">{post.summary}</p>
@@ -111,13 +161,13 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
         <!-- Type page: show 20 numbered topic cards -->
         <div class="ig-coming-section">
           <div class="ig-coming-header">
-            <span class="k-section-label" style={`color: ${section.color}`}>{section.topics.length} topics</span>
+            <span class="k-section-label" style={`color: ${ACCENT}`}>{section.topics.length} topics</span>
             <h2 class="ig-coming-title">Upcoming {section.title} Infographics</h2>
             <p class="ig-coming-sub">All infographics below are in production. Each one will be published as a full visual — clean, clear, and shareable.</p>
           </div>
           <div class="ig-topics-grid">
             {section.topics.map((topic, i) => (
-              <div class="ig-topic-card" style={`--ic: ${section.color}; --delay: ${i * 0.03}s`}>
+              <div class="ig-topic-card" style={`--delay: ${i * 0.03}s`}>
                 <div class="ig-topic-card-top">
                   <span class="ig-topic-num">#{String(i + 1).padStart(2, '0')}</span>
                   <span class="ig-topic-soon">Coming Soon</span>
@@ -137,7 +187,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
               <span class="ig-cta-icon">{section.icon}</span>
               <h3>Be first when {section.title} drops</h3>
               <p>Follow khizology and get notified when new infographics go live.</p>
-              <a href={url("/drop-a-vibe")} class="ig-cta-btn" style={`background: ${section.color}`}>Stay in the Loop →</a>
+              <a href={url("/drop-a-vibe")} class="ig-cta-btn">Stay in the Loop →</a>
             </div>
           </div>
         </div>
@@ -151,7 +201,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
           </div>
           <div class="ig-preview-grid">
             {fallbackTitles.map((title, i) => (
-              <div class="ig-preview-card" style={`--ic: ${section.color}; --delay: ${i * 0.08}s`}>
+              <div class="ig-preview-card" style={`--delay: ${i * 0.08}s`}>
                 <div class="ig-preview-thumb skeleton"></div>
                 <div class="ig-preview-body">
                   <div class="ig-preview-coming-badge">Coming Soon</div>
@@ -183,7 +233,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
       <h2 class="ig-related-title">More Infographic Categories</h2>
       <div class="ig-related-grid">
         {relatedSections.map(s => (
-          <a href={url(`/infographics/${s.slug}`)} class="ig-related-card" style={`--rc: ${s.color}`}>
+          <a href={url(`/infographics/${s.slug}`)} class="ig-related-card">
             <span class="ig-related-icon">{s.icon}</span>
             <span class="ig-related-name">{s.title}</span>
           </a>
@@ -224,7 +274,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
   }
   .ig-cat-icon-wrap {
     width: 72px; height: 72px; border-radius: 1.125rem; flex-shrink: 0;
-    background: color-mix(in srgb, var(--ic) 15%, transparent);
+    background: color-mix(in srgb, #5CCFAF 15%, transparent);
     display: flex; align-items: center; justify-content: center; font-size: 2rem;
   }
   .ig-cat-hero-text { flex: 1; min-width: 280px; }
@@ -253,11 +303,57 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     border-radius: 1.25rem; overflow: hidden; text-decoration: none;
     display: flex; flex-direction: column; transition: border-color .2s, transform .2s;
   }
-  .ig-post-card:hover { border-color: var(--ic); transform: translateY(-3px); }
+  .ig-post-card:hover { border-color: #5CCFAF; transform: translateY(-3px); }
+  /* Live strip above topics */
+  .ig-live-strip { margin-bottom: 3rem; }
+  .ig-live-strip-hdr {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;
+  }
+  .ig-live-pill {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .28rem .75rem; border-radius: 999px;
+    background: color-mix(in srgb, #5CCFAF 12%, transparent);
+    border: 1px solid color-mix(in srgb, #5CCFAF 35%, transparent);
+    font-size: .68rem; font-weight: 800; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .ig-live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #5CCFAF;
+    animation: lv-pulse 2s infinite;
+  }
+  .ig-live-strip-sub { font-size: .8rem; color: var(--k-text-muted); }
+
+  /* Live card override */
+  .ig-post-card--live {
+    border-color: color-mix(in srgb, #5CCFAF 40%, transparent);
+  }
+  .ig-post-card--live:hover { border-color: #5CCFAF; }
+  .ig-post-live-banner {
+    height: 54px; width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: .5rem;
+    background: color-mix(in srgb, #5CCFAF 12%, transparent);
+    font-size: .78rem; font-weight: 800; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif;
+    border-bottom: 1px solid color-mix(in srgb, #5CCFAF 25%, transparent);
+  }
+  .ig-post-live-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #5CCFAF;
+    animation: lv-pulse 2s infinite;
+  }
+  @keyframes lv-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(1.5); }
+  }
+  .ig-post-live-badge {
+    font-size: .65rem; font-weight: 800; color: #5CCFAF;
+    font-family: 'Poppins', sans-serif; text-transform: uppercase; letter-spacing: .07em;
+  }
+  .ig-post-meta-right { display: flex; align-items: center; gap: .5rem; }
+
   .ig-post-img-placeholder { height: 180px; width: 100%; }
   .ig-post-body { padding: 1.25rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
   .ig-post-meta { display: flex; align-items: center; justify-content: space-between; }
-  .ig-post-cat { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ic); font-family: 'Poppins', sans-serif; }
+  .ig-post-cat { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #5CCFAF; font-family: 'Poppins', sans-serif; }
   .ig-post-time { font-size: .7rem; color: var(--k-text-muted); }
   .ig-post-title { font-family: 'Poppins', sans-serif; font-size: .975rem; font-weight: 800; color: var(--k-text); margin: 0; line-height: 1.3; }
   .ig-post-summary { font-size: .8rem; color: var(--k-text-muted); line-height: 1.5; margin: 0; flex: 1; }
@@ -281,7 +377,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
   .ig-topic-card {
     background: var(--k-bg-card);
     border: 1.5px solid var(--k-border);
-    border-left: 3px solid var(--ic);
+    border-left: 3px solid #5CCFAF;
     border-radius: 0 1rem 1rem 0;
     padding: 1.25rem;
     display: flex;
@@ -292,8 +388,8 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     transition: box-shadow .2s, border-color .2s;
   }
   .ig-topic-card:hover {
-    box-shadow: 0 4px 20px color-mix(in srgb, var(--ic) 12%, transparent);
-    border-color: var(--ic);
+    box-shadow: 0 4px 20px color-mix(in srgb, #5CCFAF 12%, transparent);
+    border-color: #5CCFAF;
   }
   .ig-topic-card-top {
     display: flex;
@@ -304,7 +400,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     font-family: 'Poppins', sans-serif;
     font-size: .68rem;
     font-weight: 800;
-    color: var(--ic);
+    color: #5CCFAF;
     opacity: .7;
     letter-spacing: .05em;
   }
@@ -324,7 +420,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     width: 38px;
     height: 38px;
     border-radius: .625rem;
-    background: color-mix(in srgb, var(--ic) 12%, transparent);
+    background: color-mix(in srgb, #5CCFAF 12%, transparent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -349,7 +445,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .07em;
-    color: var(--ic);
+    color: #5CCFAF;
     font-family: 'Poppins', sans-serif;
   }
 
@@ -371,7 +467,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     opacity: .85; transition: opacity .2s, border-color .2s, transform .2s;
     animation: fadeIn .35s ease both; animation-delay: var(--delay, 0s);
   }
-  .ig-preview-card:hover { opacity: 1; border-color: var(--ic); transform: translateY(-2px); }
+  .ig-preview-card:hover { opacity: 1; border-color: #5CCFAF; transform: translateY(-2px); }
   .ig-preview-thumb { height: 140px; width: 100%; }
   .ig-preview-body { padding: 1rem; display: flex; flex-direction: column; gap: .5rem; }
   .ig-preview-coming-badge {
@@ -414,7 +510,7 @@ const fallbackTitles = sampleTitles[section.slug] || ['Coming Soon: Visual Conte
     text-decoration: none; color: var(--k-text-muted); font-size: .8rem; font-weight: 600;
     transition: border-color .2s, color .2s;
   }
-  .ig-related-card:hover { border-color: var(--rc); color: var(--rc); }
+  .ig-related-card:hover { border-color: #5CCFAF; color: #5CCFAF; }
   .ig-related-icon { font-size: 1rem; }
   .ig-related-name { font-family: 'Poppins', sans-serif; font-size: .78rem; }
 

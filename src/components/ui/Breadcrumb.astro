@@ -1,4 +1,5 @@
 ---
+import { url } from '../../utils/url';
 interface Crumb {
   label: string;
   href?: string;
@@ -12,7 +13,7 @@ const { crumbs, accentColor } = Astro.props;
 
 <nav class="k-breadcrumb" aria-label="Breadcrumb">
   <ol>
-    <li><a href="/">Home</a></li>
+    <li><a href={url('/')}>Home</a></li>
     {crumbs.map((crumb, i) => (
       <li>
         <span aria-hidden="true" class="sep">›</span>

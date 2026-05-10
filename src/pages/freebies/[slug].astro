@@ -31,7 +31,7 @@ const related = freebiesCategories.filter(c => c.slug !== cat.slug).slice(0, 6);
     <div class="k-container">
       <Breadcrumb
         crumbs={[
-          { label: 'freeooo', href: '/freebies' },
+          { label: 'freeooo', href: url('/freebies') },
           { label: cat.title },
         ]}
         accentColor={cat.color}
